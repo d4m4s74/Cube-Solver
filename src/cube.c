@@ -6,9 +6,9 @@
 
 //colors
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-char *C[7] = {"", "", "", "", "", "", ""};
+char *C[7] = {"G", "R", "B", "O", "W", "Y", ""};
 #else
-char *C[7] = {"\e[42m", "\e[41m", "\e[44m", "\e[48;5;208m", "\e[107m", "\e[103m", "\e[49m"}; //green, red, blue, orange, white, yellow
+char *C[7] = {"\e[42mG", "\e[41mR", "\e[44mB", "\e[48;5;208mO", "\e[107mW", "\e[103mY", "\e[49m"}; //green, red, blue, orange, white, yellow
 #endif
 
 
@@ -264,33 +264,33 @@ void print_cube(int cube[6][9])
     //Todo: Rewrite this to work with loops if possible
 
     //%s gets replaced with the color tag with the number, %i with the number on the face
-    printf("    %s%i%s%i%s%i%s\n",
-           C[cube[4][0]], cube[4][0], C[cube[4][1]], cube[4][1], C[cube[4][2]], cube[4][2], C[6]);
-    printf("    %s%i%s%i%s%i%s\n",
-           C[cube[4][3]], cube[4][3], C[cube[4][4]], cube[4][4], C[cube[4][5]], cube[4][5], C[6]);
-    printf("    %s%i%s%i%s%i%s\n\n",
-           C[cube[4][6]], cube[4][6], C[cube[4][7]], cube[4][7], C[cube[4][8]], cube[4][8], C[6]);
-    printf("%s%i%s%i%s%i%s %s%i%s%i%s%i%s %s%i%s%i%s%i%s %s%i%s%i%s%i%s\n",
-           C[cube[3][0]], cube[3][0], C[cube[3][1]], cube[3][1], C[cube[3][2]], cube[3][2], C[6],
-           C[cube[0][0]], cube[0][0], C[cube[0][1]], cube[0][1], C[cube[0][2]], cube[0][2], C[6],
-           C[cube[1][0]], cube[1][0], C[cube[1][1]], cube[1][1], C[cube[1][2]], cube[1][2], C[6],
-           C[cube[2][0]], cube[2][0], C[cube[2][1]], cube[2][1], C[cube[2][2]], cube[2][2], C[6]);
-    printf("%s%i%s%i%s%i%s %s%i%s%i%s%i%s %s%i%s%i%s%i%s %s%i%s%i%s%i%s\n",
-           C[cube[3][3]], cube[3][3], C[cube[3][4]], cube[3][4], C[cube[3][5]], cube[3][5], C[6],
-           C[cube[0][3]], cube[0][3], C[cube[0][4]], cube[0][4], C[cube[0][5]], cube[0][5], C[6],
-           C[cube[1][3]], cube[1][3], C[cube[1][4]], cube[1][4], C[cube[1][5]], cube[1][5], C[6],
-           C[cube[2][3]], cube[2][3], C[cube[2][4]], cube[2][4], C[cube[2][5]], cube[2][5], C[6]);
-    printf("%s%i%s%i%s%i%s %s%i%s%i%s%i%s %s%i%s%i%s%i%s %s%i%s%i%s%i%s\n\n",
-           C[cube[3][6]], cube[3][6], C[cube[3][7]], cube[3][7], C[cube[3][8]], cube[3][8], C[6],
-           C[cube[0][6]], cube[0][6], C[cube[0][7]], cube[0][7], C[cube[0][8]], cube[0][8], C[6],
-           C[cube[1][6]], cube[1][6], C[cube[1][7]], cube[1][7], C[cube[1][8]], cube[1][8], C[6],
-           C[cube[2][6]], cube[2][6], C[cube[2][7]], cube[2][7], C[cube[2][8]], cube[2][8], C[6]);
-    printf("    %s%i%s%i%s%i%s\n",
-           C[cube[5][0]], cube[5][0], C[cube[5][1]], cube[5][1], C[cube[5][2]], cube[5][2], C[6]);
-    printf("    %s%i%s%i%s%i%s\n",
-           C[cube[5][3]], cube[5][3], C[cube[5][4]], cube[5][4], C[cube[5][5]], cube[5][5], C[6]);
-    printf("    %s%i%s%i%s%i%s\n\n",
-           C[cube[5][6]], cube[5][6], C[cube[5][7]], cube[5][7], C[cube[5][8]], cube[5][8], C[6]);
+    printf("    %s%s%s%s\n",
+           C[cube[4][0]], C[cube[4][1]], C[cube[4][2]], C[6]);
+    printf("    %s%s%s%s\n",
+           C[cube[4][3]],  C[cube[4][4]], C[cube[4][5]], C[6]);
+    printf("    %s%s%s%s\n\n",
+           C[cube[4][6]], C[cube[4][7]], C[cube[4][8]],  C[6]);
+    printf("%s%s%s%s %s%s%s%s %s%s%s%s %s%s%s%s\n",
+           C[cube[3][0]], C[cube[3][1]], C[cube[3][2]], C[6],
+           C[cube[0][0]], C[cube[0][1]], C[cube[0][2]], C[6],
+           C[cube[1][0]], C[cube[1][1]], C[cube[1][2]], C[6],
+           C[cube[2][0]], C[cube[2][1]], C[cube[2][2]], C[6]);
+    printf("%s%s%s%s %s%s%s%s %s%s%s%s %s%s%s%s\n",
+           C[cube[3][3]], C[cube[3][4]], C[cube[3][5]], C[6],
+           C[cube[0][3]], C[cube[0][4]], C[cube[0][5]], C[6],
+           C[cube[1][3]], C[cube[1][4]], C[cube[1][5]], C[6],
+           C[cube[2][3]], C[cube[2][4]], C[cube[2][5]], C[6]);
+    printf("%s%s%s%s %s%s%s%s %s%s%s%s %s%s%s%s\n\n",
+           C[cube[3][6]], C[cube[3][7]], C[cube[3][8]], C[6],
+           C[cube[0][6]], C[cube[0][7]], C[cube[0][8]], C[6],
+           C[cube[1][6]], C[cube[1][7]], C[cube[1][8]], C[6],
+           C[cube[2][6]], C[cube[2][7]], C[cube[2][8]], C[6]);
+    printf("    %s%s%s%s\n",
+           C[cube[5][0]], C[cube[5][1]], C[cube[5][2]], C[6]);
+    printf("    %s%s%s%s\n",
+           C[cube[5][3]], C[cube[5][4]], C[cube[5][5]], C[6]);
+    printf("    %s%s%s%s\n\n",
+           C[cube[5][6]], C[cube[5][7]], C[cube[5][8]], C[6]);
 }
 
 /*
