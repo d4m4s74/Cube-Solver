@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Rubik's Cube Solver</title>
+    <link rel="stylesheet" href="/static/cube.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div id="container">
+        <div id="solver">
+            <div id="canvas"></div>
+            <div id="currentAlg"></div>
+            <div id="playbackControls">
+                <div class="controlButton" id="prev"><img src="/static/prev.png" alt="previous"></div>
+                <div class="controlButton" id="playpause"><img src="/static/pause.png" alt="pause"></div>
+                <div class="controlButton" id="next"><img src="/static/next.png" alt="next"></div>
+            </div>
+            <input type="range" min="1" max="50" value="10" class="slider" id="speed" orient="vertical">
+        </div>
+        <div id="solution">
+        </div>
+        <div id="controls">
+            <div id="error">&nbsp;</div>
+            <div id="colorpicker">
+                <div class="face" id="frontFace">
+                    <div class="square sq0" id="f0s0"></div>
+                    <div class="square sq1" id="f0s1"></div>
+                    <div class="square sq2" id="f0s2"></div>
+                    <div class="square sq3" id="f0s3"></div>
+                    <div class="square sq4" id="f0s4"></div>
+                    <div class="square sq5" id="f0s5"></div>
+                    <div class="square sq6" id="f0s6"></div>
+                    <div class="square sq7" id="f0s7"></div>
+                    <div class="square sq8" id="f0s8"></div>
+                </div>
+                <div class="face" id="rightFace">
+                    <div class="square sq0" id="f1s0"></div>
+                    <div class="square sq1" id="f1s1"></div>
+                    <div class="square sq2" id="f1s2"></div>
+                    <div class="square sq3" id="f1s3"></div>
+                    <div class="square sq4" id="f1s4"></div>
+                    <div class="square sq5" id="f1s5"></div>
+                    <div class="square sq6" id="f1s6"></div>
+                    <div class="square sq7" id="f1s7"></div>
+                    <div class="square sq8" id="f1s8"></div>
+                </div>
+                <div class="face" id="backFace">
+                    <div class="square sq0" id="f2s0"></div>
+                    <div class="square sq1" id="f2s1"></div>
+                    <div class="square sq2" id="f2s2"></div>
+                    <div class="square sq3" id="f2s3"></div>
+                    <div class="square sq4" id="f2s4"></div>
+                    <div class="square sq5" id="f2s5"></div>
+                    <div class="square sq6" id="f2s6"></div>
+                    <div class="square sq7" id="f2s7"></div>
+                    <div class="square sq8" id="f2s8"></div>
+                </div>
+                <div class="face" id="leftFace">
+                    <div class="square sq0" id="f3s0"></div>
+                    <div class="square sq1" id="f3s1"></div>
+                    <div class="square sq2" id="f3s2"></div>
+                    <div class="square sq3" id="f3s3"></div>
+                    <div class="square sq4" id="f3s4"></div>
+                    <div class="square sq5" id="f3s5"></div>
+                    <div class="square sq6" id="f3s6"></div>
+                    <div class="square sq7" id="f3s7"></div>
+                    <div class="square sq8" id="f3s8"></div>
+                </div>
+                <div class="face" id="upFace">
+                    <div class="square sq0" id="f4s0"></div>
+                    <div class="square sq1" id="f4s1"></div>
+                    <div class="square sq2" id="f4s2"></div>
+                    <div class="square sq3" id="f4s3"></div>
+                    <div class="square sq4" id="f4s4"></div>
+                    <div class="square sq5" id="f4s5"></div>
+                    <div class="square sq6" id="f4s6"></div>
+                    <div class="square sq7" id="f4s7"></div>
+                    <div class="square sq8" id="f4s8"></div>
+                </div>
+                <div class="face" id="downFace">
+                    <div class="square sq0" id="f5s0"></div>
+                    <div class="square sq1" id="f5s1"></div>
+                    <div class="square sq2" id="f5s2"></div>
+                    <div class="square sq3" id="f5s3"></div>
+                    <div class="square sq4" id="f5s4"></div>
+                    <div class="square sq5" id="f5s5"></div>
+                    <div class="square sq6" id="f5s6"></div>
+                    <div class="square sq7" id="f5s7"></div>
+                    <div class="square sq8" id="f5s8"></div>
+                </div>
+                <div id="colors">
+                    <div class="square" id="white"></div>
+                    <div class="square" id="green"></div>
+                    <div class="square" id="red"></div>
+                    <div class="square" id="blue"></div>
+                    <div class="square" id="orange"></div>
+                    <div class="square" id="yellow"></div>
+                    <div class="square" id="cur"></div>
+                </div>
+                <div id="button">
+                    <input type="button" id="apply"  value="apply">
+                    <input type="button" id="clear" value="clear">
+                </div>
+            </div>
+            <div id=forms>
+                <form id="algForm" action="#">
+                    <p>
+                    Algorithm: <input type="text" spellcheck="false" name="alg" id="alg" size="27"> <br/>
+                    Pattern: <select name="pattern" id="pattern">
+                        <option value="">Select a pattern</option>
+                        {% for pattern in patterns %}
+                        <option value="{{pattern.algorithm}}">{{pattern.name}}</option>
+                        {% endfor %}
+                    </select><br/>
+                    <input type="submit"  value="Animate">
+                    <input type="button"  value="Scramble"  id="scramble">
+                    <input type="button" value="Solve" id="solve"> 
+                    <input type="button"  value="Reset Cube" id="reset">
+                    </p>
+                </form>
+            </div>
+            <div id="explanation">
+                <h3>How to use the solver</h3>
+                <p>
+                    Fill in the color picker by clicking the colors on the right, and clicking the squares to color them in.
+                    Click apply to apply the colors to the cube.<br/>
+                    You can also enter an algorithm and click Animate to run it on the cube, or Scramble to apply it to the cube without any animation.<br/>
+                    Finally you click Solve to generate a solution and run it.
+                </p>
+                <p>
+                    Use play/pause button to pause the animation. Use the previous and next buttons to undo the last move or do the next one.<br/>
+                    Use the speed slider to vary the movement speed.<br/>
+                    Rotate the cube using your mouse and zoom using the scroll wheel.
+                </p>
+                <p>
+                    This solver uses standard Rubik's Cube notation. Read more about it on the <a href="https://www.speedsolving.com/wiki/index.php/3x3x3_notation">Speedsolving Wiki</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="/static/cube.js"></script>
+</body>
+
+</html>

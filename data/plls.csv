@@ -1,0 +1,25 @@
+#Contains a list of all 22 PLL cases (including solved)
+#Algorithms from my own memory, and from https://www.speedsolving.com/wiki/index.php/PLL
+name,pattern,algorithm
+Skip,000111222333,
+H perm,020131202313,M2 U M2 U2 M2 U M2
+U perm a,010131222303,R U' R U R U R U' R' U' R2
+U perm b,030101222313,L' U L' U' L' U' L' U L U L2
+Z perm,010101232323,M2 U M2 U M U2 M2 U2 M
+A perm a,002310121233,R' F R' B2 R F' R' B2 R2
+A perm b,030102311223,R B' R F2 R' B R F2 R2
+E perm,032301210123,(z) U2 R2 F (R U R' U') (R U R' U') (R U R' U') F' R2 U2 (z')
+F perm,032320111203,R' U2 R' d' R' F' R2 U' R' U R' F R U' F
+G perm a,030122301213,R L U2 R' L' (y') R' U L' U2 R U' L
+G perm b,021200132313,R' U' R U D' R2 U R' U R U' R U' R2 D
+G perm c,010132301223,L' R' U2 L R (y) L U' R U2 L' U R'
+G perm d,031220102313,R U R' F2 D' (L U' L' U L') D F2
+J perm a,001220112333,R' U2 R U R' U2' L U' R U L'
+J perm b,011200122333,R U2 (R' U' R) U2 L' (U R' U') L
+N Perm a,022311200133,(R U' L U2 R' U L') (R U' L U2 R' U L')
+N perm b,002331220113,(R' U L' U2 R U' L) (R' U L' U2 R U' L)
+R perm a,032310101223,R U2 R' U2 R B' R' U' R U R B R2 U
+R perm b,010102321233,R' U2 R U2 R' F (R U R' U') R' F' R2'
+T perm,001230122313,R U R' U' R' F R2 U' R' U' R U R' F'
+V perm,002321210133,R' U R' d' R' F' R2 U' R' U R' F R F
+Y perm,002311230123,F R U' R' U' R U R' F' (R U R' U') (R' F R F')

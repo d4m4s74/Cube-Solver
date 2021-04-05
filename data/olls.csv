@@ -1,0 +1,61 @@
+#Contains a list of all 58 OLL cases (including solved)
+#Algorithms from my own memory, and from https://www.speedsolving.com/wiki/index.php/OLL
+name,pattern,algorithm
+Skip,000000000000,
+Sune,001001001000,R U R' U R U2 R'
+Antisune,100100000100,R U2 R' U' R U' R'
+Cross,101000101000,F (R U R' U') (R U R' U') (R U R' U') F'
+Wheel,001000100101,R U2 R2' U' R2 U' R2' U2 R
+headlights,000000101000,R2' D' R U2 R' D R U2 R
+Chameleon,100000001000,r U R' U' r' F R F'
+Bowtie,001000000100,F' r U R' U' r' F R
+Runway,010111010111,(R U2) (R2 F R F' U2') (R' F R F')
+Zamboni,011010110111,F (R U R' U') F' f (R U R' U') f'
+Anti-Mouse,011011011010,r' R2 U R' U r U2 r' U R' r
+Mouse,110010110110,l L2 U' L U' l' U2 l U' M'
+Slash,010010110011,R U R' U (R' F R F') U2 (R' F R F')
+Crown,010010010111,R U2 R2 F R F' U2 M' U R U' r'
+Bunny,010110010011,M U R U R' U' M' R' F R F'
+Couch,110000001010,R' U' F U R U' R' F' R
+Anti-Couch,100000011010,R U B' U' R' U R B R'
+Anti-P,000111010000,f' L' U' L U f
+p,000000010111,f (R U R' U') f'
+Wario,100011010000,R' U' R U' R' U R U R y R' F' R
+Mario,010110001000,(R U R' U) (R U' R' U') (R' F R F')
+Breakneck,011010100101,F (R U R' U') (R U R' U') F'
+Anti-Breakneck,110101001010,F' (L' U' L U) (L' U' L U) F
+Frying Pan,010111000101,l' U' L U' L' U L U' L' U2 l
+Anti-Frying Pan,010101000111,r U R' U R U' R' U R U2 r'
+Right back squeezy,100111011000,R B' R2 F R2 B R2 F' R
+Right front squeezy,110111001000,R' F R2 B' R2 F' R2 B R'
+City,010001010100,(R U R' U') x D' R' U R E' z'
+Seein' Headlights,000111000010,R' U' R' F R F' U R
+Tying Shoelaces,110000011000,(R U R' U') (R' F R F')
+Suit up,010000010101,F (R U R' U') F'
+Highway,000111000111,R U2 R2 U' R U' R' U2 F R F'
+Streetlights,010101010101,r U r' U R U' R' U R U' R' r U' r'
+Bottlecap,110101011000,F U R U' R' U R U' R' F'
+Rice Cooker,100111001010,R' U' R U' R' U F' U F R
+RBWAS,000001011011,(r' U2) (R U R' U r)
+RFWAS,110100000110,r U2 R' U' R U' r'
+Fung,011000010100,R U R' F' U' F U R U2 R'
+Anti-Fung,010000110001,R' F (R U R' U') F' U R
+Lightning,011011001000,r U R' U R U2 r'
+Reverse Lightning,110000100110,l' U' L U' L' U2 l
+Downstairs,001011010001,F' (L' U' L U) F y F (R U R' U') F'
+Upstairs,100100010110,F (R U R' U') F' U F (R U R' U') F'
+Kite,110010100100,(R U R' U') R' F R2 U R' U' F'
+Anti-Kite,001010011001,(R U R' U) (R' F R F') R U2 R'
+Fish Salad,100001010010,R U2 R2' F R F' R U2 R'
+Mounted Fish,110011000000,F R U' R' U' R U R' F'
+Gun,011001011000,F U R U' R2 F' R U R U' R'
+Anti-Gun,110000110100,R' F R U R' F' R y' R U' R'
+Squeegee,011001010001,R' F' R L' U' L U R' F R
+Anti-Squeegee,110100010100,r U r' (R U R' U') r U' r'
+Spotted Chameleon,000110010001,M U (R U R' U') (R' F R F') M'
+Anti-Spotted Chameleon,000100010011,r' U2 R U R' U r R U2 R' U' R U' R'
+Awkward Fish,101000010010,R' M2 U' F' U F r U' M'
+Lefty Awkward Fish,101010010000,r' R2 y R U R' U' y' R' U M'
+Stealth,010010000000,r U R' U' r' R U R U' R'
+Mummy,010000010000,R U R' U' M' U R U' r'
+X,010010010010,M U R U R' U' M2 U R U' r'

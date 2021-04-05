@@ -1,0 +1,10 @@
+#patterns taken from https://ruwix.com/the-rubiks-cube/rubiks-cube-patterns-algorithms/
+name,algorithm
+Superflip,U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2
+Easy checkerboard,M2 E2 S2
+Tablecloth,R L U2 F' U2 D2 R2 L2 F' D2 F2 D R2 L2 F2 B2 D B2 L2
+Vertical stripes,F U F R L2 B D' R D2 L D' B R2 L F U F
+Gift box,U B2 R2 B2 L2 F2 R2 D' F2 L2 B F' L F2 D U' R2 F' L' R'
+Cross,R2 L' D F2 R' D' R' L U' D R D B2 R' U D2
+Cube in Cube,F L F U' R U F2 L2 U' L' B D' B' L2 U
+Cube in Cube in Cube,U' L' U' F' R2 B' R F U B2 U B' L U' F U R F'

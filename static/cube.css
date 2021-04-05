@@ -1,0 +1,287 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+
+#container {
+    margin-left: 5%;
+    margin-right: 5%;
+    display: grid;
+    grid-template-columns: 90vw;
+    grid-template-rows: 80vw 80vw auto;
+    gap: 15px 10px;
+    grid-template-areas:
+      "a"
+      "b"
+      "c";
+}
+
+@media only screen and (min-device-width: 768px) {
+#container {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 2%;
+    height: 95vh;
+    display: grid;
+    grid-template-columns: minmax(300px, 30%) 70%;
+    grid-template-rows: 55vh auto;
+    gap: 15px 10px;
+    grid-template-areas:
+      "c a"
+      "c b";
+  }
+}
+
+#solver {
+    grid-area: a;
+    width: 100%;
+    /*height: 55vh;*/
+    position: relative;
+}
+
+
+#canvas {
+    background-color: #AAAAAA;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    /* fixed or static for camera controls*/
+    top: 0;
+    left: 0;
+}
+
+#currentAlg {
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#currentAlg p {
+    font-size: large;
+    margin: 0;
+    padding: 0;
+}
+
+#playbackControls {
+    display: grid;
+    grid-template-areas:
+      ". . . .";
+    width: 130px;
+    position: absolute;
+    bottom: -20px;
+    left: calc(50% - 65px);
+}
+
+#speed
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 8px;
+    height: 175px;
+    padding: 0 5px;
+    position: absolute;
+    bottom:0px;
+    right:0px;
+}
+
+.controlButton img {
+    height: 40px;
+    padding-top: 10px;
+    cursor: pointer;
+}
+
+#playpause img {
+    height: 50px;
+    padding-top: 0px;
+}
+
+#solution {
+    background-color: #AAAAAA;
+    height: 100%;
+    grid-area: b;
+    overflow-y: scroll;
+}
+
+
+#controls {
+    grid-area: c;
+    width: 100%;
+    position: relative;
+}
+
+@media only screen and (min-device-width: 768px) {
+    #controls {
+    height:95vh;
+    }
+}
+
+#explanation {
+    display: inline-block;
+    overflow-y: auto;
+}
+
+
+.currentMove {
+    font-weight: bold;    
+}
+
+ul {
+    position: relative;
+    list-style: none;
+  }
+  
+.currentAlg::before {
+    content: '▶';
+    position: absolute;
+    left: 0;
+  }
+
+#colorpicker{
+    width: max(300px, 100%);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 1px 1px;
+    grid-template-areas:
+      "bt u . . c"
+      "l f r b c"
+      ". d . . c";
+  }
+
+.face {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+      ". . ."
+      ". . ."
+      ". . .";
+}
+
+#upFace {
+    grid-area: u;
+}
+#leftFace {
+    grid-area: l;
+}
+#frontFace {
+    grid-area: f;
+}
+#rightFace {
+    grid-area: r;
+}
+#backFace {
+    grid-area: b;
+}
+#downFace {
+    grid-area: d;
+}
+
+#button {
+    grid-area: bt
+}
+
+#error {
+    text-align: center;
+    color: red;
+}
+
+#colors {
+    grid-area: c;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 2fr 1fr 2fr 1fr 2fr 1fr 2fr 1fr 2fr 1fr 2fr 1fr;
+    gap: 1px 1px;
+    grid-template-areas:
+      "c . w"
+      ". . ."
+      ". . g"
+      ". . ."
+      ". . r"
+      ". . ."
+      ". . b"
+      ". . ."
+      ". . o"
+      ". . ."
+      ". . y"
+      ". . ."
+}
+
+.square {
+    background-color: gray;
+    outline: black 1px solid;
+    outline-offset: -1px;
+    cursor: pointer;
+    height: 0;
+    padding-bottom: 100%;
+}
+
+#cur {
+    grid-area: c;
+}
+
+#white {
+    grid-area: w;
+    background-color: white;
+}
+
+#f4s4 {
+    background-color: white;
+    cursor: default;
+}
+
+#green {
+    grid-area: g;
+    background-color: green;
+}
+
+#f0s4 {
+    background-color: green;
+    cursor: default;
+}
+
+#red {
+    grid-area: r;
+    background-color: red;
+}
+
+#f1s4 {
+    background-color: red;
+    cursor: default;
+}
+
+#blue {
+    grid-area: b;
+    background-color: blue;
+}
+
+#f2s4 {
+    background-color: blue;
+    cursor: default;
+}
+
+#orange {
+    grid-area: o;
+    background-color: orange;
+}
+
+#f3s4 {
+    background-color: orange;
+    cursor: default;
+}
+
+#yellow {
+    grid-area: y;
+    background-color: yellow
+}
+
+#f5s4 {
+    background-color: yellow;
+    cursor: default;
+}
+
