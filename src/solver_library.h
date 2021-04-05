@@ -63,6 +63,9 @@ bool load_olls(char *filename);
 //Loads the PLLs from a file into memory
 bool load_plls(char *filename);
 
+//A function that adds the colors from four strings onto the cube.
+void color_cube(int cube[6][9], char *f, char *r, char *b, char *l, char *u, char *d);
+
 /*
 A function that moves the virtual cube
 Each face moves clockwise, assuming you're facing the face.
