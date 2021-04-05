@@ -19,3 +19,4 @@ bin/solver -d data/ "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2"
 bin/solver -o data/olls.csv -p data/plls.csv "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2"
 ```
 Add option `-t` to only print the text without images of the cube. 
+### Solver_Library
