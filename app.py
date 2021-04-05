@@ -1,7 +1,3 @@
-import os
-import sys
-sys.path.insert(
-    0, '/usr/local/WWW/B/d/dzalinge/cgi-bin/myenv/lib/python3.5/site-packages')
 import numpy
 from flask import Flask, render_template, request, jsonify, send_from_directory
 import ctypes
