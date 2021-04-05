@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     //try to set everything up (mostly loading external files)
     if (!setup(argc, argv))
     {
-        //If it fails, unload te algorithms and quit
+        //If it fails, unload the algorithms and quit
         cleanup_last_layer();
         return 2;
     }
