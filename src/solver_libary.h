@@ -3,7 +3,7 @@
 
 /**
  * Rubik's Cube Solver Library for C
- * https://github.com/d4m4s74/rubiks_cube_solver
+ * https://github.com/d4m4s74/Cube-Solver
  *
  * Created as my CS50 final project 
  *
