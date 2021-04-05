@@ -11,6 +11,8 @@
 
 bool setup(int argc, char *argv[]);
 void print_usage(char *filename);
+//bool that signifies if textOnly is enabled.
+bool textOnly = false;
 
 //The filenames for the PLL and OLL files
 char *pllFileName = "plls.csv";
@@ -88,7 +90,10 @@ int main(int argc, char *argv[])
         }
         if (!validate(cube))
         {
-            print_cube(cube);
+            if (!textOnly)
+            {
+                print_cube(cube);
+            }
             printf("Invalid color combination. Colors are not possible on normal rubik's cube\n");
             return 1;
         }
@@ -99,7 +104,10 @@ int main(int argc, char *argv[])
         return 0;
     }
     //Print the scrambled cube
-    print_cube(cube);
+    if (!textOnly)
+    {
+        print_cube(cube);
+    }
     //Solve the cross,
     char *cross = solve_cross(cube);
     //Check if it works
@@ -117,7 +125,10 @@ int main(int argc, char *argv[])
         return 2;
     }
     //Print the cube
-    print_cube(cube);
+    if (!textOnly)
+    {
+        print_cube(cube);
+    }
     //repeater for f2l
     char *f2l = solve_f2l(cube);
     if (f2l)
@@ -131,7 +142,10 @@ int main(int argc, char *argv[])
         cleanup_last_layer();
         return 2;
     }
-    print_cube(cube);
+    if (!textOnly)
+    {
+        print_cube(cube);
+    }
     //Repeat for oll
     char *oll = solve_oll(cube);
     if (oll)
@@ -145,7 +159,10 @@ int main(int argc, char *argv[])
         cleanup_last_layer();
         return 2;
     }
-    print_cube(cube);
+    if (!textOnly)
+    {
+        print_cube(cube);
+    }
     //repeat for pll
     char *pll = solve_pll(cube);
     if (pll)
@@ -160,7 +177,10 @@ int main(int argc, char *argv[])
         return 2;
     }
     //Print the cube one last time
-    print_cube(cube);
+    if (!textOnly)
+    {
+        print_cube(cube);
+    }
     //Clean up and exit
     cleanup_last_layer();
     return 0;
@@ -211,7 +231,7 @@ bool setup(int argc, char *argv[])
     //reset optind
     optind = 1;
     //go through the options to check for the oll or pll file, or their folder
-    while ((opt = getopt(argc, argv, ":o:p:d:")) != -1)
+    while ((opt = getopt(argc, argv, ":o:p:d:t")) != -1)
     {
         switch (opt)
         {
@@ -228,6 +248,9 @@ bool setup(int argc, char *argv[])
                 free(filepath);
                 filepath = optarg;
                 ff = false;
+                break;
+            case 't':
+                textOnly = true;
                 break;
 
         }
@@ -311,6 +334,7 @@ void print_usage(char *filename)
     printf("                   Defaults to the same directory as the executable\n");
     printf("  -o <file>        Specify the path to the olls.csv file\n");
     printf("  -p <file>        Specify the path to the plls.csv file\n");
+    printf("  -t               Text Only, do not print the cube\n");
     printf("  -h, --help       Display this help and exit\n\n");
     printf("Valid colors for faces are the first letters of:\n");
     printf("G(reen), R(ed), B(lue), O(range), W(hite) and Y(ellow)\n");
