@@ -304,7 +304,7 @@ int move: the move done
 6 for M
 7 for E
 8 for S
-int tims: the amount of times the same move is repeated.
+int times: the amount of times the same move is repeated.
 The function does this recursively.
 */
 void move_cube(int cube[6][9], int move, int times)
@@ -320,7 +320,7 @@ void move_cube(int cube[6][9], int move, int times)
             cycle(&cube[1][0], &cube[5][2], &cube[3][8], &cube[4][6]);
             cycle(&cube[1][3], &cube[5][1], &cube[3][5], &cube[4][7]);
             cycle(&cube[1][6], &cube[5][0], &cube[3][2], &cube[4][8]);
-            //turn the cube
+            //turn the face
             cycle(&cube[0][0], &cube[0][2], &cube[0][8], &cube[0][6]);
             cycle(&cube[0][1], &cube[0][5], &cube[0][7], &cube[0][3]);
             break;
@@ -477,6 +477,7 @@ void run_algorithm(int cube[6][9], char *algorithm)
                 move_cube(cube, B, 4 - times);
                 break;
         }
+        //If there is a 2 or ' after the number, increment i an extra time to skip it.
         if (times != 1)
         {
             i++;
