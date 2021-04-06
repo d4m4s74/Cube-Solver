@@ -1,5 +1,5 @@
-#ifndef SOLVER_LIBRARY_H
-#define SOLVER_LIBRARY_H
+#ifndef CUBESOLVER_H
+#define CUBESOLVER_H
 
 /**
  * Rubik's Cube Solver Library for C
