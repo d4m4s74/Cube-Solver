@@ -16,7 +16,7 @@ app = Flask(__name__)
 array_2d_int = numpy.ctypeslib.ndpointer(
     dtype=ctypes.c_int, ndim=2, flags='CONTIGUOUS')
 # Load the solver library
-solver = ctypes.CDLL("./bin/solver_library.so")
+solver = ctypes.CDLL("./bin/libcubesolver.so")
 # Set the argument types. String for one, 2d int array for the rest
 solver.setup.argtypes = [ctypes.c_char_p]
 solver.run_algorithm.argtypes = [array_2d_int, ctypes.c_char_p]
@@ -178,4 +178,4 @@ def favicon():
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(host='127.0.0.1', port=8000)
+    app.run(host='127.0.0.1', port=5000)
