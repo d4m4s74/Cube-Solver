@@ -41,16 +41,6 @@
 
 #include <stdbool.h>
 
-//A struct used to return two ints from one function
-typedef struct
-{
-    int first;
-    int second;
-} pair_int_int;
-
-//A function to make it easier to make a pair_int_int
-pair_int_int make_pair_int_int(int first, int second);
-
 /*
 Load all OLLs and PLLs into memory
 path is the folder in which the csv files are located
@@ -66,31 +56,9 @@ bool load_plls(char *filename);
 //A function that adds the colors from four strings onto the cube.
 void color_cube(int cube[6][9], char *f, char *r, char *b, char *l, char *u, char *d);
 
-/*
-A function that moves the virtual cube
-Each face moves clockwise, assuming you're facing the face.
-int move: the move done
-0 for F
-1 for R
-2 for B
-3 for L
-4 for U
-5 for D
-6 for M
-7 for E
-8 for S
-int times: the amount of times the same move is repeated.
-*/
-void move_cube(int cube[6][9], int move, int times);
-
 //Runs a multiple move algorithm on the cube, using standard cube notation
 void run_algorithm(int cube[6][9], char *algorithm);
 
-//returns string containing all algorithms used to solve the cube, separated by newlines and the names of the steps (eg. Cross, F2L, OLL: Sune, PLL: Y perm)
-char *solve(int cube[6][9]);
-
-//Generates a cube from an algorithm and returns its solution
-char *solve_scramble(char *scramble);
 /*
 A function that prints the sides of the cube in an exploded fashion
     444
@@ -110,6 +78,12 @@ void print_cube(int cube[6][9]);
 //Validate the colors on the cube for impossible cubies. This does not check if the scramble is solvable.
 bool validate(int cube[6][9]);
 
+//returns string containing all algorithms used to solve the cube, separated by newlines and the names of the steps (eg. Cross, F2L, OLL: Sune, PLL: Y perm)
+char *solve(int cube[6][9]);
+
+//Generates a cube from an algorithm and returns its solution
+char *solve_scramble(char *scramble);
+
 /*
 A function to solve the (yellow) cross.
 Returns a string containing the solve algorithm, with each solved edge separated by newlines
@@ -117,31 +91,19 @@ Returns a string containing the solve algorithm, with each solved edge separated
 char *solve_cross(int cube[6][9]);
 
 /*
-A function to solve the first two layers of the cube
+A function to solve the first two layers of the cube assuming a solved cross
 Returns a string containing the solve algorithm, with each solved pair separated by newlines
 */
 char *solve_f2l(int cube[6][9]);
 
 /*
-Analyses the cube and finds the right OLL algorithm.
-Returns pair_int_int of the right algorithm number, and the amount of U moves to do before
-*/
-pair_int_int find_oll(int cube[6][9]);
-
-/*
-Analyses the cube and finds the right PLL algorithm.
-Returns pair_int_int of the right algorithm number, and the amount of U moves to do before
-*/
-pair_int_int find_pll(int cube[6][9]);
-
-/*
-Looks up the right OLL algorithm and runs it
+Looks up the right OLL algorithm and runs it, assuming a solved F2L
 Returns the name of the OLL, and the algorithm, separated by a newline
 */
 char *solve_oll(int cube[6][9]);
 
 /*
-Looks up the right PLL algorithm and runs it
+Looks up the right PLL algorithm and runs it, assuming a solved OLL
 Returns the name of the PLL, and the algorithm, separated by a newline
 */
 char *solve_pll(int cube[6][9]);
