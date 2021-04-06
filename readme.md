@@ -61,19 +61,21 @@ On Linux you can use `make library`
 Copy libcubesolver.h from src to wherever headers are saved on your pc (ex. /usr/include/)
 #### Usage with C or C++
 Link with -lcubesolver
-```
+```C
 #include <cubesolver.h>
 
 //Use either setup, or both load_olls and load_plls
-//Load all OLLs and PLLs into memory. Path is the folder where the olls.csv and plls.csv file are located. Returns indicating for succes or failure
+//Load all OLLs and PLLs into memory. Path is the folder where the olls.csv and plls.csv file are located.
+//Returns indicating for succes or failure
 setup(path);
 //Loads the OLLs from a CSV file. Returns bool indicating success or failure
 load_olls(filename);
 //Loads the PLLs from a CSV file. Returns bool indicating success or failure
 load_plls(filename);
-//Create an array to hold the cube. 6 faces, 9 squares per face. The faces in order are Front, Right, Back, Left, Up and Down
+//Create an array to hold the cube. 6 faces, 9 squares per face.
+//The faces in order are Front, Right, Back, Left, Up and Down
 int cube[6][9];
-//Add the "colors" of the cube to the array as 9 character strings containing numbers 0 to 5 (Useful for user input)
+//Add the "colors" of the cube to the array as 9 character strings containing numbers 0 to 5
 color_cube(cube, front, right, back, left, up, down);
 //Run a multiple move algorithm on the cube, using standard cube notation (Useful for scrambling)
 void run_algorithm(cube, "Algorithm");
@@ -93,22 +95,28 @@ OOO GGG RRR BBB
     YYY
 */
 print_cube(cube);
-//Validate the colors on the cube for impossible cubies. This does not check if the scramble is solvable. Returns bool
+//Validate the colors on the cube for impossible cubies. This does not check if the scramble is solvable.
+//Returns bool
 validate(cube);
-//returns pointer to string containing all algorithms used to solve the cube, separated by newlines and the names of the steps (eg. Cross, F2L, OLL: Sune, PLL: Y perm)
+//returns pointer to string containing all algorithms used to solve the cube, separated by newlines and the names of the steps
+//(eg. Cross, F2L, OLL: Sune, PLL: Y perm)
 //solves the cube in the given array
 char *solution = solve(cube);
 //Generates a cube from an algorithm and returns pointer to its solution
 char *solution2 = solve_scramble("scramble");
-//Solves the (yellow) cross. Returns a pointer to a string containing the solve algorithm, with each solved edge separated by newlines
+//Solves the (yellow) cross.
+//Returns a pointer to a string containing the solve algorithm, with each solved edge separated by newlines
 //Modifies the cube array to have a solved cross
 char *cross = solve_cross(cube);
-//Solves the first two layers of the cube assuming a solved cross. Returns a string containing the solve algorithm, with each solved pair separated by newlines
+//Solves the first two layers of the cube assuming a solved cross.
+//Returns a string containing the solve algorithm, with each solved pair separated by newlines
 //Modifies the cube array to solve its f2l
 char *f2l = solve_f2l(cube);
-//Looks up the right OLL algorithm and runs it, assuming a solved F2L Returns the name of the OLL, and the algorithm, separated by a newline
+//Looks up the right OLL algorithm and runs it, assuming a solved F2L
+//Returns the name of the OLL, and the algorithm, separated by a newline
 char *oll = solve_oll(cube);
-//Looks up the right PLL algorithm and runs it, assuming a solved OLL. Returns the name of the PLL, and the algorithm, separated by a newline
-char *pll = solve_pll(int cube[6][9]);
+//Looks up the right PLL algorithm and runs it, assuming a solved OLL.
+//Returns the name of the PLL, and the algorithm, separated by a newline
+char *pll = solve_pll(cube);
 ```
 #### Usage with python (todo)
