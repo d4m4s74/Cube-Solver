@@ -1060,7 +1060,7 @@ function apply_pattern(pattern) {
 //Function to get the solution for the cube and add the moves to the steps array.
 function solve_cube() {
     //Send the pattern (if applied) and any moves done to it already to the solver
-    $.post("/api/solver", { pattern: JSON.stringify(applied), scramble: movesDone.join(" ") }, function (data) {
+    $.post("api/solver", { pattern: JSON.stringify(applied), scramble: movesDone.join(" ") }, function (data) {
         //empty the steps array
         steps = [];
         //reset the curent step
@@ -1107,7 +1107,7 @@ const errors = ["Success", "No pattern entered", "Invalid color combination", "O
 //If a user applies a pattern
 $('#apply').click(function () {
     //First validate the pattern
-    $.post("/api/validator", { pattern: JSON.stringify(faces) }, function (data) {
+    $.post("api/validator", { pattern: JSON.stringify(faces) }, function (data) {
         //If it fails, give the error
         let reply = parseInt(data);
         if (reply != 0) {
@@ -1184,12 +1184,12 @@ $('#playpause').click(function () {
     if (paused) {
         paused = false;
         running = true;
-        $('#playpause').html('<img src="/static/pause.png" alt="pause"></img>');
+        $('#playpause').html('<img src="static/pause.png" alt="pause"></img>');
     }
     else {
         paused = true;
         running = false;
-        $('#playpause').html('<img src="/static/play.png" alt="play"></img>');
+        $('#playpause').html('<img src="static/play.png" alt="play"></img>');
     }
 });
 
@@ -1197,7 +1197,7 @@ $('#next').click(function () {
     if(paused == false){
         paused = true;
         running = false;
-        $('#playpause').html('<img src="/static/play.png" alt="play"></img>');
+        $('#playpause').html('<img src="static/play.png" alt="play"></img>');
     }
     next_move(true);
 });
@@ -1206,7 +1206,7 @@ $('#prev').click(function () {
     if(paused == false){
         paused = true;
         running = false;
-        $('#playpause').html('<img src="/static/play.png" alt="play"></img>');
+        $('#playpause').html('<img src="static/play.png" alt="play"></img>');
     }
     prev_move();
 });
