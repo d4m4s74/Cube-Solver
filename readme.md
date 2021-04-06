@@ -98,8 +98,8 @@ print_cube(cube);
 //Validate the colors on the cube for impossible cubies. This does not check if the scramble is solvable.
 //Returns bool
 validate(cube);
-//returns pointer to string containing all algorithms used to solve the cube, separated by newlines and the names of the steps
-//(eg. Cross, F2L, OLL: Sune, PLL: Y perm)
+//returns pointer to string containing all algorithms used to solve the cube, separated by newlines,
+//and the names of the steps (eg. Cross, F2L, OLL: Sune, PLL: Y perm)
 //solves the cube in the given array
 char *solution = solve(cube);
 //Generates a cube from an algorithm and returns pointer to its solution
