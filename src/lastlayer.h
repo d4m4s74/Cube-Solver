@@ -11,12 +11,12 @@ bool load_olls(char *filename);
 bool load_plls(char *filename);
 /*
 Analyses the cube and finds the right OLL algorithm.
-Returns pair_int_int of the right algorithm number, and the amount of U moves to do before
+Returns pair_int_int of the right algorithm number, and the amount of y moves to do before
 */
 pair_int_int find_oll(int cube[6][9]);
 /*
 Analyses the cube and finds the right PLL algorithm.
-Returns pair_int_int of the right algorithm number, and the amount of U moves to do before
+Returns pair_int_int of the right algorithm number, and the amount of y moves to do before
 */
 pair_int_int find_pll(int cube[6][9]);
 //Looks up the right OLL algorithm and runs it
