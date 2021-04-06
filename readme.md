@@ -37,7 +37,7 @@ Either use the command `flask run`, or `python3 app.py` to run the webserver.
 Go to https://127.0.0.1:5000/ to use the solver.
 #### OS X:
 Download or clone the files from this repository.  
-Remove the Linux version of bin/solver_library.so manually or using `make clean` and recompile using `make library`.  
+Remove the Linux version of bin/libcubesolver.so manually or using `make clean` and recompile using `make library`.  
 Install Flask and Numpy using pip.
 ```
 python3 -m pip -r requirements.txt
@@ -46,12 +46,12 @@ Either use the command `flask run`, or `python3 app.py` to run the webserver.
 Go to https://127.0.0.1:5000/ to use the solver.
 #### Windows:
 Download or clone the files from this repository.
-Remove the Linux version of bin/solver_library.so manually.  
-Compile all .c files in src except for solver.c to bin/solver_library.so. Or if using a different name, change line 19 in app.py to reflect that.  
+Remove the Linux version of bin/libcubesolver.so manually.  
+Compile all .c files in src except for solver.c to bin/libcubesolver.so. Or if using a different name, change line 19 in app.py to reflect that.  
 Install Flask and Numpy using pip.
 ```
 python3 -m pip -r requirements.txt
 ```
 Either use the command `flask run`, or `python3 app.py` to run the webserver.  
 Go to https://127.0.0.1:5000/ to use the solver.
-### Solver_Library
+### Solver Library
