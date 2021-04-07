@@ -97,7 +97,10 @@ OOO GGG RRR BBB
 print_cube(cube);
 //Validate the colors on the cube for impossible cubies. This does not check if the scramble is solvable.
 //Returns bool
-validate(cube);
+if (!validate(cube))
+{
+    return "Invalid color combinaton";
+}
 //returns pointer to string containing all algorithms used to solve the cube, separated by newlines,
 //and the names of the steps (eg. Cross, F2L, OLL: Sune, PLL: Y perm)
 //solves the cube in the given array
@@ -190,6 +193,9 @@ cube = numpy.array(solvedcube).astype(ctypes.c_int)
 solver.run_algorithm(cube, "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2".encode('utf-8'))
 # Print the cube to the shell 
 solver.print_cube(cube)
+# Validate the color comibinations on the cube
+if (!validate(cube)):
+    return "Invalid color combinaton"
 # Solve the cube using solver.solve.
 # Note: running the function also modifies the cube array
 solution = solver.solve_safe(cube).decode("utf-8")
