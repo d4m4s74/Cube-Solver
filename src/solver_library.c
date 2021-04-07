@@ -1,3 +1,4 @@
+#define library
 #include "utils.h"
 #include "cube.h"
 #include "cross.h"
@@ -22,6 +23,146 @@ bool issetup;
 //The default filenames for the PLL and OLL files
 char *pllFileName = "plls.csv";
 char *ollFileName = "olls.csv";
+
+//This is only necessary when using the library with python, because it's hard to free strings.
+int nstrings = 0;
+char **strings;
+
+bool store_string_pointer(char * ptr);
+void free_strings();
+
+char* solve_cross_safe(int cube[6][9]);
+char* solve_f2l_safe(int cube[6][9]);
+char* solve_oll_safe(int cube[6][9]);
+char* solve_pll_safe(int cube[6][9]);
+
+//Store a string pointer in an array to free later
+bool store_string_pointer(char * ptr)
+{
+    //if ptr is NULL, there is nothing to store. Return false
+    if (ptr == NULL)
+    {
+        return false;
+    }
+    //Create a temporary pointer
+    char **tmp;
+    //If strings is NULL, malloc it
+    if (strings == NULL)
+    {
+        tmp = malloc(sizeof(ptr));
+    }
+    //Otherwise make it one larger
+    else
+    {
+    tmp = realloc(strings, sizeof(ptr) * nstrings + 1);
+    }
+    //If tmp is null, report failure
+    if (tmp == NULL)
+    {
+        return false;
+    }
+    //Put tmp in strings
+    strings = tmp;
+    //add the pointer to the end
+    strings[nstrings] = ptr;
+    //iterate nstrings
+    nstrings++;
+    //report success
+    return true;
+}
+
+//Free all string pointers
+void free_strings()
+{
+    //Iterate over the strings array, freeing everything
+    for (int i = 0; i < nstrings; i++)
+    {
+        free(strings[i]);
+    }
+    //free the array
+    free(strings);
+    //set nstrings to 0
+    nstrings = 0;
+}
+
+//Get cross algorithms and save a pointer to the string
+char* solve_cross_safe(int cube[6][9]){
+    char * alg = solve_cross(cube);
+    if (store_string_pointer(alg))
+    {
+    return alg;
+    }
+    else
+    {
+        free(alg);
+        return NULL;
+    }
+}
+//Get f2l algorithms and save a pointer to the string
+char* solve_f2l_safe(int cube[6][9]){
+    char * alg = solve_f2l(cube);
+    if (store_string_pointer(alg))
+    {
+    return alg;
+    }
+    else
+    {
+        free(alg);
+        return NULL;
+    }
+}
+//Get oll algorithms and save a pointer to the string
+char* solve_oll_safe(int cube[6][9]){
+    char * alg = solve_oll(cube);
+    if (store_string_pointer(alg))
+    {
+    return alg;
+    }
+    else
+    {
+        free(alg);
+        return NULL;
+    }
+}
+//Get pll algorithms and save a pointer to the string
+char* solve_pll_safe(int cube[6][9]){
+    char * alg = solve_pll(cube);
+    if (store_string_pointer(alg))
+    {
+    return alg;
+    }
+    else
+    {
+        free(alg);
+        return NULL;
+    }
+}
+//Get solution algorithms and save a pointer to the string
+char* solve_safe(int cube[6][9]){
+    char * alg = solve(cube);
+    if (store_string_pointer(alg))
+    {
+    return alg;
+    }
+    else
+    {
+        free(alg);
+        return NULL;
+    }
+}
+//Get solution algorithms and save a pointer to the string
+char* solve_scramble_safe(char *scramble){
+    char * alg = solve_scramble(scramble);
+    if (store_string_pointer(alg))
+    {
+    return alg;
+    }
+    else
+    {
+        free(alg);
+        return NULL;
+    }
+}
 
 //Generates a cube from an algorithm and returns its solution
 char *solve_scramble(char *scramble)

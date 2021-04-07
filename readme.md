@@ -145,6 +145,7 @@ char *pll = solve_pll(cube);
 ```
 #### Usage with python
 See C version to see what each function does.
+Because it's hard to free malloced memory in python, use "safe" versions of the functions
 ```python
 import numpy
 import ctypes
@@ -162,17 +163,17 @@ solver.run_algorithm.argtypes = [array_2d_int, ctypes.c_char_p]
 # All other functions require just the 2d array
 solver.print_cube.argtypes = [array_2d_int]
 solver.validate.argtypes = [array_2d_int]
-solver.solve.argtypes = [array_2d_int]
-solver.solve_cross.argtypes = [array_2d_int]
-solver.solve_f2l.argtypes = [array_2d_int]
-solver.solve_oll.argtypes = [array_2d_int]
-solver.solve_pll.argtypes = [array_2d_int]
+solver.solve_safe.argtypes = [array_2d_int]
+solver.solve_cross_safe.argtypes = [array_2d_int]
+solver.solve_f2l_safe.argtypes = [array_2d_int]
+solver.solve_oll_safe.argtypes = [array_2d_int]
+solver.solve_pll_safe.argtypes = [array_2d_int]
 # For functions that return something other than an int (or bool) we also need to set the response type
-solver.solve.restype = ctypes.c_char_p
-solver.solve_cross.restype = ctypes.c_char_p
-solver.solve_f2l.restype = ctypes.c_char_p
-solver.solve_oll.restype = ctypes.c_char_p
-solver.solve_pll.restype = ctypes.c_char_p
+solver.solve_safe.restype = ctypes.c_char_p
+solver.solve_cross_safe.restype = ctypes.c_char_p
+solver.solve_f2l_safe.restype = ctypes.c_char_p
+solver.solve_oll_safe.restype = ctypes.c_char_p
+solver.solve_pll_safe.restype = ctypes.c_char_p
 # Load the olls and plls csvs. in my case they're in the data folder.
 # Use .encode('utf-8') to convert the python string to a c string
 solver.setup("data".encode('utf-8'))
@@ -189,9 +190,9 @@ cube = numpy.array(solvedcube).astype(ctypes.c_int)
 solver.run_algorithm(cube, "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2".encode('utf-8'))
 # Print the cube to the shell 
 solver.print_cube(cube)
-# Solve the cube sing solver.solve.
+# Solve the cube using solver.solve.
 # Note: running the function also modifies the cube array
-solution = solver.solve(cube).decode("utf-8")
+solution = solver.solve_safe(cube).decode("utf-8")
 # Returns:
 """
 Cross
@@ -216,7 +217,7 @@ PLL: G perm c
 
 # You can also do the steps separately
 # solve the cross
-cross = solver.solve_cross(cube).decode("utf-8")
+cross = solver.solve_cross_safe(cube).decode("utf-8")
 #returns
 '''
 (R D' F D)
@@ -225,7 +226,7 @@ cross = solver.solve_cross(cube).decode("utf-8")
 (y) (R D' F D)
 '''
 # solve the F2L
-f2l = solver.solve_f2l(cube).decode("utf-8")
+f2l = solver.solve_f2l_safe(cube).decode("utf-8")
 #returns
 '''
 (y) R U R' U R U' R') (d' L U L')
@@ -234,14 +235,14 @@ f2l = solver.solve_f2l(cube).decode("utf-8")
 (y) (U R U R' U2) (d R' U2 R) (U' R B' R' B)
 '''
 # solve the OLL
-oll = solver.solve_oll(cube).decode("utf-8")
+oll = solver.solve_oll_safe(cube).decode("utf-8")
 #returns
 '''
 Kite
 (y2) (R U R' U') R' F R2 U R' U' F'
 '''
 # solve the PLL
-pll = solver.solve_pll(cube).decode("utf-8")
+pll = solver.solve_pll_safe(cube).decode("utf-8")
 #returns
 '''
 G perm c
@@ -250,7 +251,8 @@ G perm c
 # If a step is already solved, the functions return an empty string.
 # With an unsolvable cube, these functions return NULL,
 # which causes an AttributeError when trying to decode. You may want to verify before decoding (or use try)
-
+# Clean up the memory for the solution strings
+solver.free_strings()
 # Finally clean up the loaded OLLs or PLLs to prevent memory leaks
 solver.cleanup_last_layer()
 

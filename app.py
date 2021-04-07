@@ -21,19 +21,19 @@ solver = ctypes.CDLL("./bin/libcubesolver.so")
 # Set the argument types. String for one, 2d int array for the rest
 solver.setup.argtypes = [ctypes.c_char_p]
 solver.run_algorithm.argtypes = [array_2d_int, ctypes.c_char_p]
-solver.solve.argtypes = [array_2d_int]
+solver.solve_safe.argtypes = [array_2d_int]
 solver.print_cube.argtypes = [array_2d_int]
 solver.validate.argtypes = [array_2d_int]
-solver.solve_cross.argtypes = [array_2d_int]
-solver.solve_f2l.argtypes = [array_2d_int]
-solver.solve_oll.argtypes = [array_2d_int]
-solver.solve_pll.argtypes = [array_2d_int]
+solver.solve_cross_safe.argtypes = [array_2d_int]
+solver.solve_f2l_safe.argtypes = [array_2d_int]
+solver.solve_oll_safe.argtypes = [array_2d_int]
+solver.solve_pll_safe.argtypes = [array_2d_int]
 # Set the argument types for the functions that return something else than an int. Basically all char arrays.
-solver.solve.restype = ctypes.c_char_p
-solver.solve_cross.restype = ctypes.c_char_p
-solver.solve_f2l.restype = ctypes.c_char_p
-solver.solve_oll.restype = ctypes.c_char_p
-solver.solve_pll.restype = ctypes.c_char_p
+solver.solve_safe.restype = ctypes.c_char_p
+solver.solve_cross_safe.restype = ctypes.c_char_p
+solver.solve_f2l_safe.restype = ctypes.c_char_p
+solver.solve_oll_safe.restype = ctypes.c_char_p
+solver.solve_pll_safe.restype = ctypes.c_char_p
 # List of possible errors.
 errors = ["Unable to load algorithms",
           "Invalid color combination",
@@ -67,26 +67,29 @@ def getsteps(cube):
     # because I don't need to return an error here, I just put everything in a try except
     try:
         # solve the cross
-        alg = solver.solve_cross(cube).decode("utf-8")
+        alg = solver.solve_cross_safe(cube).decode("utf-8")
         # add the cross to the steps
         steps.append({'step': "Cross", 'name': "",
                       'algorithms': alg.strip().split("\n")})
         # solve the F2L
-        alg = solver.solve_f2l(cube).decode("utf-8")
+        alg = solver.solve_f2l_safe(cube).decode("utf-8")
         # add the F2L to the steps
         steps.append({'step': "F2L", 'name': "",
                       'algorithms': alg.strip().split("\n")})
         # solve the OLL
-        alg = solver.solve_oll(cube).decode("utf-8")
+        alg = solver.solve_oll_safe(cube).decode("utf-8")
         # add the OLL to the steps
         steps.append({'step': "OLL", 'name': alg.split("\n")[
                      0], 'algorithms': alg.strip().split("\n")[1:]})
         # solve the PLL
-        alg = solver.solve_pll(cube).decode("utf-8")
+        alg = solver.solve_pll_safe(cube).decode("utf-8")
         steps.append({'step': "PLL", 'name': alg.split("\n")[
                      0], 'algorithms': alg.strip().split("\n")[1:]})
+        # free the C strings
+        solver.free_strings()
         return steps
     except:
+        solver.free_strings()
         # in case of an exception, there might be an error with my validator, or my js file.
         with open("data/errors.txt", "a") as errorFile:  # save the error
             now = datetime.datetime.now()
@@ -97,6 +100,7 @@ def getsteps(cube):
 
 def cleanup():
     solver.cleanup_last_layer()
+    solver.free_strings()
 
 
 atexit.register(cleanup)
@@ -159,23 +163,28 @@ def validatorJSON():
     if solver.validate(cube) == 0:  # If it's an invalid cube
         return jsonify(2)
     # This only happens if there's a bug in the solver
-    if solver.solve_cross(cube) is None:
+    if solver.solve_cross_safe(cube) is None:
+        solver.free_strings()
         with open("data/errors.txt", "a") as errorFile:  # save the error
             now = datetime.datetime.now()
             errorFile.write(now.strftime(
                 "%Y-%m-%d %H:%M:%S CROSS: ") + patternJSON)
         return jsonify(5)
     # This only happens if there's a bug in the solver
-    if solver.solve_f2l(cube) is None:
+    if solver.solve_f2l_safe(cube) is None:
+        solver.free_strings()
         with open("data/errors.txt", "a") as errorFile:  # save the error
             now = datetime.datetime.now()
             errorFile.write(now.strftime(
                 "%Y-%m-%d %H:%M:%S F2L: ") + patternJSON)
         return jsonify(5)
-    if solver.solve_oll(cube) is None:
+    if solver.solve_oll_safe(cube) is None:
+        solver.free_strings()
         return jsonify(3)
-    if solver.solve_pll(cube) is None:
+    if solver.solve_pll_safe(cube) is None:
+        solver.free_strings()
         return jsonify(4)
+    solver.free_strings()
     return jsonify(0)
 
 
