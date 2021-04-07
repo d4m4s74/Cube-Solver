@@ -102,21 +102,129 @@ validate(cube);
 //and the names of the steps (eg. Cross, F2L, OLL: Sune, PLL: Y perm)
 //solves the cube in the given array
 char *solution = solve(cube);
-//Generates a cube from an algorithm and returns pointer to its solution
+//Generates a cube from an algorithm and returns pointer to its solution, or an error if unsolvable
 char *solution2 = solve_scramble("scramble");
 //Solves the (yellow) cross.
 //Returns a pointer to a string containing the solve algorithm, with each solved edge separated by newlines
+//May also return an error if unsolvable
 //Modifies the cube array to have a solved cross
 char *cross = solve_cross(cube);
 //Solves the first two layers of the cube assuming a solved cross.
 //Returns a string containing the solve algorithm, with each solved pair separated by newlines
 //Modifies the cube array to solve its f2l
+//Returns null if the cube is unsolvable
 char *f2l = solve_f2l(cube);
 //Looks up the right OLL algorithm and runs it, assuming a solved F2L
 //Returns the name of the OLL, and the algorithm, separated by a newline
+//Returns null if the cube is unsolvable
 char *oll = solve_oll(cube);
 //Looks up the right PLL algorithm and runs it, assuming a solved OLL.
 //Returns the name of the PLL, and the algorithm, separated by a newline
+//Returns null if the cube is unsolvable
 char *pll = solve_pll(cube);
 ```
 #### Usage with python (todo)
+```python
+import numpy
+import ctypes
+# Most functions will need a c 2d int array. Let's give it a name so it's easy to use
+array_2d_int = numpy.ctypeslib.ndpointer(dtype=ctypes.c_int, ndim=2, flags='CONTIGUOUS')
+# First load the solver library using ctypes CDLL.
+solver = ctypes.CDLL("/path/to/libcubesolver.so")
+# Then we set up all functions we might want to use.
+# Setup, load_olls and load_plls require a string
+solver.setup.argtypes = [ctypes.c_char_p]
+solver.load_olls.argtypes = [ctypes.c_char_p]
+solver.load_olls.argtypes = [ctypes.c_char_p]
+# Run_algorithm requires a 2d array for the cube, and a string
+solver.run_algorithm.argtypes = [array_2d_int, ctypes.c_char_p]
+# All other functions require just the 2d array
+solver.print_cube.argtypes = [array_2d_int]
+solver.validate.argtypes = [array_2d_int]
+solver.solve.argtypes = [array_2d_int]
+solver.solve_cross.argtypes = [array_2d_int]
+solver.solve_f2l.argtypes = [array_2d_int]
+solver.solve_oll.argtypes = [array_2d_int]
+solver.solve_pll.argtypes = [array_2d_int]
+# For functions that return something other than an int (or bool) we also need to set the response type
+solver.solve.restype = ctypes.c_char_p
+solver.solve_cross.restype = ctypes.c_char_p
+solver.solve_f2l.restype = ctypes.c_char_p
+solver.solve_oll.restype = ctypes.c_char_p
+solver.solve_pll.restype = ctypes.c_char_p
+# Load the olls and plls csvs. in my case they're in the data folder.
+# Use .encode('utf-8') to convert the python string to a c string
+solver.setup("data".encode('utf-8'))
+# Set up a cube. The inner lists in order are Front, Right, Back, Left, Up and Down
+solvedcube = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+              [1, 1, 1, 1, 1, 1, 1, 1, 1],
+              [2, 2, 2, 2, 2, 2, 2, 2, 2],
+              [3, 3, 3, 3, 3, 3, 3, 3, 3],
+              [4, 4, 4, 4, 4, 4, 4, 4, 4],
+              [5, 5, 5, 5, 5, 5, 5, 5, 5]]
+# Turn it into a C 2d array
+cube = numpy.array(solvedcube).astype(ctypes.c_int)
+# Run a scramble on the array. Use .encode('utf-8') to change the python string to a c string.
+solver.run_algorithm(cube, "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2".encode('utf-8'))
+# Solve the cube sing solver.solve, or step by step using solve_cross, solve_f2l, solve_oll or solve_pll
+# Note: running the function also modifies the cube array
+solution = solver.solve(cube).decode("utf-8")
+# Returns:
+"""
+Cross
+(R D' F D)
+(y) (R D' F D)
+(y) (R D' F D)
+(y) (R D' F D)
+F2L
+(y) R U R' U R U' R') (d' L U L')
+(y2) (L' U' L) (y') (U' F' U F) (R' F R F')
+(d2 R' U2 R2 U R2 U R)
+(y) (U R U R' U2) (d R' U2 R) (U' R B' R' B)
+OLL: Kite
+(y2) (R U R' U') R' F R2 U R' U' F'
+PLL: G perm c
+(y2) L' R' U2 L R (y) L U' R U2 L' U R'
+""" 
+# Or returns an error if the cube is unsolvable.
+# You can also do the steps separately
+# solve the cross
+cross = solver.solve_cross(cube).decode("utf-8")
+#returns
+'''
+(R D' F D)
+(y) (R D' F D)
+(y) (R D' F D)
+(y) (R D' F D)
+'''
+# solve the F2L
+f2l = solver.solve_f2l(cube).decode("utf-8")
+#returns
+'''
+(y) R U R' U R U' R') (d' L U L')
+(y2) (L' U' L) (y') (U' F' U F) (R' F R F')
+(d2 R' U2 R2 U R2 U R)
+(y) (U R U R' U2) (d R' U2 R) (U' R B' R' B)
+'''
+# solve the OLL
+oll = solver.solve_oll(cube).decode("utf-8")
+#returns
+'''
+Kite
+(y2) (R U R' U') R' F R2 U R' U' F'
+'''
+# solve the PLL
+pll = solver.solve_pll(cube).decode("utf-8")
+#returns
+'''
+G perm c
+(y2) L' R' U2 L R (y) L U' R U2 L' U R'
+'''
+# If the step is already solved, the functions return an empty string.
+# With an unsolvable cube, these functions return NULL,
+# which causes an AttributeError when trying to decode. You may want to verify before decoding (or use try)
+
+# Finally clean up the loaded OLLs or PLLs to prevent memory leaks
+solver.cleanup_last_layer()
+
+```
