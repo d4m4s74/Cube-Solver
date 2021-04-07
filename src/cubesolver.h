@@ -111,6 +111,8 @@ char *solve_pll(int cube[6][9]);
 //frees the memory used to store OLLs and PLLs
 void cleanup_last_layer();
 
+
+//Extra functions for when using the library with Python
 //Free all stored strings
 void free_strings();
 //Version of solve that saves the string pointer for later deletion
