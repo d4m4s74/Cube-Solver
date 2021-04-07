@@ -57,7 +57,7 @@ Go to https://127.0.0.1:5000/ to use the solver.
 ### Solver Library
 #### Install for use with C or C++
 Compile all files in src except for solver.c to libcubesolver.so, libcubesolver.dylib or libcubesolver.dll and save it wherever libraries are saved on your pc.  
-On Linux you can use `make library`
+On Linux you can use `make library`  
 Copy libcubesolver.h from src to wherever headers are saved on your pc (ex. /usr/include/)
 #### Usage with C or C++
 Link with -lcubesolver
@@ -123,7 +123,8 @@ char *oll = solve_oll(cube);
 //Returns null if the cube is unsolvable
 char *pll = solve_pll(cube);
 ```
-#### Usage with python (todo)
+#### Usage with python
+See C version to see what each function does.
 ```python
 import numpy
 import ctypes
@@ -166,7 +167,9 @@ solvedcube = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
 cube = numpy.array(solvedcube).astype(ctypes.c_int)
 # Run a scramble on the array. Use .encode('utf-8') to change the python string to a c string.
 solver.run_algorithm(cube, "U R2 F B R B2 R U2 L B2 R U' D' R2 F R' L B2 U2 F2".encode('utf-8'))
-# Solve the cube sing solver.solve, or step by step using solve_cross, solve_f2l, solve_oll or solve_pll
+# Print the cube to the shell 
+solver.print_cube(cube)
+# Solve the cube sing solver.solve.
 # Note: running the function also modifies the cube array
 solution = solver.solve(cube).decode("utf-8")
 # Returns:
@@ -187,6 +190,7 @@ PLL: G perm c
 (y2) L' R' U2 L R (y) L U' R U2 L' U R'
 """ 
 # Or returns an error if the cube is unsolvable.
+
 # You can also do the steps separately
 # solve the cross
 cross = solver.solve_cross(cube).decode("utf-8")
@@ -220,7 +224,7 @@ pll = solver.solve_pll(cube).decode("utf-8")
 G perm c
 (y2) L' R' U2 L R (y) L U' R U2 L' U R'
 '''
-# If the step is already solved, the functions return an empty string.
+# If a step is already solved, the functions return an empty string.
 # With an unsolvable cube, these functions return NULL,
 # which causes an AttributeError when trying to decode. You may want to verify before decoding (or use try)
 
