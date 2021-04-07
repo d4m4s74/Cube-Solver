@@ -102,6 +102,26 @@ validate(cube);
 //and the names of the steps (eg. Cross, F2L, OLL: Sune, PLL: Y perm)
 //solves the cube in the given array
 char *solution = solve(cube);
+// Returns:
+/*
+Cross
+(R D' F D)
+(y) (R D' F D)
+(y) (R D' F D)
+(y) (R D' F D)
+
+F2L
+(y) R U R' U R U' R') (d' L U L')
+(y2) (L' U' L) (y') (U' F' U F) (R' F R F')
+(d2 R' U2 R2 U R2 U R)
+(y) (U R U R' U2) (d R' U2 R) (U' R B' R' B)
+
+OLL: Kite
+(y2) (R U R' U') R' F R2 U R' U' F'
+
+PLL: G perm c
+(y2) L' R' U2 L R (y) L U' R U2 L' U R'
+*/
 //Generates a cube from an algorithm and returns pointer to its solution, or an error if unsolvable
 char *solution2 = solve_scramble("scramble");
 //Solves the (yellow) cross.
@@ -179,13 +199,16 @@ Cross
 (y) (R D' F D)
 (y) (R D' F D)
 (y) (R D' F D)
+
 F2L
 (y) R U R' U R U' R') (d' L U L')
 (y2) (L' U' L) (y') (U' F' U F) (R' F R F')
 (d2 R' U2 R2 U R2 U R)
 (y) (U R U R' U2) (d R' U2 R) (U' R B' R' B)
+
 OLL: Kite
 (y2) (R U R' U') R' F R2 U R' U' F'
+
 PLL: G perm c
 (y2) L' R' U2 L R (y) L U' R U2 L' U R'
 """ 
