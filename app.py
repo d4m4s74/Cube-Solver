@@ -5,6 +5,7 @@ import atexit
 import json
 import datetime
 import csv
+import os
 
 app = Flask(__name__)
 
@@ -50,51 +51,58 @@ solvedcube = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
               [5, 5, 5, 5, 5, 5, 5, 5, 5]]
 
 
-#stolen from stackoverflow: decomment. Which removes comments from CSVs
-#url: https://stackoverflow.com/questions/14158868/python-skip-comment-lines-marked-with-in-csv-dictreader
+# stolen from stackoverflow: decomment. Which removes comments from CSVs
+# url: https://stackoverflow.com/questions/14158868/python-skip-comment-lines-marked-with-in-csv-dictreader
 def decomment(csvfile):
     for row in csvfile:
         raw = row.split('#')[0].strip()
-        if raw: yield raw
+        if raw:
+            yield raw
 
 # Function that gets the steps of solving a cube and returns a list of dicts
 def getsteps(cube):
-    #empty step list
+    # empty step list
     steps = []
-    #every step could generate an AttributeError because it's trying to decode null, this should not occur because my cube.js file validates everything side.
-    #because I don't need to return an error here, I just put everything in a try except
-    try: 
-        #solve the cross
+    # every step could generate an AttributeError because it's trying to decode null, this should not occur because my cube.js file validates everything side.
+    # because I don't need to return an error here, I just put everything in a try except
+    try:
+        # solve the cross
         alg = solver.solve_cross(cube).decode("utf-8")
-        #add the cross to the steps
-        steps.append({'step':"Cross", 'name':"", 'algorithms':alg.strip().split("\n")})
-        #solve the F2L
+        # add the cross to the steps
+        steps.append({'step': "Cross", 'name': "",
+                      'algorithms': alg.strip().split("\n")})
+        # solve the F2L
         alg = solver.solve_f2l(cube).decode("utf-8")
-        #add the F2L to the steps
-        steps.append({'step':"F2L", 'name':"", 'algorithms':alg.strip().split("\n")})
-        #solve the OLL
+        # add the F2L to the steps
+        steps.append({'step': "F2L", 'name': "",
+                      'algorithms': alg.strip().split("\n")})
+        # solve the OLL
         alg = solver.solve_oll(cube).decode("utf-8")
-        #add the OLL to the steps
-        steps.append({'step':"OLL", 'name':alg.split("\n")[0], 'algorithms':alg.strip().split("\n")[1:]})
-        #solve the PLL
+        # add the OLL to the steps
+        steps.append({'step': "OLL", 'name': alg.split("\n")[
+                     0], 'algorithms': alg.strip().split("\n")[1:]})
+        # solve the PLL
         alg = solver.solve_pll(cube).decode("utf-8")
-        steps.append({'step':"PLL", 'name':alg.split("\n")[0], 'algorithms':alg.strip().split("\n")[1:]})
+        steps.append({'step': "PLL", 'name': alg.split("\n")[
+                     0], 'algorithms': alg.strip().split("\n")[1:]})
         return steps
     except:
-        #in case of an exception, there might be an error with my validator, or my js file. 
-        with open("data/errors.txt", "a") as errorFile: #save the error
+        # in case of an exception, there might be an error with my validator, or my js file.
+        with open("data/errors.txt", "a") as errorFile:  # save the error
             now = datetime.datetime.now()
-            errorFile.write(now.strftime("%Y-%m-%d %H:%M:%S getsteps: ") + jsonify(cube))
+            errorFile.write(now.strftime(
+                "%Y-%m-%d %H:%M:%S getsteps: ") + jsonify(cube))
         return list()
-
 
 
 def cleanup():
     solver.cleanup_last_layer()
+
+
 atexit.register(cleanup)
 
 
-#Only used for testing purposes: generates solution from scramble algorithm
+# Only used for testing purposes: generates solution from scramble algorithm
 @app.route('/solver')
 def solverInterface():
     scramble = request.args.get("scramble", "").encode('utf-8')
@@ -110,53 +118,59 @@ def solverInterface():
 
 @app.route("/api/solver", methods=['GET', 'POST'])
 def solverJSON():
-    #gets scramble algorithm, and pattern from get or post
+    # gets scramble algorithm, and pattern from get or post
     if request.method == 'POST':
         scramble = request.form.get("scramble", "").encode('utf-8')
         patternJSON = request.form.get("pattern", "")
-    else: 
+    else:
         scramble = request.args.get("scramble", "").encode('utf-8')
         patternJSON = request.form.get("pattern", "")
-    #if there are no scramble and pattern json, return an empty list
+    # if there are no scramble and pattern json, return an empty list
     if not scramble and not patternJSON:
         return jsonify(list())
-    #if there is a pattern, turn it into a numpy array
+    # if there is a pattern, turn it into a numpy array
     if patternJSON:
         pattern = json.loads(patternJSON)
         cube = numpy.array(pattern).astype(ctypes.c_int)
-    #if not, take a solved cube
+    # if not, take a solved cube
     else:
         cube = numpy.array(solvedcube).astype(ctypes.c_int)
-    #scramble the cube using the given scramble algorithm
+    # scramble the cube using the given scramble algorithm
     solver.run_algorithm(cube, scramble)
-    #generate a solution
+    # generate a solution
     steps = getsteps(cube)
-    #return the solution
+    # return the solution
     return jsonify(steps)
 
-#this function basically solves the cube, just to see if it's valid.
-@app.route("/api/validator", methods=['GET', 'POST']) 
+# this function basically solves the cube, just to see if it's valid.
+
+
+@app.route("/api/validator", methods=['GET', 'POST'])
 def validatorJSON():
     if request.method == 'POST':
         patternJSON = request.form.get("pattern", "")
     else:
         patternJSON = request.args.get("pattern", "")
     if not patternJSON:
-        return jsonify(1) #1 stands for no pattern
+        return jsonify(1)  # 1 stands for no pattern
     pattern = json.loads(patternJSON)
     # Create a 2d array containing c ints from the aforementioned cube
     cube = numpy.array(pattern).astype(ctypes.c_int)
-    if solver.validate(cube) == 0: #If it's an invalid cube
+    if solver.validate(cube) == 0:  # If it's an invalid cube
         return jsonify(2)
-    if solver.solve_cross(cube) is None: #This only happens if there's a bug in the solver
-        with open("data/errors.txt", "a") as errorFile: #save the error
+    # This only happens if there's a bug in the solver
+    if solver.solve_cross(cube) is None:
+        with open("data/errors.txt", "a") as errorFile:  # save the error
             now = datetime.datetime.now()
-            errorFile.write(now.strftime("%Y-%m-%d %H:%M:%S CROSS: ") + patternJSON)
+            errorFile.write(now.strftime(
+                "%Y-%m-%d %H:%M:%S CROSS: ") + patternJSON)
         return jsonify(5)
-    if solver.solve_f2l(cube) is None: #This only happens if there's a bug in the solver
-        with open("data/errors.txt", "a") as errorFile: #save the error
+    # This only happens if there's a bug in the solver
+    if solver.solve_f2l(cube) is None:
+        with open("data/errors.txt", "a") as errorFile:  # save the error
             now = datetime.datetime.now()
-            errorFile.write(now.strftime("%Y-%m-%d %H:%M:%S F2L: ") + patternJSON)
+            errorFile.write(now.strftime(
+                "%Y-%m-%d %H:%M:%S F2L: ") + patternJSON)
         return jsonify(5)
     if solver.solve_oll(cube) is None:
         return jsonify(3)
@@ -164,17 +178,20 @@ def validatorJSON():
         return jsonify(4)
     return jsonify(0)
 
+
 @app.route('/')
 @app.route("/cube")
 def cube():
     with open('data/patterns.csv', 'r') as fp:
         patterns = csv.DictReader(decomment(fp))
         return render_template('cube.html', patterns=patterns)
-    
+
+
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 if __name__ == '__main__':
     app.debug = True
