@@ -55,22 +55,8 @@ bool store_string_pointer(char * ptr)
         return false;
     }
     //Create a temporary pointer
-    char **tmp;
-    //If strings is NULL, malloc it
-    if (strings == NULL)
-    {
-        tmp = malloc(sizeof(ptr));
-    }
-    //Otherwise make it one larger
-    else
-    {
+    char **tmp = NULL;
     tmp = realloc(strings, sizeof(ptr) * nstrings + 1);
-    }
-    //If tmp is null, report failure
-    if (tmp == NULL)
-    {
-        return false;
-    }
     //Put tmp in strings
     strings = tmp;
     //add the pointer to the end
@@ -91,6 +77,7 @@ void free_strings()
     }
     //free the array
     free(strings);
+    strings = NULL;
     //set nstrings to 0
     nstrings = 0;
 }
@@ -152,7 +139,7 @@ char* solve_safe(int cube[6][9]){
     char * alg = solve(cube);
     if (store_string_pointer(alg))
     {
-    return alg;
+        return alg;
     }
     else
     {
