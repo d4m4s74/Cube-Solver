@@ -224,13 +224,13 @@ bool setup(int argc, char *argv[])
     char *ollfile = NULL;
     char *pllfile = NULL;
 
-    //check if the user used the -o or -p options
-    int opt;
+    //check if the user used the -o or -p options    
     //bools for if strings need to be freed. Default to true.
     bool fo = true, fp = true, ff = true;
     //reset optind
     optind = 1;
     //go through the options to check for the oll or pll file, or their folder
+    int opt;
     while ((opt = getopt(argc, argv, ":o:p:d:t")) != -1)
     {
         switch (opt)
