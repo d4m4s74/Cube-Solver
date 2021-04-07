@@ -111,9 +111,6 @@ char *solve_pll(int cube[6][9]);
 //frees the memory used to store OLLs and PLLs
 void cleanup_last_layer();
 
-
-//Function that stores all string (char *) pointers for later deletion
-bool store_string_pointer(char * ptr);
 //Free all stored strings
 void free_strings();
 //Version of solve that saves the string pointer for later deletion
