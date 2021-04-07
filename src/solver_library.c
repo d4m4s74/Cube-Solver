@@ -35,11 +35,11 @@ char *solve_scramble(char *scramble)
 //returns string containing all algorithms used to solve the cube
 char *solve(int cube[6][9])
 {
-    //If the algorithms aren't already loaded, and aren't able to load
-    if (!issetup && !setup(""))
+    //If the algorithms aren't already loaded, return error
+    if (!issetup)
     {
         cleanup_last_layer();
-        return "Unable to load algorithms";
+        return "OLLs and PLLs not loaded";
     }
     if (!validate(cube))
     {
@@ -60,7 +60,7 @@ char *solve(int cube[6][9])
     {
         free(algs);
         cleanup_last_layer();
-        return "Bug in cross algorithm. Please report scramble to d4m4s74 in discord\n";
+        return "Bug in cross algorithm.\n";
     }
     //print_cube(cube);
     algs = append(algs, "\n");
@@ -75,7 +75,7 @@ char *solve(int cube[6][9])
     {
         free(algs);
         cleanup_last_layer();
-        return "Bug in f2l algorithm. Please report scramble to d4m4s74 in discord\n";
+        return "Bug in f2l algorithm.\n";
     }
     //print_cube(cube);
     algs = append(algs, "\n");
@@ -91,7 +91,7 @@ char *solve(int cube[6][9])
     {
         free(algs);
         cleanup_last_layer();
-        return "OLL Parity.\nOne of the cubies is flipped or twisted\n";
+        return "OLL Parity.\n";
     }
     //print_cube(cube);
     algs = append(algs, "\n");
@@ -107,10 +107,8 @@ char *solve(int cube[6][9])
     {
         free(algs);
         cleanup_last_layer();
-        return "PLL Parity\nTwo cubies are switched\n";
+        return "PLL Parity\n";
     }
-    //print_cube(cube);
-    cleanup_last_layer();
     return algs;
 }
 
