@@ -90,7 +90,7 @@ var running = false;
 var paused = false;
 //The wait time until the next step
 var wait = 0;
-//the movement speed in radians per frame
+//The default movement speed in radians per frame
 var mspeed = 0.1;
 //The step of a solution being done
 var stepnumber = 0;
@@ -116,6 +116,15 @@ const slices = {
     'S': [3, 4, 5, 12, 13, 14, 21, 22, 23],
     'F': [6, 7, 8, 15, 16, 17, 24, 25, 26]
 };
+
+//A 2d list of the faces of a solved cube
+const solvedCube = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+[1, 1, 1, 1, 1, 1, 1, 1, 1],
+[2, 2, 2, 2, 2, 2, 2, 2, 2],
+[3, 3, 3, 3, 3, 3, 3, 3, 3],
+[4, 4, 4, 4, 4, 4, 4, 4, 4],
+[5, 5, 5, 5, 5, 5, 5, 5, 5]]
+
 //A 2d list of the faces of a cube, for entering your own colors
 var faces = [[6, 6, 6, 6, 0, 6, 6, 6, 6],
 [6, 6, 6, 6, 1, 6, 6, 6, 6],
@@ -123,13 +132,7 @@ var faces = [[6, 6, 6, 6, 0, 6, 6, 6, 6],
 [6, 6, 6, 6, 3, 6, 6, 6, 6],
 [6, 6, 6, 6, 4, 6, 6, 6, 6],
 [6, 6, 6, 6, 5, 6, 6, 6, 6]]
-//A 2d list of the faces of a solved cube
-var solvedCube = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
-[1, 1, 1, 1, 1, 1, 1, 1, 1],
-[2, 2, 2, 2, 2, 2, 2, 2, 2],
-[3, 3, 3, 3, 3, 3, 3, 3, 3],
-[4, 4, 4, 4, 4, 4, 4, 4, 4],
-[5, 5, 5, 5, 5, 5, 5, 5, 5]]
+
 //The last applied cube (currently solvedCube but not always)
 var applied = solvedCube.map(function (arr) { return arr.slice() });
 
@@ -897,7 +900,7 @@ if (urlparam("scramble")) {
     movesDone = scramble;
 }
 
-//The colors of the cube, assuming white is up and green is front. This is different than the API, but saves me from unnecessary x and y moves to start the cross
+//The colors of the cube, assuming white is up and green is front.
 const colors = ["green", "red", "blue", "orange", "white", "yellow", "grey"]
 var color = 6;
 //If one of the squared is clicked
@@ -922,6 +925,7 @@ $('.square').click(function () {
     }
 });
 
+//Clear the color picker
 $('#clear').click(function () {
     for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 9; j++) {
@@ -1057,7 +1061,115 @@ function apply_pattern(pattern) {
     apply_color(cubes[26], faces[0][8], opposite_color(faces[1][6]));
 }
 
-//Function to get the solution for the cube and add the moves to the steps array.
+const errors = ["Success", "No pattern entered", "Invalid color combination", "OLL parity", "PLL parity", "Error in solving algorithm"]
+//If a user applies a pattern
+$('#apply').click(function () {
+    //First validate the pattern
+    $.post("api/validator", { pattern: JSON.stringify(faces) }, function (data) {
+        //If it fails, give the error
+        let reply = parseInt(data);
+        if (reply != 0) {
+            $('#error').html(errors[reply]);
+        }
+        else {
+            //then apply the faces
+            $('#error').html("&nbsp;");
+            apply_pattern(faces);
+            applied = faces.map(function (arr) { return arr.slice() });
+        }
+    });
+});
+
+//Run an algorithm on the cube
+$('#algForm').submit(function (e) {
+    //Only submit if there's no algorithm running
+    if (running == false) {
+        //In case of mobile, scroll to the top of the screen
+        window.scrollTo(0, 0);
+        //get the alg from the alg field
+        let alg = $('#alg').val();
+        //turn it into the moves array
+        moves = alg.replace(/[^FfBbRrLlUuDdxyzMES\'2+ ]/g, "").split(" ");
+        //reset the move counter
+        movenumber = 0;
+        //clear the steps
+        steps = [];
+        //reset the step number to 0
+        stepnumber = 0;
+        let html = "";
+        for (let i = 0; i < moves.length; i++) {
+            html += moves[i] + " ";
+        }
+        $("#currentAlg").html(html);
+        //start running if not paused
+        if (!paused)
+            running = true;
+    }
+    //and do not submit.
+    e.preventDefault();
+})
+
+//Disable return on the algorithm field, because there are two submit buttons
+$('#algForm').on('keydown', function (event) {
+    var x = event.which;
+    if (x === 13) {
+        event.preventDefault();
+    }
+});
+
+//Select a pattern from the pattern select and put it in the algorithm field.
+$('#pattern').change(function () {
+    $('#alg').val(document.getElementById("pattern").value)
+})
+
+//Run an algorithm on the cube without showing the moves
+$('#scramble').click(function () {
+    reset_cube()
+    let alg = $('#alg').val();
+    let scramble = alg.replace(/[^FfBbRrLlUuDdxyzMES\'2+ ]/g, "").split(" ");
+    movenumber = 0;
+    steps = [];
+    stepnumber = 0;
+    for (let move of scramble) {
+        //We just do the finishing step (the actual movement) without animation
+        finish_move(move);
+    }
+    movesDone = scramble;
+});
+
+//On click events for play/pause, next and prev
+$('#playpause').click(function () {
+    if (paused) {
+        paused = false;
+        running = true;
+        $('#playpause').html('<img src="static/pause.png" alt="pause"></img>');
+    }
+    else {
+        paused = true;
+        running = false;
+        $('#playpause').html('<img src="static/play.png" alt="play"></img>');
+    }
+});
+
+$('#next').click(function () {
+    if (paused == false) {
+        paused = true;
+        running = false;
+        $('#playpause').html('<img src="static/play.png" alt="play"></img>');
+    }
+    next_move(true);
+});
+
+$('#prev').click(function () {
+    if (paused == false) {
+        paused = true;
+        running = false;
+        $('#playpause').html('<img src="static/play.png" alt="play"></img>');
+    }
+    prev_move();
+});
+
+//Function to get the solution for the cube, show it in the solution div and add the moves to the steps array.
 function solve_cube() {
     //Send the pattern (if applied) and any moves done to it already to the solver
     $.post("api/solver", { pattern: JSON.stringify(applied), scramble: movesDone.join(" ") }, function (data) {
@@ -1103,122 +1215,16 @@ function solve_cube() {
     });
 }
 
-const errors = ["Success", "No pattern entered", "Invalid color combination", "OLL parity", "PLL parity", "Error in solving algorithm. "]
-//If a user applies a pattern
-$('#apply').click(function () {
-    //First validate the pattern
-    $.post("api/validator", { pattern: JSON.stringify(faces) }, function (data) {
-        //If it fails, give the error
-        let reply = parseInt(data);
-        if (reply != 0) {
-            $('#error').html(errors[reply]);
-        }
-        else {
-            //then apply the faces
-            $('#error').html("&nbsp;");
-            apply_pattern(faces);
-            applied = faces.map(function (arr) { return arr.slice() });
-        }
-    });
-});
-
-
-
-//Run an algorithm on the cube
-$('#algForm').submit(function (e) {
-    //Only submit if there's no algorithm running
-    if (running == false) {
-        //In case of mobile, scroll to the top of the screen
-        window.scrollTo(0, 0);
-        //get the alg from the alg field
-        let alg = $('#alg').val();
-        //turn it into the moves array
-        moves = alg.replace(/[^FfBbRrLlUuDdxyzMES\'2+ ]/g, "").split(" ");
-        //reset the move counter
-        movenumber = 0;
-        steps = [];
-        stepnumber = 0;
-        let html = "";
-        for (let i = 0; i < moves.length; i++) {
-            html += moves[i] + " ";
-        }
-        $("#currentAlg").html(html);
-        //start running if not paused
-        if (!paused)
-            running = true;
-    }
-    //and do not submit.
-    e.preventDefault();
-})
-
-//Select a pattern from the pattern select.
-$('#pattern').change(function(){
-    $('#alg').val(document.getElementById("pattern").value)
-})
-
-//Run an algorithm on the cube without showing the moves
-$('#scramble').click(function () {
-    reset_cube()
-    let alg = $('#alg').val();
-    let scramble = alg.replace(/[^FfBbRrLlUuDdxyzMES\'2+ ]/g, "").split(" ");
-    movenumber = 0;
-    steps = [];
-    stepnumber = 0;
-    for (let move of scramble) {
-        //We just do the finishing step (the actual movement) without animation
-        finish_move(move);
-    }
-    movesDone = scramble;
-});
-
-//Disable return on the algorithm field, because there are two submit buttons
-$('#algForm').on('keydown', function (event) {
-    var x = event.which;
-    if (x === 13) {
-        event.preventDefault();
-    }
-});
-
-//On click events for play/pause, next and prev
-$('#playpause').click(function () {
-    if (paused) {
-        paused = false;
-        running = true;
-        $('#playpause').html('<img src="static/pause.png" alt="pause"></img>');
-    }
-    else {
-        paused = true;
-        running = false;
-        $('#playpause').html('<img src="static/play.png" alt="play"></img>');
-    }
-});
-
-$('#next').click(function () {
-    if(paused == false){
-        paused = true;
-        running = false;
-        $('#playpause').html('<img src="static/play.png" alt="play"></img>');
-    }
-    next_move(true);
-});
-
-$('#prev').click(function () {
-    if(paused == false){
-        paused = true;
-        running = false;
-        $('#playpause').html('<img src="static/play.png" alt="play"></img>');
-    }
-    prev_move();
-});
 
 //On click events for solver and reset.
 $('#solve').click(function () {
-    window.scrollTo(0, 0);
-    solve_cube(); //In case of mobile, scroll to the top of the screen
+    window.scrollTo(0, 0); //In case of mobile, scroll to the top of the screen
+    solve_cube();
 });
 
 $('#reset').click(function () { reset_cube(); });
 
+//Vary the movement speed.
 $('#speed').on('input', function () {
     mspeed = $('#speed').val() / 100;
     console.log(mspeed);
