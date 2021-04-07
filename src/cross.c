@@ -162,7 +162,7 @@ char *solve_cross(int cube[6][9])
         return NULL;
     }
     //remove trailing newline
-    if (algs[strlen(algs) - 1] == '\n')
+    if (strlen(algs) > 1 && algs[strlen(algs) - 1] == '\n')
     {
         algs[strlen(algs) - 1] = 0;
     }

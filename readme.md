@@ -78,7 +78,7 @@ int cube[6][9];
 //Add the "colors" of the cube to the array as 9 character strings containing numbers 0 to 5
 color_cube(cube, front, right, back, left, up, down);
 //Run a multiple move algorithm on the cube, using standard cube notation (Useful for scrambling)
-void run_algorithm(cube, "Algorithm");
+run_algorithm(cube, "Algorithm");
 /*
 A function that prints the sides of the cube in an exploded fashion. Uses colors when in linux or OS X
 Uses Green for 0, Red for 1, Blue for 2, Orange for 3, White for 4, Yellow for 5

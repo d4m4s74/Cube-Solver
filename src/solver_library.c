@@ -56,7 +56,14 @@ bool store_string_pointer(char * ptr)
     }
     //Create a temporary pointer
     char **tmp = NULL;
-    tmp = realloc(strings, sizeof(ptr) * nstrings + 1);
+    if (strings == NULL)
+    {
+        tmp = malloc(sizeof(ptr));
+    }
+    else
+    {
+    tmp = realloc(strings, sizeof(ptr) * (nstrings + 1));
+    }
     //Put tmp in strings
     strings = tmp;
     //add the pointer to the end
