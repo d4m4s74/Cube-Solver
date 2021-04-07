@@ -82,7 +82,7 @@ char *solve(int cube[6][9])
     char *oll = solve_oll(cube);
     if (oll)
     {
-        algs = append(algs, "\nOLL: \n");
+        algs = append(algs, "\nOLL: ");
         algs = append(algs, oll);
         algs = append(algs, "\n");
         free(oll);
@@ -98,7 +98,7 @@ char *solve(int cube[6][9])
     char *pll = solve_pll(cube);
     if (pll)
     {
-        algs = append(algs, "\nPLL: \n");
+        algs = append(algs, "PLL: ");
         algs = append(algs, pll);
         algs = append(algs, "\n");
         free(pll);
