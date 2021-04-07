@@ -145,7 +145,7 @@ char *pll = solve_pll(cube);
 ```
 #### Usage with python
 See C version to see what each function does.
-Because it's hard to free malloced memory in python, use "safe" versions of the functions
+Because it's hard to free malloced memory in python, use "safe" versions of the solve functions
 ```python
 import numpy
 import ctypes
