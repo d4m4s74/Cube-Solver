@@ -919,10 +919,18 @@ $('.square').click(function () {
         $("#cur").css("background-color", colors[color])
     }//for all other squares, except for the centers
     else if (parseInt(this.id[3]) != 4) {
-        //set the color of the square to the selected color
-        $("#" + this.id).css("background-color", colors[color])
-        //update the color in the "faces" array
-        faces[parseInt(this.id[1])][parseInt(this.id[3])] = color;
+        if (faces[parseInt(this.id[1])][parseInt(this.id[3])] == color) {
+            //set the color of the square to the selected color
+            $("#" + this.id).css("background-color", colors[6])
+            //update the color in the "faces" array
+            faces[parseInt(this.id[1])][parseInt(this.id[3])] = 6;
+        }
+        else {
+            //set the color of the square to the selected color
+            $("#" + this.id).css("background-color", colors[color])
+            //update the color in the "faces" array
+            faces[parseInt(this.id[1])][parseInt(this.id[3])] = color;
+        }
     }
 });
 
