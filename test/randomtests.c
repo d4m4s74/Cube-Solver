@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     int cube[6][9];
     if (argc != 3 || !isNumber(argv[2]))
     {
-        printf("Usage: %s [path/to/csvs] [num_tests]\n", argv[0]);
+        printf("Usage: %s [path/to/csv/files] [num_tests]\n", argv[0]);
         return 1;
     }
     if (!setup(argv[1]))
