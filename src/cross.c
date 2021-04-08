@@ -6,21 +6,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-//White facing down in wrong location
+//Yellow facing down in wrong location
 char *crossCase1(int cube[6][9]);
-//White facing up.
+//Yellow facing up.
 char *crossCase2(int cube[6][9]);
-//Next: white on the right side of the face
+//Next: Yellow on the right side of the face
 char *crossCase3(int cube[6][9]);
-//White on the left side of the face
+//Yellow on the left side of the face
 char *crossCase4(int cube[6][9]);
-//White on the sides of the down layer
+//Yellow on the sides of the down layer
 char *crossCase5(int cube[6][9]);
-//White on the sides of the up layer
+//Yellow on the sides of the up layer
 char *crossCase6(int cube[6][9]);
 
 /*
-A function to solve the (white) cross.
+A function to solve the cross.
 No alorithms this time, so it'll be a huge decision tree.
 Based on my own methods
 */
@@ -28,7 +28,7 @@ char *solve_cross(int cube[6][9])
 {
     char *algs = malloc(1);
     algs[0] = 0;
-    //First orient the cube with the white center pointing down.
+    //First orient the cube with the yellow center pointing down.
     if (cube[U][4] == 5)
     {
         algs = append(algs, "(z2)\n");
@@ -56,7 +56,7 @@ char *solve_cross(int cube[6][9])
     }
     int solved = 0;
     char *alg;
-    while (solved < 4)
+    for (int i = 0; i < 4; i++) //The cross should be able to be solved max 4 rounds. One edge per round.
     {
         //print_cube(); //for debugging purposes
         //Reset solved every round.
@@ -68,7 +68,7 @@ char *solve_cross(int cube[6][9])
         {
             break;
         }
-        //white facing down
+        //Yellow facing down
         alg = crossCase1(cube);
         if (alg)
         {
@@ -83,7 +83,7 @@ char *solve_cross(int cube[6][9])
             }
             continue;
         }
-        //White facing up.
+        //Yellow facing up.
         alg = crossCase2(cube);
         if (alg)
         {
@@ -98,7 +98,7 @@ char *solve_cross(int cube[6][9])
             }
             continue;
         }
-        //White on the right side of the face
+        //Yellow on the right side of the face
         alg = crossCase3(cube);
         if (alg)
         {
@@ -113,7 +113,7 @@ char *solve_cross(int cube[6][9])
             }
             continue;
         }
-        //White on the left side of the face
+        //Yellow on the left side of the face
         alg = crossCase4(cube);
         if (alg)
         {
@@ -128,7 +128,7 @@ char *solve_cross(int cube[6][9])
             }
             continue;
         }
-        //White on the sides of the down layer
+        //Yellow on the sides of the down layer
         alg = crossCase5(cube);
         if (alg)
         {
@@ -143,7 +143,7 @@ char *solve_cross(int cube[6][9])
             }
             continue;
         }
-        //White on the sides of the up layer
+        //Yellow on the sides of the up layer
         alg = crossCase6(cube);
         if (alg)
         {
@@ -170,7 +170,7 @@ char *solve_cross(int cube[6][9])
 }
 
 
-//White facing down in wrong location.
+//Yellow facing down in wrong location.
 char *crossCase1(int cube[6][9])
 {
     char *alg = malloc(1);
@@ -184,7 +184,7 @@ char *crossCase1(int cube[6][9])
                  (cube[D][3] == 5 && cube[L][7] == cube[L][4]) +
                  (cube[D][5] == 5 && cube[R][7] == cube[R][4]) +
                  (cube[D][7] == 5 && cube[B][7] == cube[B][4]);
-    //If there is a white edge on the bottom facing front but not in place
+    //If there is a Yellow edge on the bottom facing front but not in place
     if ((cube[D][1] == 5 && cube[F][7] != cube[F][4]))
     {
         //If this is the first solved, just rotate the down face
@@ -228,7 +228,7 @@ char *crossCase1(int cube[6][9])
         //check again from the start
         return alg;
     }
-    //If there is a white edge on the bottom facing right but not in place
+    //If there is a Yellow edge on the bottom facing right but not in place
     if ((cube[D][5] == 5 && cube[R][7] != cube[R][4]))
     {
         //If this is the first solved, just rotate the down face
@@ -272,7 +272,7 @@ char *crossCase1(int cube[6][9])
         }
         return alg;
     }
-    //If there is a white edge on the bottom facing left but not in place
+    //If there is a Yellow edge on the bottom facing left but not in place
     if ((cube[D][3] == 5 && cube[L][7] != cube[L][4]))
     {
         //If this is the first solved, just rotate the down face
@@ -315,7 +315,7 @@ char *crossCase1(int cube[6][9])
         }
         return alg;
     }
-    //If there is a white edge on the bottom facing back but not in place
+    //If there is a Yellow edge on the bottom facing back but not in place
     if ((cube[D][7] == 5 && cube[B][7] != cube[B][4]))
     {
         //If this is the first solved, just rotate the down face
@@ -363,7 +363,7 @@ char *crossCase1(int cube[6][9])
     return NULL;
 }
 
-//White facing up.
+//Yellow facing up.
 char *crossCase2(int cube[6][9])
 {
     char *alg = malloc(1);
@@ -373,10 +373,10 @@ char *crossCase2(int cube[6][9])
         return NULL;
     }
     alg[0] = 0;
-    //The plan: Find white facing up, find where is it supposed to go, rotate U and rotate the correct face.
+    //The plan: Find Yellow facing up, find where is it supposed to go, rotate U and rotate the correct face.
     int found = -1;
     int correction = -1;
-    //Check for white facing up on the front edge
+    //Check for Yellow facing up on the front edge
     if (cube[U][7] == 5)
     {
         //Correction is how far we have to turn the up slice to align the piece with it's place
@@ -384,7 +384,7 @@ char *crossCase2(int cube[6][9])
         //Found is where the piece should be.
         found = mod(F - correction, 4);
     }
-    //White facing up on left edge
+    //Yellow facing up on left edge
     else if (cube[U][3] == 5)
     {
         correction = mod(cube[L][4] - cube[L][1], 4);
@@ -442,7 +442,7 @@ char *crossCase2(int cube[6][9])
     return NULL;
 }
 
-//Next: white on the right side of the face
+//Next: Yellow on the right side of the face
 char *crossCase3(int cube[6][9])
 {
     char *alg = malloc(1);
@@ -504,7 +504,7 @@ char *crossCase3(int cube[6][9])
     return NULL;
 }
 
-//White on the left side of the face
+//Yellow on the left side of the face
 char *crossCase4(int cube[6][9])
 {
     char *alg = malloc(1);
@@ -566,7 +566,7 @@ char *crossCase4(int cube[6][9])
     return NULL;
 }
 
-//White on the sides of the down layer
+//Yellow on the sides of the down layer
 char *crossCase5(int cube[6][9])
 {
     char *alg = malloc(1);
@@ -578,26 +578,26 @@ char *crossCase5(int cube[6][9])
     alg[0] = 0;
     int found = -1;
     int correction = -1;
-    //White facing out on the down right edge
+    //Yellow facing out on the down right edge
     if (cube[R][7] == 5)
     {
         found = 0;
     }
-    //White facing out on the down back edge
+    //Yellow facing out on the down back edge
     else if (cube[B][7] == 5)
     {
         found = 1;
         alg = append(alg, "(y) ");
         run_algorithm(cube, "y");
     }
-    //White facing out on the down left edge
+    //Yellow facing out on the down left edge
     else if (cube[L][7] == 5)
     {
         found = 2;
         alg = append(alg, "(y2) ");
         run_algorithm(cube, "y2");
     }
-    //White facing out on the down front edge
+    //Yellow facing out on the down front edge
     else if (cube[F][7] == 5)
     {
         found = 3;
@@ -632,7 +632,7 @@ char *crossCase5(int cube[6][9])
     return NULL;
 }
 
-//White on the sides of the up layer
+//Yellow on the sides of the up layer
 char *crossCase6(int cube[6][9])
 {
     char *alg = malloc(1);
@@ -644,26 +644,26 @@ char *crossCase6(int cube[6][9])
     alg[0] = 0;
     int found = -1;
     int correction = -1;
-    //White facing out on the up right edge
+    //Yellow facing out on the up right edge
     if (cube[R][1] == 5)
     {
         found = 0;
     }
-    //White facing out on the up back edge
+    //Yellow facing out on the up back edge
     else if (cube[B][1] == 5)
     {
         found = 1;
         alg = append(alg, "(y) ");
         run_algorithm(cube, "y");
     }
-    //White facing out on the up left edge
+    //Yellow facing out on the up left edge
     else if (cube[L][1] == 5)
     {
         found = 2;
         alg = append(alg, "(y2) ");
         run_algorithm(cube, "y2");
     }
-    //White facing out on the up front edge
+    //Yellow facing out on the up front edge
     else if (cube[F][1] == 5)
     {
         found = 3;

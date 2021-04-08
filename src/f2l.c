@@ -49,7 +49,7 @@ char *solve_f2l(int cube[6][9])
     algs[0] = 0;
     int solved = 0;
     char *alg;
-    while (solved < 4)
+    for (int i = 0; i < 4; i++) //The cross should be able to be solved max 4 rounds. One edge per round.
     {
         //for every corner/edge pair that's solved one is added.
         solved = (cube[D][2] == 5 && cube[F][8] == cube[F][4] && cube[F][5] == cube[F][4] &&
