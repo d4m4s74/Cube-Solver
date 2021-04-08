@@ -156,13 +156,14 @@ window.reset_cube = function () { reset_cube(); }
 //reset the cube
 reset_cube();
 
-//Function to cycle the rotations of 4 cubies a = b = c = d = a
+//Function to cycle the rotations of 4 cubies a > b > c > d > a
+//todo: invert cycle_rotations
 function cycle_rotations(a, b, c, d) {
     tempcube.setRotationFromEuler(a.rotation);
-    a.setRotationFromEuler(b.rotation);
-    b.setRotationFromEuler(c.rotation);
-    c.setRotationFromEuler(d.rotation);
-    d.setRotationFromEuler(tempcube.rotation);
+    a.setRotationFromEuler(d.rotation);
+    d.setRotationFromEuler(c.rotation);
+    c.setRotationFromEuler(b.rotation);
+    b.setRotationFromEuler(tempcube.rotation);
 }
 
 //Function to swap the rotations of two cubies
@@ -408,9 +409,9 @@ function finish_move(move) {
         //If the move is U or u
         if (move == "U" || move == "u" || move == "y") {
             //Cycle the rotation of the corners
-            cycle_rotations(cubes[0], cubes[6], cubes[8], cubes[2]);
+            cycle_rotations(cubes[2], cubes[8], cubes[6], cubes[0]);
             //Cycle the rotation of the edges
-            cycle_rotations(cubes[1], cubes[3], cubes[7], cubes[5]);
+            cycle_rotations(cubes[5], cubes[7], cubes[3], cubes[1]);
             for (let i of slices['U']) {
                 //rotate them all clockwise
                 cubes[i].rotateOnWorldAxis(yAxis, -(Math.PI / 2));
@@ -432,9 +433,9 @@ function finish_move(move) {
         //Inverted move
         else if (move == "U'" || move == "u'" || move == "y'") {
             //Cycle the rotation of the corners
-            cycle_rotations(cubes[0], cubes[2], cubes[8], cubes[6]);
+            cycle_rotations(cubes[6], cubes[8], cubes[2], cubes[0]);
             //Cycle the rotation of the edges
-            cycle_rotations(cubes[1], cubes[5], cubes[7], cubes[3]);
+            cycle_rotations(cubes[3], cubes[7], cubes[5], cubes[1]);
             for (let i of slices['U']) {
                 //rotate them counterclockwise
                 cubes[i].rotateOnWorldAxis(yAxis, (Math.PI / 2));
@@ -451,9 +452,9 @@ function finish_move(move) {
         //If the move is E', d' or u
         if (move == "E'" || move == "u" || move == "d'" || move == "y") {
             //Cycle the rotation of the edges
-            cycle_rotations(cubes[9], cubes[15], cubes[17], cubes[11]);
+            cycle_rotations(cubes[11], cubes[17], cubes[15], cubes[9]);
             //Cycle the rotation of the centers
-            cycle_rotations(cubes[10], cubes[12], cubes[16], cubes[14]);
+            cycle_rotations(cubes[14], cubes[16], cubes[12], cubes[10]);
             for (let i of slices['E']) {
                 //rotate them clockwise
                 cubes[i].rotateOnWorldAxis(yAxis, -(Math.PI / 2));
@@ -474,9 +475,9 @@ function finish_move(move) {
         }
         else if (move == "E" || move == "u'" || move == "d" || move == "y'") {
             //Cycle the rotation of the edges
-            cycle_rotations(cubes[9], cubes[11], cubes[17], cubes[15]);
+            cycle_rotations(cubes[15], cubes[17], cubes[11], cubes[9]);
             //Cycle the rotation of the centers
-            cycle_rotations(cubes[10], cubes[14], cubes[16], cubes[12]);
+            cycle_rotations(cubes[12], cubes[16], cubes[14], cubes[10]);
             for (let i of slices['E']) {
                 //rotate them counterclockwise
                 cubes[i].rotateOnWorldAxis(yAxis, (Math.PI / 2));
@@ -493,9 +494,9 @@ function finish_move(move) {
         //If the move is E', d' or u
         if (move == "D'" || move == "d'" || move == "y") {
             //Cycle the rotation of the corners
-            cycle_rotations(cubes[18], cubes[24], cubes[26], cubes[20]);
+            cycle_rotations(cubes[20], cubes[26], cubes[24], cubes[18]);
             //Cycle the rotation of the edges
-            cycle_rotations(cubes[19], cubes[21], cubes[25], cubes[23]);
+            cycle_rotations(cubes[23], cubes[25], cubes[21], cubes[19]);
             for (let i of slices['D']) {
                 //rotate them clockwise
                 cubes[i].rotateOnWorldAxis(yAxis, -(Math.PI / 2));
@@ -516,9 +517,9 @@ function finish_move(move) {
         }
         else if (move == "D" || move == "d" || move == "y'") {
             //Cycle the rotation of the corners
-            cycle_rotations(cubes[18], cubes[20], cubes[26], cubes[24]);
+            cycle_rotations(cubes[24], cubes[26], cubes[20], cubes[18]);
             //Cycle the rotation of the edges
-            cycle_rotations(cubes[19], cubes[23], cubes[25], cubes[21]);
+            cycle_rotations(cubes[21], cubes[25], cubes[23], cubes[19]);
             for (let i of slices['D']) {
                 //rotate them counterclockwise
                 cubes[i].rotateOnWorldAxis(yAxis, (Math.PI / 2));
@@ -536,9 +537,9 @@ function finish_move(move) {
         //If the move is U or u
         if (move == "R" || move == "r" || move == "x") {
             //cycle the corners
-            cycle_rotations(cubes[2], cubes[8], cubes[26], cubes[20]);
+            cycle_rotations(cubes[20], cubes[26], cubes[8], cubes[2]);
             //cycle the edges
-            cycle_rotations(cubes[5], cubes[17], cubes[23], cubes[11]);
+            cycle_rotations(cubes[11], cubes[23], cubes[17], cubes[5]);
             for (let i of slices['R']) {
                 //rotate them clockwise
                 cubes[i].rotateOnWorldAxis(xAxis, -(Math.PI / 2));
@@ -559,9 +560,9 @@ function finish_move(move) {
         }
         else if (move == "R'" || move == "r'" || move == "x'") {
             //cycle the corners
-            cycle_rotations(cubes[2], cubes[20], cubes[26], cubes[8]);
+            cycle_rotations(cubes[8], cubes[26], cubes[20], cubes[2]);
             //cycle the edges
-            cycle_rotations(cubes[5], cubes[11], cubes[23], cubes[17]);
+            cycle_rotations(cubes[17], cubes[23], cubes[11], cubes[5]);
             for (let i of slices['R']) {
                 //rotate them counterclockwise
                 cubes[i].rotateOnWorldAxis(xAxis, (Math.PI / 2));
@@ -578,9 +579,9 @@ function finish_move(move) {
         //If the move is E', d' or u
         if (move == "M'" || move == "r" || move == "l'" || move == "x") {
             //cycle the edges
-            cycle_rotations(cubes[1], cubes[7], cubes[25], cubes[19]);
+            cycle_rotations(cubes[19], cubes[25], cubes[7], cubes[1]);
             //cycle the centers
-            cycle_rotations(cubes[4], cubes[16], cubes[22], cubes[10]);
+            cycle_rotations(cubes[10], cubes[22], cubes[16], cubes[4]);
             for (let i of slices['M']) {
                 //rotate them clockwise
                 cubes[i].rotateOnWorldAxis(xAxis, -(Math.PI / 2));
@@ -601,9 +602,9 @@ function finish_move(move) {
         }
         else if (move == "M" || move == "r'" || move == "l" || move == "x'") {
             //cycle the edges
-            cycle_rotations(cubes[1], cubes[19], cubes[25], cubes[7]);
+            cycle_rotations(cubes[7], cubes[25], cubes[19], cubes[1]);
             //cycle the centers
-            cycle_rotations(cubes[4], cubes[10], cubes[22], cubes[16]);
+            cycle_rotations(cubes[16], cubes[22], cubes[10], cubes[4]);
             for (let i of slices['M']) {
                 //rotate them counterclockwise
                 cubes[i].rotateOnWorldAxis(xAxis, (Math.PI / 2));
@@ -620,9 +621,9 @@ function finish_move(move) {
         //If the move is E', d' or u
         if (move == "L'" || move == "l'" || move == "x") {
             //cycle the corners
-            cycle_rotations(cubes[0], cubes[6], cubes[24], cubes[18]);
+            cycle_rotations(cubes[18], cubes[24], cubes[6], cubes[0]);
             //cycle the edges
-            cycle_rotations(cubes[3], cubes[15], cubes[21], cubes[9]);
+            cycle_rotations(cubes[9], cubes[21], cubes[15], cubes[3]);
             for (let i of slices['L']) {
                 //rotate them clockwise
                 cubes[i].rotateOnWorldAxis(xAxis, -(Math.PI / 2));
@@ -643,9 +644,9 @@ function finish_move(move) {
         }
         else if (move == "L" || move == "l" || move == "x'") {
             //cycle the corners
-            cycle_rotations(cubes[0], cubes[18], cubes[24], cubes[6]);
+            cycle_rotations(cubes[6], cubes[24], cubes[18], cubes[0]);
             //cycle the edges
-            cycle_rotations(cubes[3], cubes[9], cubes[21], cubes[15]);
+            cycle_rotations(cubes[15], cubes[21], cubes[9], cubes[3]);
             for (let i of slices['L']) {
                 //rotate them counterclockwise
                 cubes[i].rotateOnWorldAxis(xAxis, (Math.PI / 2));
@@ -663,9 +664,9 @@ function finish_move(move) {
         //If the move is U or u
         if (move == "F" || move == "f" || move == "z") {
             //cycle the corners
-            cycle_rotations(cubes[6], cubes[24], cubes[26], cubes[8]);
+            cycle_rotations(cubes[8], cubes[26], cubes[24], cubes[6]);
             //cycle the edges
-            cycle_rotations(cubes[7], cubes[15], cubes[25], cubes[17]);
+            cycle_rotations(cubes[17], cubes[25], cubes[15], cubes[7]);
             for (let i of slices['F']) {
                 //rotate them clockwise
                 cubes[i].rotateOnWorldAxis(zAxis, -(Math.PI / 2));
@@ -686,9 +687,9 @@ function finish_move(move) {
         }
         else if (move == "F'" || move == "f'" || move == "z'") {
             //cycle the corners
-            cycle_rotations(cubes[6], cubes[8], cubes[26], cubes[24]);
+            cycle_rotations(cubes[24], cubes[26], cubes[8], cubes[6]);
             //cycle the edges
-            cycle_rotations(cubes[7], cubes[17], cubes[25], cubes[15]);
+            cycle_rotations(cubes[15], cubes[25], cubes[17], cubes[7]);
             for (let i of slices['F']) {
                 //rotate them counterclockwise
                 cubes[i].rotateOnWorldAxis(zAxis, (Math.PI / 2));
@@ -705,9 +706,9 @@ function finish_move(move) {
         //If the move is E', d' or u
         if (move == "S'" || move == "f" || move == "b'" || move == "z") {
             //cycle the edges
-            cycle_rotations(cubes[3], cubes[21], cubes[23], cubes[5]);
+            cycle_rotations(cubes[5], cubes[23], cubes[21], cubes[3]);
             //cycle the centers
-            cycle_rotations(cubes[4], cubes[12], cubes[22], cubes[14]);
+            cycle_rotations(cubes[14], cubes[22], cubes[12], cubes[4]);
             for (let i of slices['S']) {
                 //rotate them clockwise
                 cubes[i].rotateOnWorldAxis(zAxis, -(Math.PI / 2));
@@ -728,9 +729,9 @@ function finish_move(move) {
         }
         else if (move == "S" || move == "f'" || move == "b" || move == "z'") {
             //cycle the edges
-            cycle_rotations(cubes[3], cubes[5], cubes[23], cubes[21]);
+            cycle_rotations(cubes[21], cubes[23], cubes[5], cubes[3]);
             //cycle the centers
-            cycle_rotations(cubes[4], cubes[14], cubes[22], cubes[12]);
+            cycle_rotations(cubes[12], cubes[22], cubes[14], cubes[4]);
             for (let i of slices['S']) {
                 //rotate them counterclockwise
                 cubes[i].rotateOnWorldAxis(zAxis, (Math.PI / 2));
@@ -747,9 +748,9 @@ function finish_move(move) {
         //If the move is E', d' or u
         if (move == "B'" || move == "b'" || move == "z") {
             //cycle the corners
-            cycle_rotations(cubes[0], cubes[18], cubes[20], cubes[2]);
+            cycle_rotations(cubes[2], cubes[20], cubes[18], cubes[0]);
             //cycle the edges
-            cycle_rotations(cubes[1], cubes[9], cubes[19], cubes[11]);
+            cycle_rotations(cubes[11], cubes[19], cubes[9], cubes[1]);
             for (let i of slices['B']) {
                 //rotate them clockwise
                 cubes[i].rotateOnWorldAxis(zAxis, -(Math.PI / 2));
@@ -770,9 +771,9 @@ function finish_move(move) {
         }
         else if (move == "B" || move == "b" || move == "z'") {
             //cycle the corners
-            cycle_rotations(cubes[0], cubes[2], cubes[20], cubes[18]);
+            cycle_rotations(cubes[18], cubes[20], cubes[2], cubes[0]);
             //cycle the edges
-            cycle_rotations(cubes[1], cubes[11], cubes[19], cubes[9]);
+            cycle_rotations(cubes[9], cubes[19], cubes[11], cubes[1]);
             for (let i of slices['B']) {
                 //rotate them counterclockwise
                 cubes[i].rotateOnWorldAxis(zAxis, (Math.PI / 2));
