@@ -16,9 +16,9 @@ G perm c,010132301223,L' R' U2 L R (y) L U' R U2 L' U R'
 G perm d,031220102313,R U R' F2 D' (L U' L' U L') D F2
 J perm a,001220112333,R' U2 R U R' U2' L U' R U L'
 J perm b,011200122333,R U2 (R' U' R) U2 L' (U R' U') L
-N Perm a,022311200133,(R U' L U2 R' U L') (R U' L U2 R' U L')
+N perm a,022311200133,(R U' L U2 R' U L') (R U' L U2 R' U L')
 N perm b,002331220113,(R' U L' U2 R U' L) (R' U L' U2 R U' L)
-R perm a,032310101223,R U2 R' U2 R B' R' U' R U R B R2 U
+R perm a,032310101223,R U2 R' U2 R B' R' U' R U R B R2
 R perm b,010102321233,R' U2 R U2 R' F (R U R' U') R' F' R2'
 T perm,001230122313,R U R' U' R' F R2 U' R' U' R U R' F'
 V perm,002321210133,R' U R' d' R' F' R2 U' R' U R' F R F
