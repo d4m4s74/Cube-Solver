@@ -1131,6 +1131,7 @@ $('#scramble').click(function () {
     movenumber = 0;
     steps = [];
     stepnumber = 0;
+    $('#solution').html("");
     for (let move of scramble) {
         //We just do the finishing step (the actual movement) without animation
         finish_move(move);
