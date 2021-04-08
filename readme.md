@@ -90,7 +90,7 @@ Unfortunately Windows doesn't support this type of shell codes, so I had to keep
 Move_cube() is the first function for actually changing the cube.
 This is a recursive function that does the requested move the requested amount of times.
 There are 9 possible moves, numbered 0 through 8. The default front, right, back, etc. But also the middle, equator and standing layer.
-Using a helper function I wrote in utils.c called Cycle I switch the values of each square on each face correspoding to each move clockwise, repeating if necessary.
+Using a helper function I wrote in utils.c called Cycle I switch the values of each square on each face correspoding the move clockwise, repeating if necessary.
 ##### run_algorithm()
 Because moves usually don't happen on their own, next I wrote run_algorithm(). This function uses move_cube() to run an algorithm on the cube supplied in standard cube notation. This gives me the ability to do multiple moves at once (or actually in order), and do moves that have effect on 2 or even 3 layers like x, y and z.
 ##### validate()
@@ -98,6 +98,24 @@ Finally, validate(). I added this function while writing the Python interface be
 This function does not check if the rubik's cube is solvable. It checks if the colors are correct. For example, one cubie can not have both white and yellow stickers. And going clockwise it's possible to have green, white and red stickers in that order, but not the other way around.  
 In order to do this I partially copied the idea of the locked array in Tideman, using a 2d boolean array for the corners, and a 3d boolean array for the edges to see if a combination of 2 or 3 colors is possible. This code went through multiple iterations. First checking each edge and corner separately, and later using a few for loops.
 
+#### cross.c and cross.h
+Cross.c contains all code needed to solve the cross of the cube. Because I use a "Human method" (CFOP) to solve the cube, I'm kind of forced to use huge decision trees.  
+##### crossCase1() through 6
+These 6 cases are every way an edge can be oriented, Pointing down, pointing up, pointing out in the up and down layers, pointing left and pointing right on the E layer.  
+The functions basically scan the faces in order from 0 to 3 to look for pieces that belong in the cross, rotate them into place, and store the moves in a char array using a helper function I call append().
+##### solve_cross()
+Solve_cross first orients the cube so yellow is down. Then it does the 6 cross cases in order. If one returns something other than null it goes back to the first case.  
+Once all 4 edges are solved the function returns the algorithms. If all cases are tested without success, or after 4 loops the function returns NULL.
+
+#### f2l.c and f2l.h
+The same idea as cross.c, except way bigger. 3600 lines of code to solve all the cases. 
+##### f2lCase1() through 11
+These 11 cases consist of every way a corner can be oriented, and some combinations of corners and edges.  
+To save time and lines most functions don't completely solve a corner/edge combination, but bring them to the shortest known state and call the correct function.  
+The number 1 through 11 are the order they were written in, not always the order they're run in.
+##### solve_f2l()
+Solve_f2l first verifies the cross is solved. If not it returns null.  
+After that solve_f2l goes through the cases in order of shortest average algorithm to longest, going back to 1 once a function returns an algorithm. If all cases are tested without succss, or after 4 loops the function returns NULL.
 
 ## How to use
 ### Solver
