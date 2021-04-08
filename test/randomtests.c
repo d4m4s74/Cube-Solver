@@ -1,4 +1,3 @@
-#include "../src/utils.h"
 #include <cubesolver.h>
 #include <string.h>
 #include <stdio.h>
@@ -6,9 +5,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-
-
-int numtests = 5000000;
+//These helper functions are in libcubesolver but not in cubesolver.h
+char *append(char *a, char *b);
+bool isNumber(char *s);
 
 //The four solved states
 const int solvedcube1[6][9] = {{0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -77,12 +76,21 @@ char *generate_scramble(int length)
     return alg;    
 }
 
-int main(void)
+int main(int argc, char *argv[])
 {
     srand(time(NULL));   // initialize random.
     //create a variable for a cube
     int cube[6][9];
-    setup("/home/d4m4s74/vscode/project/data");
+    if (argc != 3 || !isNumber(argv[2]))
+    {
+        printf("Usage: %s [path/to/csvs] [num_tests]\n", argv[0]);
+        return 1;
+    }
+    if (!setup(argv[1]))
+    {
+        return 2;
+    }
+    int numtests = atoi(argv[2]);
     printf("Solving %i random scrambles\n", numtests);
     for (int i = 1; i <= numtests; i++)
     {
