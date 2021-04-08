@@ -1,9 +1,104 @@
 # Rubik's Cube Solver
 #### Video Demo:  <URL HERE>
+#### Demo: http://d4m4s74.pythonanywhere.com/
 #### Description:
 My Final Project for CS50 is a "Human Method" Rubik's Cube Solver.  
 This means that the entered Rubik's Cube is solved using a method a human could use (CFOP), with clear steps: Cross, F2L, OLL and PLL.  
-The final product consists of a shell application, a C library for use in other projects, and a web interface writen in Flask, HTML, CSS and Javascript. 
+The final product consists of a shell application, a C library for use in other projects, and a web interface writen in Flask, HTML, CSS and Javascript.
+
+I decided to create a Rubik's Cube solver because I have made a Sudoku solver before in C++, and the cube was a step up.  
+Instead of a 2d plane, I have a semi-3d plane, with edges and corners.  
+Because AI solvers have been done, and I'm not confident enough of my AI writing abilities I decided to make the program solve the cube the way I do:  
+Cross, F2L, OLL and PLL
+
+## Structure
+```
+├── app.py
+├── bin
+│   ├── libcubesolver.so
+│   └── solver
+├── data
+│   ├── errors.txt
+│   ├── olls.csv
+│   ├── patterns.csv
+│   └── plls.csv
+├── makefile
+├── readme.md
+├── requirements.txt
+├── src
+│   ├── cross.c
+│   ├── cross.h
+│   ├── cube.c
+│   ├── cube.h
+│   ├── cubesolver.h
+│   ├── f2l.c
+│   ├── f2l.h
+│   ├── lastlayer.c
+│   ├── lastlayer.h
+│   ├── solver.c
+│   ├── solver_library.c
+│   ├── utils.c
+│   └── utils.h
+├── static
+│   ├── cube.css
+│   ├── cube.js
+│   ├── favicon.ico
+│   ├── next.png
+│   ├── pause.png
+│   ├── play.png
+│   └── prev.png
+├── templates
+│   ├── cube.html
+│   ├── home.html
+│   ├── layout.html
+│   └── solver.html
+```
+### src
+#### cube.c and cube.h
+Cube.c and cube.h contain all the code that controls the rubik's cube in memory.
+
+A rubik's cube, in memory, is a 6 by 9 2d array. The outer array contains the six faces: Front, Right, Back, Left, Up and Down.  
+I chose this order because the up and down faces are always the same, so I can hardcode them, but the sides only need to be correct in relation to each other. This means I can use simple plus or minus, combined with modulus to translate the tests and moves to every side.
+The same is for colors, which are saved as numbers 0 through 5, 0 being the front color, 1 being right, etc.  
+I first chose the color order I use: Red in front, yellow on top, green to the right. But later when writing my python code and interface I switched to the "Official" green in front, white on top so I don't need to rotate the cube entered by the user to have white on the bottom.
+
+##### color_cube()
+First I made the color_cube() function. This applies a pattern of your choice to the cube using 6 strings.  
+It uses simple char math to change char '0', '1', etc. to ints and stores them the given array.  
+I only use this once or twice as a one liner to set up a solved cube in one line, because when translating user input to something the computer understands you might as well enter the ints individually instead of first translating it to a string.
+##### print_cube()
+Print_cube() outputs the supplied cube to the terminal. This is used a lot when debugging, and for the terminal application.
+I started by outputting just the numbers 0 through 5 in the shape of an exploded rubik's cube.
+```
+    444
+    444
+    444
+
+333 000 111 222
+333 000 111 222
+333 000 111 222
+
+    555
+    555
+    555
+```
+Because it would make more lines of code to automate this I simply use 9 print statements each containing up to 12 variables.  
+Later I found out I could add shell codes like `\e[42m` to give these numbers a background color. Adding those gave me 28 variables per print.  
+Finally I thought of simply putting the letter or number for the color in the array that holds the shell codes, bringing it back to 12.
+Unfortunately Windows doesn't support this type of shell codes, so I had to keep using just numbers, and later letters.
+##### move_cube()
+Move_cube() is the first function for actually changing the cube.
+This is a recursive function that does the requested move the requested amount of times.
+There are 9 possible moves, numbered 0 through 8. The default front, right, back, etc. But also the middle, equator and standing layer.
+Using a helper function I wrote in utils.c called Cycle I switch the values of each square on each face correspoding to each move clockwise, repeating if necessary.
+##### run_algorithm()
+Because moves usually don't happen on their own, next I wrote run_algorithm(). This function uses move_cube() to run an algorithm on the cube supplied in standard cube notation. This gives me the ability to do multiple moves at once (or actually in order), and do moves that have effect on 2 or even 3 layers like x, y and z.
+##### validate()
+Finally, validate(). I added this function while writing the Python interface because you should never trust your user not to enter weird things.  
+This function does not check if the rubik's cube is solvable. It checks if the colors are correct. For example, one cubie can not have both white and yellow stickers. And going clockwise it's possible to have green, white and red stickers in that order, but not the other way around.  
+In order to do this I partially copied the idea of the locked array in Tideman, using a 2d boolean array for the corners, and a 3d boolean array for the edges to see if a combination of 2 or 3 colors is possible. This code went through multiple iterations. First checking each edge and corner separately, and later using a few for loops.
+
+
 ## How to use
 ### Solver
 #### Linux
@@ -149,7 +244,7 @@ char *oll = solve_oll(cube);
 char *pll = solve_pll(cube);
 ```
 #### Usage with python
-See C version to see what each function does.
+See C version to see what each function does.  
 Because it's hard to free malloced memory in python, use "safe" versions of the solve functions and use free_strings() after use.
 ```python
 import numpy
