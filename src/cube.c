@@ -399,6 +399,10 @@ void move_cube(int cube[6][9], int move, int times)
 //Runs a multiple move algorithm on the cube, using standard cube notation
 void run_algorithm(int cube[6][9], char *algorithm)
 {
+    if (algorithm == NULL)
+    {
+        return;
+    }
     for (int i = 0, n = strlen(algorithm); i < n; i++)
     {
         int times = 1;
