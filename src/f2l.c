@@ -32,7 +32,7 @@ char *f2lCase11(int cube[6][9]);
 //Solves the edges of the first two layers of the cube.
 char *solve_f2l(int cube[6][9])
 {
-    //First verify that the cross is solved
+    //First verify that the cross is solved. If not, return null.
     if (!(cube[D][1] == 5 && cube[F][7] == cube[F][4]) ||
         !(cube[D][3] == 5 && cube[L][7] == cube[L][4]) ||
         !(cube[D][5] == 5 && cube[R][7] == cube[R][4]) ||
@@ -1417,7 +1417,7 @@ char *f2lCase7(int cube[6][9])
                     }
                     run_algorithm(cube, "R U' R'");
                     alg = append(alg, "R U' R' ");
-                    if (cube[D][8] == 5)
+                    if (cube[D][6] == 5)
                     {
                         run_algorithm(cube, "d2");
                         alg = append(alg, "d2 ");
