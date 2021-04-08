@@ -1077,6 +1077,8 @@ $('#apply').click(function () {
             $('#error').html("&nbsp;");
             apply_pattern(faces);
             applied = faces.map(function (arr) { return arr.slice() });
+            //reset solution
+            $('#solution').html("");
         }
     });
 });
