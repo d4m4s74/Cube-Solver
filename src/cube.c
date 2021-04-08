@@ -187,8 +187,10 @@ bool validate(int cube[6][9])
 //first check the up slice
     for (int i = 0; i < 4; i++)
     {
+        //check if square 1 (top center) of each face, combined with the corresponding up square is possible.
         if (edges[cube[i][1]][cube[U][up1[i]]] && edges[cube[U][up1[i]]][cube[i][1]])
         {
+            //If so, set them to false so there can't be a second.
             edges[cube[i][1]][cube[U][up1[i]]] = 0;
             edges[cube[U][up1[i]]][cube[i][1]] = 0;
         }
@@ -200,8 +202,10 @@ bool validate(int cube[6][9])
 //then the E slice
     for (int i = 0; i < 4; i++)
     {
+        //check if square 5 (center right) of every face, combined with square 3 (center left) of the next face.
         if (edges[cube[i][5]][cube[(i + 1) % 4][3]] && edges[cube[(i + 1) % 4][3]][cube[i][5]])
         {
+            //If so, set them to false so there can't be a second.
             edges[cube[i][5]][cube[(i + 1) % 4][3]] = 0;
             edges[cube[(i + 1) % 4][3]][cube[i][5]] = 0;
         }
@@ -213,8 +217,10 @@ bool validate(int cube[6][9])
 //then the D slice
     for (int i = 0; i < 4; i++)
     {
+        //check if square 7 (bottom center) of each face, combined with the corresponding down square is possible.
         if (edges[cube[i][7]][cube[D][down1[i]]] && edges[cube[D][down1[i]]][cube[i][7]])
         {
+            //If so, set them to false so there can't be a second.
             edges[cube[i][7]][cube[D][down1[i]]] = 0;
             edges[cube[D][down1[i]]][cube[i][7]] = 0;
         }
@@ -227,6 +233,8 @@ bool validate(int cube[6][9])
     //first the U slice
     for (int i = 0; i < 4; i++)
     {
+        //check if square 2 (top right) of each face, combined with the corresponding up square, combined with square 0 of the next face is possible.
+        //repeat for every possible starting point
         if (corners[cube[i][2]][cube[U][up2[i]]][cube[(i + 1) % 4][0]] &&
             corners[cube[U][up2[i]]][cube[(i + 1) % 4][0]][cube[i][2]] &&
             corners[cube[(i + 1) % 4][0]][cube[i][2]][cube[U][up2[i]]])
@@ -240,9 +248,11 @@ bool validate(int cube[6][9])
             return false;
         }
     }
-    //first the D slice
+    //then the D slice
     for (int i = 0; i < 4; i++)
     {
+        //check if square 8 (bottom right) of each face, combined with the corresponding down square, combined with square 6 of the next face is possible.
+        //repeat for every possible starting point
         if (corners[cube[i][8]][cube[(i + 1) % 4][6]][cube[D][down2[i]]] &&
             corners[cube[(i + 1) % 4][6]][cube[D][down2[i]]][cube[i][8]] &&
             corners[cube[D][down2[i]]][cube[i][8]][cube[(i + 1) % 4][6]])
