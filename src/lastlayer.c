@@ -55,12 +55,21 @@ bool load_olls(char *filename)
                 i--;
                 continue;
             }
+            //To stop potential out of bound writes or reads, let's check the lengths
+            char *tmp = strchr(buffer, ',');
+            char *tmp2 = strrchr(buffer, ',');
+            if (tmp - buffer > 29 || tmp2 - tmp != 13 || buffer + strlen(buffer) - tmp2 > 100)
+            {
+                //Name, pattern or algorithm too long. Just ignore it and continue
+                i--;
+                continue;
+            }
             //Because some casese can have an empty algorithm
             algorithm[0] = 0;
             //scan the name, pattern and algorithm.
             sscanf(buffer, "%[^,], %[^,], %[^,\n]\n", name, pattern, algorithm);
-            //check if the pattern is all ones and zeroes
-            if (!isBinary(pattern))
+            //check if the pattern is all ones and zeroes and the right length
+            if (!isBinary(pattern) || strlen(pattern) != 12)
             {
                 //If not, go to the next line without iterating
                 i--;
@@ -125,12 +134,22 @@ bool load_plls(char *filename)
                 i--;
                 continue;
             }
+
+            //To stop potential out of bound writes or reads, let's check the lengths
+            char *tmp = strchr(buffer, ',');
+            char *tmp2 = strrchr(buffer, ',');
+            if (tmp - buffer > 29 || tmp2 - tmp != 13 || buffer + strlen(buffer) - tmp2 > 100)
+            {
+                //Name, pattern or algorithm too long. Just ignore it and continue
+                i--;
+                continue;
+            }
             //Because some casese can have an empty algorithm
             algorithm[0] = 0;
             //scan the name, pattern and algorithm.
             sscanf(buffer, "%[^,], %[^,], %[^,\n]\n", name, pattern, algorithm);
-            //check if pattern is purely numerical
-            if (!isNumber(pattern))
+            //check if pattern is purely numerical and the right length
+            if (!isNumber(pattern) || strlen(pattern) != 12)
             {
                 //If not, go to the next line without iterating
                 i--;
