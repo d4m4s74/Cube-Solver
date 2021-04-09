@@ -117,6 +117,20 @@ The number 1 through 11 are the order they were written in, not always the order
 Solve_f2l first verifies the cross is solved. If not it returns null.  
 After that solve_f2l goes through the cases in order of shortest average algorithm to longest, going back to 1 once a function returns an algorithm. If all cases are tested without succss, or after 4 loops the function returns NULL.
 
+#### lastlayer.c and lastlayer.h
+The file I'm most proud of. No giant loops, no decision trees. Just smart math and lookup tables.
+##### struct oll, and pll
+Oll and pll are two structs meant to store OLL and PLLs. They store the name, the pattern I use to recognize them, and the algorithm to solve them.  
+On a sleepless night I figured out I could recognize PLL using just the colors of the outer ring, and the OLL by just 12 booleans meaning yellow, or not yellow.  
+##### load_olls() and load_plls()
+Load_olls() and load_plls() load the names, patterns and algorithms from a CSV file. This went through some iterations.  
+I first started by getline() to get each line of the CSV files, and splitting the string at 24, characters and 36 characters, padding the name with spaces.  
+This wasn't pretty so I started looking for the commas and splitting things there.  
+Finally someone on the discord directed me to sscanf() allowing me to easily, cleanly split each string.  
+I also switched to fgets() to make getting the line more cross compatible.  
+Lines starting with # are rejeted because they are comments. Lines where the pattern isn't purely numeric are recognized using a helper function called isNumber() or isBinary()
+
+
 ## How to use
 ### Solver
 #### Linux
