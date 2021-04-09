@@ -128,7 +128,16 @@ I first started by getline() to get each line of the CSV files, and splitting th
 This wasn't pretty so I started looking for the commas and splitting things there.  
 Finally someone on the discord directed me to sscanf() allowing me to easily, cleanly split each string.  
 I also switched to fgets() to make getting the line more cross compatible.  
-Lines starting with # are rejeted because they are comments. Lines where the pattern isn't purely numeric are recognized using a helper function called isNumber() or isBinary()
+Lines starting with # are rejected because they are comments. Lines where the pattern isn't purely numeric are recognized using a helper function called isNumber() or isBinary() and are rejected, and while writing this section I added a test to see if the name, pattern and algorithm are the right length to stop out of bound reads and writes.  
+In the olls and plls array space for the names and algorithms is created using malloc and the information is copied in using strncpy. The pattern is turned into an array of 12 ints or booleans.
+##### find_oll() and find_pll()
+Find_pll() is my pride and joy. It was the first algorithm I wrote for solving the cube (before the cross and f2l), and it came to me in a dream.  A way to check the oll pattern for any color combination with some simple maths. 
+I literally woke up and wrote down `int case[12] containing the outer ring. if (front[0] == (front[1]-(case[0]-case[1])%4))`. The next day I simplified it to `(faces[0][0] == (faces[0][1] - (plls[i].pattern[0] - plls[i].pattern[1])) % 4)` (times 12). Then `(faces[j][0] - faces[j][1]) % 4 == (plls[i].pattern[0] - plls[i].pattern[1]) % 4` and finally after many iterations I ended up with `mod((cube[(j + i / 3) % 4][i % 3] + dif[j]), 4)` allowing me to encode the pattern of the top layer of the cube using a 12 int array, for easy comparison with all known values.  
+I could have encoded the pattern as a 4 byte int, but I decided not to because I think it's better to make the patterns easy to understand than save 44 bytes (3408 kb total for patterns)  
+Finally the function returns a pair_int_int containing the orientation of the layer, and the correct OLL or PLL. Or two negative numbers if nothing is found.
+##### solve_oll() and solve_pll()
+The functions solve_oll() and solve_pll() are relatively simple. They call find_oll or pll to get the right index and orientation (amount of y moves). Then the function turns the cube using an y move, runs the right OLL or PLL algorithm, and in case of solve_pll() turns the U layer to finally solve the cube. The functions return the algorithm used to solve the cube in standard cube notation.
+
 
 
 ## How to use
