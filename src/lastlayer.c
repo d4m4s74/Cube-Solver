@@ -56,6 +56,10 @@ bool load_olls(char *filename)
                 continue;
             }
             //To stop potential out of bound writes or reads, let's check the lengths
+            //The trick is to find the first comma and the last comma.
+            //Between the buffer pointer and the first comma is the name, with a max length of 29. 
+            //Between the comma's is the 12 character pattern (plus one for the comma itself)
+            //And at the end we have the algorithm.
             char *tmp = strchr(buffer, ',');
             char *tmp2 = strrchr(buffer, ',');
             if (tmp - buffer > 29 || tmp2 - tmp != 13 || buffer + strlen(buffer) - tmp2 > 100)
@@ -68,8 +72,8 @@ bool load_olls(char *filename)
             algorithm[0] = 0;
             //scan the name, pattern and algorithm.
             sscanf(buffer, "%[^,], %[^,], %[^,\n]\n", name, pattern, algorithm);
-            //check if the pattern is all ones and zeroes and the right length
-            if (!isBinary(pattern) || strlen(pattern) != 12)
+            //check if the pattern is all ones and zeroes
+            if (!isBinary(pattern))
             {
                 //If not, go to the next line without iterating
                 i--;
@@ -149,7 +153,7 @@ bool load_plls(char *filename)
             //scan the name, pattern and algorithm.
             sscanf(buffer, "%[^,], %[^,], %[^,\n]\n", name, pattern, algorithm);
             //check if pattern is purely numerical and the right length
-            if (!isNumber(pattern) || strlen(pattern) != 12)
+            if (!isNumber(pattern))
             {
                 //If not, go to the next line without iterating
                 i--;
