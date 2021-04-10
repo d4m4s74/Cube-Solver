@@ -20,10 +20,6 @@ path is the folder in which the csv files are located
 bool setup(char *path);
 bool issetup;
 
-//The default filenames for the PLL and OLL files
-char *pllFileName = "plls.csv";
-char *ollFileName = "olls.csv";
-
 //This is only necessary when using the library with python, because it's hard to free strings.
 int nstrings = 0;
 char **strings;
@@ -263,6 +259,9 @@ path is the folder in which the csv files are located
 */
 bool setup(char *path)
 {
+    //The default filenames for the PLL and OLL files
+    char *pllFileName = "plls.csv";
+    char *ollFileName = "olls.csv";
     if (strlen(path) == 0)
     {
         path = ".";
