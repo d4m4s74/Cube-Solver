@@ -140,5 +140,6 @@ int main(int argc, char *argv[])
         }
         free(scramble);
     }
+    cleanup_last_layer();
     printf("Correctly solved %i random scrambles\n", numtests);
 }
