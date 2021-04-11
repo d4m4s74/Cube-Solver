@@ -323,32 +323,32 @@ int color_letter_to_number(char c)
     //to save on conversion and tests, turn c into upper case
     c = toupper(c);
     //Green translate to 0
-    if (c == 'G' || c == 0)
+    if (c == 'G' || c == '0')
     {
         return 0;
     }
     //Red translates to 1
-    if (c == 'R' || c == 1)
+    if (c == 'R' || c == '1')
     {
         return 1;
     }
     //Blue translates to 2
-    if (c == 'B' || c == 2)
+    if (c == 'B' || c == '2')
     {
         return 2;
     }
     //Orange 3
-    if (c == 'O' || c == 3)
+    if (c == 'O' || c == '3')
     {
         return 3;
     }
     //White 4
-    if (c == 'W' || c == 4)
+    if (c == 'W' || c == '4')
     {
         return 4;
     }
     //Yellow 5
-    if (c == 'Y' || c == 5)
+    if (c == 'Y' || c == '5')
     {
         return 5;
     }
