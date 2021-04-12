@@ -370,10 +370,14 @@ void cleanup_last_layer()
     {
         free(olls[i].name);
         free(olls[i].algorithm);
+        olls[i].name = NULL;
+        olls[i].algorithm = NULL;
     }
     for (int i = 0; i < 22; i++)
     {
         free(plls[i].name);
         free(plls[i].algorithm);
+        plls[i].name = NULL;
+        plls[i].algorithm = NULL;
     }
 }
