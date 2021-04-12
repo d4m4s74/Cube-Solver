@@ -137,6 +137,8 @@ I could have encoded the pattern as a 4 byte int, but I decided not to because I
 Finally the function returns a pair_int_int containing the orientation of the layer, and the correct OLL or PLL. Or two negative numbers if nothing is found.
 ##### solve_oll() and solve_pll()
 The functions solve_oll() and solve_pll() are relatively simple. They call find_oll or pll to get the right index and orientation (amount of y moves). Then the function turns the cube using an y move, runs the right OLL or PLL algorithm, and in case of solve_pll() turns the U layer to finally solve the cube. The functions return the algorithm used to solve the cube in standard cube notation.
+##### cleanup_last_layer()
+Frees the memory used for storing all OLLs and PLLs. 
 #### utils.c and utils.h
 Some functions to make my life a bit easier.
 ##### mod()
@@ -149,7 +151,50 @@ A function that cycles 4 numbers. Basically a step up from swap. Used in cube.c 
 A function that adds a string to another string, reallocing if necessary. Used everywhere in this application.
 ##### isNumber() and isBinary()
 Checks if a string contains only digits, or only zeroes and ones. Currently only used for loading OLLs and PLLs.
-
+#### solver_library.c and cubesolver.h
+I first wrote solver.c as an interface for my cube solver, but quickly decided I wanted a graphical UI, which I'm not ready to do in pure C.  
+That's why I started to make my cubesolvers into a library for use with whatevery I want.  
+##### solve()
+Puts it all together to solve the cube.
+It takes a cube and validates it. Then attempts to solve the cross. If it fails it returns an error, otherwise it stores the output. Then it solves the cross or returns an error. It then solves the OLL (or returns) and the PLL. Finally it returns a string containing the full solution.
+##### solve_scramble()
+An interface for solve. Generates a cube from an entered scramble and passes it to solve()
+##### setup()
+Just to make everyone's life a little easier. Takes a path, and loads the olls and plls from that path. Returns true if it works, cleans up after itself and returns false if it doesn't.
+##### store_string_pointer()
+Because it's hard to free memory from Python, I decided to do it from C. I have "Safe" versions of every function you might want to use from outside of C. These store the generated pointers that need to be freed to a global array for freeing all at once.
+##### free_strings()
+Free all stored trings
+##### solve_safe(int cube[6][9]), solve_scramble_safe(), solve_cross_safe(), solve_f2l_safe(), solve_oll_safe() and solve_pll_safe()
+Multiple functions return strings, that need to be freed in the end. These functions store the pointers to these strings for later deletion.
+#### solver.c
+For testing, and those who are better with keyboard than with mouse, a terminal interface.  
+It went to multiple rewrites, finally being rewritten while writing this readme to work with solver_library instead of on its own.
+##### main()
+It does everything! It loads the OLLs and PLLs based on either default or user input. Then it generates a cube based on either the command line or user input, and finally solves the cube step by step, printing the cube along the way.
+##### getDir()
+Gets the directory from a given filepath (eg. argv[0]). Written to work with both Windows and Unix based OSses.
+##### color_letter_to_number()
+Changes a color letter to the corresponding int. In python I just used a dictionary. Way easier.
+##### color_face_from_input()
+Ask the user the nine colors of a rubik's cube's face, and puts them on a cube.
+##### color_cube_interactive()
+Step by step interactive interface for entering the colors onto a cube.
+##### helptext()
+Prints the help test
+##### usage()
+Prints the usage.
+### test
+#### randomtests.c
+A simple short application for bug testing. Generates lots of scrambles and solves them. Prints the first scramble that fails and stops.  
+I used this to find one single typo. Everything else I did manually.
+##### checkSolved()
+Uses memcmp to compare the cube spit out by the solve algorithm with one of 4 solved cubes. (one per orientation)  
+Trades in a bit of memory for speed.
+##### generate_scramble()
+Generates random scrambles for the rubik's cube. Badly. Does not protect against double move and reverse moves. But it's good enough if the scramble is long enough.
+##### main()
+Loads the OLLs and PLLs from user input. Solves the cube as many times as the user wants, until it fails.
 
 
 ## How to use
