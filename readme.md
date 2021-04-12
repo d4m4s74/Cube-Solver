@@ -137,6 +137,18 @@ I could have encoded the pattern as a 4 byte int, but I decided not to because I
 Finally the function returns a pair_int_int containing the orientation of the layer, and the correct OLL or PLL. Or two negative numbers if nothing is found.
 ##### solve_oll() and solve_pll()
 The functions solve_oll() and solve_pll() are relatively simple. They call find_oll or pll to get the right index and orientation (amount of y moves). Then the function turns the cube using an y move, runs the right OLL or PLL algorithm, and in case of solve_pll() turns the U layer to finally solve the cube. The functions return the algorithm used to solve the cube in standard cube notation.
+#### utils.c and utils.h
+Some functions to make my life a bit easier.
+##### mod()
+Because the normal % doesn't work with negative numbers, this is "my own version" that does. With special thanks to the cs50 discord.
+##### make_pair_int_int()
+For some functions I want to return more than one variable. This one is based on the C++ pair<int, int> and make_pair(). It creates a struct with two ints: first and second. In this case used to return the oll/pll number and the preceding U or y move.
+##### cycle()
+A function that cycles 4 numbers. Basically a step up from swap. Used in cube.c to cycle the edges and corners for cube moves. There is a copy of that move in cube.js
+##### append()
+A function that adds a string to another string, reallocing if necessary. Used everywhere in this application.
+##### isNumber() and isBinary()
+Checks if a string contains only digits, or only zeroes and ones. Currently only used for loading OLLs and PLLs.
 
 
 
