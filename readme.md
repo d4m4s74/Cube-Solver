@@ -245,8 +245,38 @@ First I create the canvas and camera. This piece of code is almost literally cop
 Except I do it 27 times. Well 28, I'll talk about that later.  
 I first did this manually one by one, but later wrote a few loops, making sure to keep the order I chose when doing that manually.  
 Finally I added way too many global variables containing the state of the cube and animation.
+#### cycle_rotations()
+Helper function. Cycles the rotations of 4 cubies using a 5th temp cubie. Simular to cycle() in utils.c
+#### swap_rotations()
+Helper function. Swaps the rotations of 2 cubies using a 3rd temp cubie.
 ##### reset_cube()
 Resets the cube to its default state. Completely solved, green in front, white on top.
+##### do_move()
+Simple function, long function. Adds all cubies that are in the next move to a group to be rotated all at once, and sets the required rotation for each direction in radians. Does not modify the cube, only sets up the animation
+##### finish_move()
+Actually does the work.  
+Once the animation is finished, this function actually moves the cubies. Or at least it pretends to. Actually it rotates the cubies, making it look like a face has rotated.  
+First it swaps or cycles the rotations of the cubes on the face, and then rotates them some more. Finally it saves the finished moves to the moves_done array so we remember what we have done. Otherwise it would be hard to solve the cube.
+##### next_move()
+Takes the next move from a global array, or the next array from an array of dicts of arrays and sends it to do_move(). It also shows the current move by changing the html for currentAlg div.
+##### prev_move()
+Takes the previous move from the moves array, inverts it and sends it to do_move, updating the dom and setting the iterator one back.
+##### if (urlparam("alg") and if (urlparam("scramble"))
+Not really functions but worth saying. Hidden eature. Animates an algorithm from GET, or scrambles the cube from GET. Useful when sharing algorithms with others.
+##### $('.square').click
+Controls the color picker. If the user picks a color and clicks a square, this piece of code gives the square its color. It also changes the corresponding field in the faces array to be applied later.
+##### $('#clear').click
+Returns the color picker, and the faces array back to default.
+##### apply_pattern()
+Applies the colors from the color picker (or actually the faces array) to the cube by rotating each cubie. Contains some of its own functions
+Every cubie has its own line with manual modifiers. To me it's too random to automate. But if you want to try, be my guest.
+###### function opposite_color()
+Changes green to blue, red to orange, white to yellow, and the other way around. Now I think of it, this could have been a dict, but one line of math and 3 ifs works too.
+###### apply_color()
+Rotates a cubie based on the front and left color, or the up color. Basically lots of if statements with hardcoded moves, but that's enough here.
+##### $('#apply').click
+Validates the pattern using api/validator and sends it to apply_pattern(). Also copies the faces array to the applied array.
+
 
 
 
