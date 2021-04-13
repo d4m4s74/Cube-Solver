@@ -181,7 +181,7 @@ Ask the user the nine colors of a rubik's cube's face, and puts them on a cube.
 ##### color_cube_interactive()
 Step by step interactive interface for entering the colors onto a cube.
 ##### helptext()
-Prints the help test
+Prints the help test.
 ##### usage()
 Prints the usage.
 ### test
@@ -189,12 +189,65 @@ Prints the usage.
 A simple short application for bug testing. Generates lots of scrambles and solves them. Prints the first scramble that fails and stops.  
 I used this to find one single typo. Everything else I did manually.
 ##### checkSolved()
-Uses memcmp to compare the cube spit out by the solve algorithm with one of 4 solved cubes. (one per orientation)  
+Uses memcmp to compare the cube spit out by the solve algorithm with one of 4 solved cubes (one per orientation).  
 Trades in a bit of memory for speed.
 ##### generate_scramble()
 Generates random scrambles for the rubik's cube. Badly. Does not protect against double move and reverse moves. But it's good enough if the scramble is long enough.
 ##### main()
 Loads the OLLs and PLLs from user input. Solves the cube as many times as the user wants, until it fails.
+### data
+#### olls.csv
+Contains a list of all 58 OLL cases (including solved) for use with my C library  
+Algorithms from my own memory, and from https://www.speedsolving.com/wiki/index.php/OLL
+#### plls.csv
+Contains a list of all 22 PLL cases (including solved) for use with my C library  
+Algorithms from my own memory, and from https://www.speedsolving.com/wiki/index.php/PLL
+#### patterns.csv
+Contains a few patterns for scrambling the cube in pretty ways. Mostly used for testing my javascript, but is a nice feature for the user.
+#### errors.txt
+Hopefully contains nothing, but is meant to store any and all errors in solving the cube.
+### ./
+#### app.py
+The bridge between my C code and javascript. It loads the C library, and initializes function I need with argtypes and if necessary restypes. Using numpy to convert from python types to ctypes.  
+##### decomment()
+A function I "borrowed" from stackoverflow. It takes an input stream and outputs every line up to #
+##### getsteps()
+The actual solver. It takes a scrambled cube and solves it step by step, returning the steps as an array of dictionaries (containing an array with algorithms). In case of exceptions it stores the pattern in data/errors.txt
+##### solverInterface()
+Only used for testing. Takes a scramble algorithm from GET, solves it using getsteps() and passes it to the solver template.
+##### solverJSON()
+Takes a pattern and scramble from GET or POST, solves it using getsteps and returns it as JSON.
+##### validatorJSON()
+Takes a pattern from GET or POST and solves the cube, not caring about the actual solution, but checking if and where it fails. Returns 0 for success or the error number.
+##### cube()
+Shows the cube.html template: the actual UI. While it does so, it also takes the patterns from data/patterns.csv to give to the template, using a dictreader and decomment to remove my comments.
+##### favicon()
+Passes the favicon though to the browser for the nice cube symbol.
+##### cleanup()
+Frees all memory from my C code: the PLLs and the strings. Registered using atexit to run at exit
+#### makefile
+All commands for compiling my C code on Linux or OS X. Even though my library can be used as a library I decided to use all files to compile so I can just give out one executable.
+#### requirements.txt
+Contains the two libraries I used that need to be installed separately. Just flask and numpy. Nothing special.
+### templates
+#### solver.html
+Asks for a scramble, passes it to app.py to solve and prints the solution. Only used for quick testing.
+#### cube.html
+Contains lots of empty divs to be filled by my javascript code, and shaped by css. Contains 3 images for the playback controls, a form for entering scrambles, and a short explanation.  
+Finally loads the javascript because it's nothing without the dom. Not that pretty, but very functional.
+### static
+Except for src contains the most actual code. Some CSS to make everything look usable, and javascript to make it actually be usable. And some images to click on.
+#### cube.js
+Brings my algorithm to the user. Based on three.js  
+This is my first time actually writing javascript. It doesn't look pretty, probably breaks all the rules, but it works.
+
+First I create the canvas and camera. This piece of code is almost literally copied from the tutorials on the three.js site. Then I create a multicolored cube with some help from [stackoverflow](https://stackoverflow.com/questions/32649428/is-it-possible-to-add-different-colors-to-every-face-of-the-cube-using-threejs)  
+Except I do it 27 times. Well 28, I'll talk about that later.  
+I first did this manually one by one, but later wrote a few loops, making sure to keep the order I chose when doing that manually.  
+Finally I added way too many global variables containing the state of the cube and animation.
+##### reset_cube()
+Resets the cube to its default state. Completely solved, green in front, white on top.
+
 
 
 ## How to use
