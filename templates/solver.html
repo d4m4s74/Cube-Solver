@@ -1,20 +1,25 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %}
-    Rubik's Cube Solver
-{% endblock %}
-{% block body %}
-    <form action = "/solver">
-        Scramble: <input type="text" name="scramble">
-        <input type="submit">
-    </form>
-    {% for step in steps %}
+    <head>
+        <title>
+            Rubik's Cube solver
+        </title>
+    </head>
+
+    <body>
+        <form action="/solver">
+            Scramble: <input type="text" name="scramble">
+            <input type="submit">
+        </form>
+        {% for step in steps %}
         <h3>{{step['step']}}</h3>
         <h4>{{step['name']}}</h4>
         <p>
             {% for alg in step['algorithms'] %}
-                {{alg}}<br/>
+            {{alg}}<br />
             {% endfor %}
         </p>
-    {% endfor %}
-{% endblock %}
+        {% endfor %}
+    </body>
+</html>

@@ -2,14 +2,6 @@
 
 import * as THREE from 'https://unpkg.com/three/build/three.module.js';
 import { OrbitControls } from 'https://unpkg.com/three/examples/jsm/controls/OrbitControls.js';
-//Copied from the jquery codebase
-function urlparam(name) {
-    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    if (results == null) {
-        return null;
-    }
-    return decodeURI(results[1]) || 0;
-}
 //Set up scene. Most of this code is copied straight from the tutorial on the three.js site
 //Get the container from the html file 
 let container = document.getElementById('canvas');
@@ -41,6 +33,16 @@ const edges = new THREE.EdgesGeometry(geometry);
 //create a 27 cubes
 var cubes = [];
 var outlines = [];
+
+//Copied from the jquery codebase
+function urlparam(name) {
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results == null) {
+        return null;
+    }
+    return decodeURI(results[1]) || 0;
+}
+
 for (let i = 0; i < 27; i++) {
     //make a mesh based on the before box
     cubes.push(new THREE.Mesh(geometry, cubeMaterials));
@@ -136,6 +138,23 @@ var faces = [[6, 6, 6, 6, 0, 6, 6, 6, 6],
 //The last applied cube (currently solvedCube but not always)
 var applied = solvedCube.map(function (arr) { return arr.slice() });
 
+//Function to cycle the rotations of 4 cubies a > b > c > d > a
+//todo: invert cycle_rotations
+function cycle_rotations(a, b, c, d) {
+    tempcube.setRotationFromEuler(a.rotation);
+    a.setRotationFromEuler(d.rotation);
+    d.setRotationFromEuler(c.rotation);
+    c.setRotationFromEuler(b.rotation);
+    b.setRotationFromEuler(tempcube.rotation);
+}
+
+//Function to swap the rotations of two cubies
+function swap_rotations(a, b) {
+    tempcube.setRotationFromEuler(a.rotation);
+    a.setRotationFromEuler(b.rotation);
+    b.setRotationFromEuler(tempcube.rotation);
+}
+
 //Function to reset the cube
 function reset_cube() {
     for (let i = 0; i < 27; i++) {
@@ -155,23 +174,6 @@ function reset_cube() {
 window.reset_cube = function () { reset_cube(); }
 //reset the cube
 reset_cube();
-
-//Function to cycle the rotations of 4 cubies a > b > c > d > a
-//todo: invert cycle_rotations
-function cycle_rotations(a, b, c, d) {
-    tempcube.setRotationFromEuler(a.rotation);
-    a.setRotationFromEuler(d.rotation);
-    d.setRotationFromEuler(c.rotation);
-    c.setRotationFromEuler(b.rotation);
-    b.setRotationFromEuler(tempcube.rotation);
-}
-
-//Function to swap the rotations of two cubies
-function swap_rotations(a, b) {
-    tempcube.setRotationFromEuler(a.rotation);
-    a.setRotationFromEuler(b.rotation);
-    b.setRotationFromEuler(tempcube.rotation);
-}
 
 //returns a bool that says if the cube is moving.
 function is_moving() {
