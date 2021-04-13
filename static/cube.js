@@ -139,7 +139,6 @@ var faces = [[6, 6, 6, 6, 0, 6, 6, 6, 6],
 var applied = solvedCube.map(function (arr) { return arr.slice() });
 
 //Function to cycle the rotations of 4 cubies a > b > c > d > a
-//todo: invert cycle_rotations
 function cycle_rotations(a, b, c, d) {
     tempcube.setRotationFromEuler(a.rotation);
     a.setRotationFromEuler(d.rotation);
@@ -840,16 +839,17 @@ function next_move(click = false) {
     }
 }
 
-//Function that gives the inverted version of the entered move (note, changes F2 to F2' to invert rotation)
-function invert_move(move) {
-    if (move.slice(-1) == "'")
-        return move.slice(0, -1);
-    else
-        return move + "'";
-}
+
 
 // function to cycle through backwards.
 function prev_move() {
+    //Function that gives the inverted version of the entered move (note, changes F2 to F2' to invert rotation)
+    function invert_move(move) {
+        if (move.slice(-1) == "'")
+            return move.slice(0, -1);
+        else
+            return move + "'";
+    }
     //Only do the mode if we aren't currently moving. Without this check we can desync if the user presses next while moving.
     if (!is_moving()) {
         //If we're already at the first move, return without doing anything
