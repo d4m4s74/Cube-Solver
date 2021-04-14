@@ -14,43 +14,46 @@ Cross, F2L, OLL and PLL
 ## Structure
 CS50 wants me to explain what every file does, and what's in it. So this readme is longer than all but 3 of my files.
 
-├── app.py  
+├── [app.py](#apppy)  
 ├── bin  
 │   ├── libcubesolver.so  
 │   └── solver  
-├── data  
-│   ├── errors.txt  
-│   ├── olls.csv  
-│   ├── patterns.csv  
-│   └── plls.csv  
-├── makefile  
+├── [data](#data)  
+│   ├── [errors.txt](#errorstxt)  
+│   ├── [olls.csv](#ollscsv)  
+│   ├── [patterns.csv](#patternscsv)  
+│   └── [plls.csv](#pllscsv)  
+├── [makefile](#makefile)  
 ├── readme.md  
-├── requirements.txt  
+├── [requirements.txt](#requirementstxt)  
 ├── [src](#src)  
-│   ├── cross.c  
-│   ├── cross.h  
-│   ├── cube.c  
-│   ├── cube.h  
-│   ├── cubesolver.h  
-│   ├── f2l.c  
-│   ├── f2l.h  
-│   ├── lastlayer.c  
-│   ├── lastlayer.h  
-│   ├── solver.c  
-│   ├── solver_library.c  
-│   ├── utils.c  
-│   └── utils.h  
+│   ├── [cross.c](#crossc-and-crossh)  
+│   ├── [cross.h](#crossc-and-crossh)  
+│   ├── [cube.c](#cubec-and-cubeh)  
+│   ├── [cube.h](#cubec-and-cubeh)  
+│   ├── [cubesolver.h](#solver_libraryc-and-cubesolverh)  
+│   ├── [f2l.c](#f2lc-and-f2lh)  
+│   ├── [f2l.h](#f2lc-and-f2lh)  
+│   ├── [lastlayer.c](#lastlayerc-and-lastlayerh)  
+│   ├── [lastlayer.h](#lastlayerc-and-lastlayerh)  
+│   ├── [solver.c](#solverc)  
+│   ├── [solver_library.c](#solver_libraryc-and-cubesolverh)    
+│   ├── [utils.c](#utilsc-and-utilsh)  
+│   └── [utils.h](#utilsc-and-utilsh) 
+├── test  
+│   ├── [randomtests.c](#randomtestsc)  
+│   └── randomtests   
 ├── static  
-│   ├── cube.css  
-│   ├── cube.js  
+│   ├── [cube.css](cubecss)  
+│   ├── [cube.js](cubejs)  
 │   ├── favicon.ico  
 │   ├── next.png  
 │   ├── pause.png  
 │   ├── play.png  
 │   └── prev.png  
-├── templates  
-│   ├── cube.html  
-│   └── solver.html  
+├── [templates](#templates)  
+│   ├── [cube.html](#cubehtml)  
+│   └── [solver.html](#solverhtml)  
 
 ### src
 #### cube.c and cube.h
@@ -236,6 +239,13 @@ Contains lots of empty divs to be filled by my javascript code, and shaped by cs
 Finally loads the javascript because it's nothing without the dom. Not that pretty, but very functional.
 ### static
 Except for src contains the most actual code. Some CSS to make everything look usable, and javascript to make it actually be usable. And some images to click on.
+#### cube.css
+Changes the link of random divs to something you can see.  
+Uses CSS grids in the default, and less default ways.  
+I use an outer container to place the controls on the left, the solver animation top right, and solution bottom right.  
+Using absolute positioning I put the playback controls and current alg over the animation.  
+Everything else is quite default except for the colorpicker. If you look at the html code you just see a div containing 6 divs, each containing 9 divs. Using grids I shape the 6 "face" divs to look like an unfolded cube, each face contains a grid of 9 squares. This allows me to make the size variable while the shape stays the same, without needing to use images.  
+I also spent a week or 2 making a mobile view, because the text seemed to be a variable size. I contacted the discord, facebook, and even stackoverflow. Finally I found a html line on stackoverflow: `<meta name="viewport" content="width=device-width, initial-scale=1.0">` which solved everything in one line.
 #### cube.js
 Brings my algorithm to the user. Based on three.js  
 This is my first time actually writing javascript. It doesn't look pretty, probably breaks all the rules, but it works.
