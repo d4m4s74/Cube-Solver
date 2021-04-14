@@ -291,7 +291,7 @@ CS50 wants me to explain what every file does, and what's in it. So this readme 
 │   ├── [patterns.csv](#patternscsv)  
 │   └── [plls.csv](#pllscsv)  
 ├── [makefile](#makefile)  
-├── readme.md  
+├── README.md  
 ├── [requirements.txt](#requirementstxt)  
 ├── [src](#src)  
 │   ├── [cross.c](#crossc-and-crossh)  
