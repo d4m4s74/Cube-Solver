@@ -12,6 +12,7 @@ Because AI solvers have been done, and I'm not confident enough of my AI writing
 Cross, F2L, OLL and PLL
 
 ## Structure
+CS50 wants me to explain what every file does, and what's in it. So this readme is longer than all but 3 of my files.
 ```
 ├── app.py
 ├── bin
@@ -49,8 +50,6 @@ Cross, F2L, OLL and PLL
 │   └── prev.png
 ├── templates
 │   ├── cube.html
-│   ├── home.html
-│   ├── layout.html
 │   └── solver.html
 ```
 ### src
@@ -276,8 +275,27 @@ Changes green to blue, red to orange, white to yellow, and the other way around.
 Rotates a cubie based on the front and left color, or the up color. Basically lots of if statements with hardcoded moves, but that's enough here.
 ##### $('#apply').click
 Validates the pattern using api/validator and sends it to apply_pattern(). Also copies the faces array to the applied array.
-
-
+##### $('#algForm').submit
+Takes an algorithm from the alg field, converts it into a moves array and sets running to true so the next frame the algorithm starts being animated.
+##### $('#scramble').click
+Takes an algorithm from the alg field, and runs the finish_move() function for every move so the cube updates without actually showing the animation.
+##### $('#pattern').change
+Takes the selected pattern and puts the algorithm in the alg field.
+##### $('#playpause').click
+Sets running to false, paused to true and switches the play icon with the pause icon in the interface
+##### $('#next'). and $('#prev').click
+Pauses animation and runs either next_move or prev_move
+##### solve_cube()
+Sends both the applied pattern, and all moves done to api/solver, puts the algorithms on screen in the Solutions div, and adds all steps to the steps array and sets running to true so the animation starts.
+##### $('#speed').on('input')
+Changes the movement speed variable based on an input slider on screen
+##### animate()
+Runs every frame and controls the 3d animation.  
+It first sets up an animation frame (default 3.js function).  
+If there is wait time, it does nothing except lowering the wait time by one.  
+If there are x, y or z moves remaining it rotates the moving group mspeed radians.  
+If there are no x, y or z moves remaining but there is a current move, it sends the move to finish_move().  
+Finally it updates the camera and renders everything.
 
 
 ## How to use
