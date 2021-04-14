@@ -59,6 +59,7 @@ def decomment(csvfile):
         if raw:
             yield raw
 
+
 # Function that gets the steps of solving a cube and returns a list of dicts
 def getsteps(cube):
     # empty step list

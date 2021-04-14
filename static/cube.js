@@ -1,5 +1,3 @@
-
-
 import * as THREE from 'https://unpkg.com/three/build/three.module.js';
 import { OrbitControls } from 'https://unpkg.com/three/examples/jsm/controls/OrbitControls.js';
 //Set up scene. Most of this code is copied straight from the tutorial on the three.js site
@@ -136,7 +134,7 @@ var faces = [[6, 6, 6, 6, 0, 6, 6, 6, 6],
 [6, 6, 6, 6, 5, 6, 6, 6, 6]]
 
 //The last applied cube (currently solvedCube but not always)
-var applied = solvedCube.map(function (arr) { return arr.slice() });
+var applied = solvedCube.map(function(arr) { return arr.slice() });
 
 //Function to cycle the rotations of 4 cubies a > b > c > d > a
 function cycle_rotations(a, b, c, d) {
@@ -167,10 +165,10 @@ function reset_cube() {
     running = false;
     steps = [];
     $("#currentAlg").html("");
-    applied = solvedCube.map(function (arr) { return arr.slice() });
+    applied = solvedCube.map(function(arr) { return arr.slice() });
 }
 //make this function available to the interface
-window.reset_cube = function () { reset_cube(); }
+window.reset_cube = function() { reset_cube(); }
 //reset the cube
 reset_cube();
 
@@ -198,14 +196,11 @@ function do_move(move) {
         //Set up the movement for U or u
         if (move == "U" || move == "u" || move == "y") {
             yRemaining = -(Math.PI / 2);
-        }
-        else if (move == "U2" || move == "u2" || move == "y2") {
+        } else if (move == "U2" || move == "u2" || move == "y2") {
             yRemaining = -Math.PI;
-        }
-        else if (move == "U2'" || move == "u2'" || move == "y2'") {
+        } else if (move == "U2'" || move == "u2'" || move == "y2'") {
             yRemaining = Math.PI;
-        }
-        else if (move == "U'" || move == "u'" || move == "y'") {
+        } else if (move == "U'" || move == "u'" || move == "y'") {
             yRemaining = (Math.PI / 2);
         }
     }
@@ -219,14 +214,11 @@ function do_move(move) {
         //only set up moves for E
         if (move == "E'") {
             yRemaining = -(Math.PI / 2);
-        }
-        else if (move == "E2") {
+        } else if (move == "E2") {
             yRemaining = -Math.PI;
-        }
-        else if (move == "E2'") {
+        } else if (move == "E2'") {
             yRemaining = Math.PI;
-        }
-        else if (move == "E") {
+        } else if (move == "E") {
             yRemaining = (Math.PI / 2);
         }
     }
@@ -240,14 +232,11 @@ function do_move(move) {
         //set up moves for D and d
         if (move == "D'" || move == "d'") {
             yRemaining = -(Math.PI / 2);
-        }
-        else if (move == "D2" || move == "d2") {
+        } else if (move == "D2" || move == "d2") {
             yRemaining = -Math.PI;
-        }
-        else if (move == "D2'" || move == "d2'") {
+        } else if (move == "D2'" || move == "d2'") {
             yRemaining = Math.PI;
-        }
-        else if (move == "D" || move == "d") {
+        } else if (move == "D" || move == "d") {
             yRemaining = (Math.PI / 2);
         }
     }
@@ -261,14 +250,11 @@ function do_move(move) {
         //Set up the movement for R or r
         if (move == "R" || move == "r" || move == "x") {
             xRemaining = -(Math.PI / 2);
-        }
-        else if (move == "R2" || move == "r2" || move == "x2") {
+        } else if (move == "R2" || move == "r2" || move == "x2") {
             xRemaining = -Math.PI;
-        }
-        else if (move == "R2'" || move == "r2'" || move == "x2'") {
+        } else if (move == "R2'" || move == "r2'" || move == "x2'") {
             xRemaining = Math.PI;
-        }
-        else if (move == "R'" || move == "r'" || move == "x'") {
+        } else if (move == "R'" || move == "r'" || move == "x'") {
             xRemaining = (Math.PI / 2);
         }
     }
@@ -282,14 +268,11 @@ function do_move(move) {
         //only set up moves for M
         if (move == "M'") {
             xRemaining = -(Math.PI / 2);
-        }
-        else if (move == "M2") {
+        } else if (move == "M2") {
             xRemaining = Math.PI;
-        }
-        else if (move == "M2'") {
+        } else if (move == "M2'") {
             xRemaining = -Math.PI;
-        }
-        else if (move == "M") {
+        } else if (move == "M") {
             xRemaining = (Math.PI / 2);
         }
     }
@@ -303,14 +286,11 @@ function do_move(move) {
         //set up moves for L and l
         if (move == "L'" || move == "l'") {
             xRemaining = -(Math.PI / 2);
-        }
-        else if (move == "L2" || move == "l2") {
+        } else if (move == "L2" || move == "l2") {
             xRemaining = Math.PI;
-        }
-        else if (move == "L2'" || move == "l2'") {
+        } else if (move == "L2'" || move == "l2'") {
             xRemaining = -Math.PI;
-        }
-        else if (move == "L" || move == "l") {
+        } else if (move == "L" || move == "l") {
             xRemaining = (Math.PI / 2);
         }
     }
@@ -325,14 +305,11 @@ function do_move(move) {
         //Set up the movement for F or f
         if (move == "F" || move == "f" || move == "z") {
             zRemaining = -(Math.PI / 2);
-        }
-        else if (move == "F2" || move == "f2" || move == "z2") {
+        } else if (move == "F2" || move == "f2" || move == "z2") {
             zRemaining = -Math.PI;
-        }
-        else if (move == "F2'" || move == "f2'" || move == "z2'") {
+        } else if (move == "F2'" || move == "f2'" || move == "z2'") {
             zRemaining = Math.PI;
-        }
-        else if (move == "F'" || move == "f'" || move == "z'") {
+        } else if (move == "F'" || move == "f'" || move == "z'") {
             zRemaining = (Math.PI / 2);
         }
     }
@@ -346,14 +323,11 @@ function do_move(move) {
         //only set up moves for S
         if (move == "S'") {
             zRemaining = -(Math.PI / 2);
-        }
-        else if (move == "S2") {
+        } else if (move == "S2") {
             zRemaining = Math.PI;
-        }
-        else if (move == "S2'") {
+        } else if (move == "S2'") {
             zRemaining = -Math.PI;
-        }
-        else if (move == "S") {
+        } else if (move == "S") {
             zRemaining = (Math.PI / 2);
         }
     }
@@ -367,20 +341,22 @@ function do_move(move) {
         //set up moves for B and b
         if (move == "B'" || move == "b'") {
             zRemaining = -(Math.PI / 2);
-        }
-        else if (move == "B2" || move == "b2") {
+        } else if (move == "B2" || move == "b2") {
             zRemaining = Math.PI;
-        }
-        else if (move == "B2'" || move == "b2'") {
+        } else if (move == "B2'" || move == "b2'") {
             zRemaining = -Math.PI;
-        }
-        else if (move == "B" || move == "b") {
+        } else if (move == "B" || move == "b") {
             zRemaining = (Math.PI / 2);
         }
     }
 }
 //make the function usable outside of the js file.
-window.do_move = function (move, inverted = false) { if (inverted) do_move(move + "'"); else do_move(move); }
+window.do_move = function(move, inverted = false) {
+    if (inverted)
+        do_move(move + "'");
+    else
+        do_move(move);
+}
 
 //Function actually moves the pieces (or gives the same effect)
 function finish_move(move) {
@@ -462,7 +438,8 @@ function finish_move(move) {
             }
         }
         //for 2 moves,
-        else if (move == "E2" || move == "u2" || move == "d2" || move == "y2" || move == "E2'" || move == "u2'" || move == "d2'" || move == "y2'") {
+        else if (move == "E2" || move == "u2" || move == "d2" || move == "y2" || move == "E2'" || move == "u2'" || move == "d2'" ||
+            move == "y2'") {
             //swap the edges
             swap_rotations(cubes[9], cubes[17]);
             swap_rotations(cubes[11], cubes[15]);
@@ -473,8 +450,7 @@ function finish_move(move) {
                 //rotate them 180
                 cubes[i].rotateOnWorldAxis(yAxis, Math.PI);
             }
-        }
-        else if (move == "E" || move == "u'" || move == "d" || move == "y'") {
+        } else if (move == "E" || move == "u'" || move == "d" || move == "y'") {
             //Cycle the rotation of the edges
             cycle_rotations(cubes[15], cubes[17], cubes[11], cubes[9]);
             //Cycle the rotation of the centers
@@ -515,8 +491,7 @@ function finish_move(move) {
                 //rote them 180
                 cubes[i].rotateOnWorldAxis(yAxis, Math.PI);
             }
-        }
-        else if (move == "D" || move == "d" || move == "y'") {
+        } else if (move == "D" || move == "d" || move == "y'") {
             //Cycle the rotation of the corners
             cycle_rotations(cubes[24], cubes[26], cubes[20], cubes[18]);
             //Cycle the rotation of the edges
@@ -558,8 +533,7 @@ function finish_move(move) {
                 //rotate them 180
                 cubes[i].rotateOnWorldAxis(xAxis, Math.PI);
             }
-        }
-        else if (move == "R'" || move == "r'" || move == "x'") {
+        } else if (move == "R'" || move == "r'" || move == "x'") {
             //cycle the corners
             cycle_rotations(cubes[8], cubes[26], cubes[20], cubes[2]);
             //cycle the edges
@@ -589,7 +563,8 @@ function finish_move(move) {
             }
         }
         //for 2 moves,
-        else if (move == "M2" || move == "r2" || move == "l2" || move == "x2" || move == "M2'" || move == "r2'" || move == "l2'" || move == "x2'") {
+        else if (move == "M2" || move == "r2" || move == "l2" || move == "x2" || move == "M2'" || move == "r2'" ||
+            move == "l2'" || move == "x2'") {
             //swap the edges
             swap_rotations(cubes[1], cubes[25]);
             swap_rotations(cubes[7], cubes[19]);
@@ -600,8 +575,7 @@ function finish_move(move) {
                 //rote them 180
                 cubes[i].rotateOnWorldAxis(xAxis, Math.PI);
             }
-        }
-        else if (move == "M" || move == "r'" || move == "l" || move == "x'") {
+        } else if (move == "M" || move == "r'" || move == "l" || move == "x'") {
             //cycle the edges
             cycle_rotations(cubes[7], cubes[25], cubes[19], cubes[1]);
             //cycle the centers
@@ -642,8 +616,7 @@ function finish_move(move) {
                 //rotate them 180
                 cubes[i].rotateOnWorldAxis(xAxis, Math.PI);
             }
-        }
-        else if (move == "L" || move == "l" || move == "x'") {
+        } else if (move == "L" || move == "l" || move == "x'") {
             //cycle the corners
             cycle_rotations(cubes[6], cubes[24], cubes[18], cubes[0]);
             //cycle the edges
@@ -685,8 +658,7 @@ function finish_move(move) {
                 //rotate them 180
                 cubes[i].rotateOnWorldAxis(zAxis, Math.PI);
             }
-        }
-        else if (move == "F'" || move == "f'" || move == "z'") {
+        } else if (move == "F'" || move == "f'" || move == "z'") {
             //cycle the corners
             cycle_rotations(cubes[24], cubes[26], cubes[8], cubes[6]);
             //cycle the edges
@@ -727,8 +699,7 @@ function finish_move(move) {
                 //rote them 180
                 cubes[i].rotateOnWorldAxis(zAxis, Math.PI);
             }
-        }
-        else if (move == "S" || move == "f'" || move == "b" || move == "z'") {
+        } else if (move == "S" || move == "f'" || move == "b" || move == "z'") {
             //cycle the edges
             cycle_rotations(cubes[21], cubes[23], cubes[5], cubes[3]);
             //cycle the centers
@@ -769,8 +740,7 @@ function finish_move(move) {
                 //rotate them 180
                 cubes[i].rotateOnWorldAxis(zAxis, Math.PI);
             }
-        }
-        else if (move == "B" || move == "b" || move == "z'") {
+        } else if (move == "B" || move == "b" || move == "z'") {
             //cycle the corners
             cycle_rotations(cubes[18], cubes[20], cubes[2], cubes[0]);
             //cycle the edges
@@ -806,7 +776,7 @@ function next_move(click = false) {
             }
             //If we're finished with the last step, asssume the cube is solved and clear the screen.
             else if (stepnumber == steps.length - 1) {
-                applied = solvedCube.map(function (arr) { return arr.slice() });
+                applied = solvedCube.map(function(arr) { return arr.slice() });
                 movesDone = [];
                 running = false;
                 $("#currentAlg").html("");
@@ -907,7 +877,7 @@ if (urlparam("scramble")) {
 const colors = ["green", "red", "blue", "orange", "white", "yellow", "grey"]
 var color = 6;
 //If one of the squared is clicked
-$('.square').click(function () {
+$('.square').click(function() {
     //If the square is one of the color pickers
     if (colors.includes(this.id)) {
         //set the color to the number of that color
@@ -919,15 +889,14 @@ $('.square').click(function () {
     else if (this.id == "cur") {
         color = 6
         $("#cur").css("background-color", colors[color])
-    }//for all other squares, except for the centers
+    } //for all other squares, except for the centers
     else if (parseInt(this.id[3]) != 4) {
         if (faces[parseInt(this.id[1])][parseInt(this.id[3])] == color) {
             //set the color of the square to the selected color
             $("#" + this.id).css("background-color", colors[6])
             //update the color in the "faces" array
             faces[parseInt(this.id[1])][parseInt(this.id[3])] = 6;
-        }
-        else {
+        } else {
             //set the color of the square to the selected color
             $("#" + this.id).css("background-color", colors[color])
             //update the color in the "faces" array
@@ -937,7 +906,7 @@ $('.square').click(function () {
 });
 
 //Clear the color picker
-$('#clear').click(function () {
+$('#clear').click(function() {
     for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 9; j++) {
             if (j != 4) {
@@ -1036,8 +1005,7 @@ function apply_pattern(pattern) {
         }
         if (fUp) {
             cubie.rotateOnWorldAxis(xAxis, -(Math.PI / 2))
-        }
-        else if (lUp) {
+        } else if (lUp) {
             cubie.rotateOnWorldAxis(zAxis, -(Math.PI / 2))
         }
     }
@@ -1072,21 +1040,21 @@ function apply_pattern(pattern) {
     apply_color(cubes[26], faces[0][8], opposite_color(faces[1][6]));
 }
 
-const errors = ["Success", "No pattern entered", "Invalid color combination", "OLL parity", "PLL parity", "Error in solving algorithm"]
+const errors = ["Success", "No pattern entered", "Invalid color combination", "OLL parity", "PLL parity",
+    "Error in solving algorithm"]
 //If a user applies a pattern
-$('#apply').click(function () {
+$('#apply').click(function() {
     //First validate the pattern
-    $.post("api/validator", { pattern: JSON.stringify(faces) }, function (data) {
+    $.post("api/validator", { pattern: JSON.stringify(faces) }, function(data) {
         //If it fails, give the error
         let reply = parseInt(data);
         if (reply != 0) {
             $('#error').html(errors[reply]);
-        }
-        else {
+        } else {
             //then apply the faces
             $('#error').html("&nbsp;");
             apply_pattern(faces);
-            applied = faces.map(function (arr) { return arr.slice() });
+            applied = faces.map(function(arr) { return arr.slice() });
             //reset solution
             $('#solution').html("");
         }
@@ -1094,7 +1062,7 @@ $('#apply').click(function () {
 });
 
 //Run an algorithm on the cube
-$('#algForm').submit(function (e) {
+$('#algForm').submit(function(e) {
     //Only submit if there's no algorithm running
     if (running == false) {
         //In case of mobile, scroll to the top of the screen
@@ -1124,7 +1092,7 @@ $('#algForm').submit(function (e) {
 
 
 //Disable return on the algorithm field, because there are two submit buttons
-$('#algForm').on('keydown', function (event) {
+$('#algForm').on('keydown', function(event) {
     var x = event.which;
     if (x === 13) {
         event.preventDefault();
@@ -1132,7 +1100,7 @@ $('#algForm').on('keydown', function (event) {
 });
 
 //Run an algorithm on the cube without showing the moves
-$('#scramble').click(function () {
+$('#scramble').click(function() {
     reset_cube()
     let alg = $('#alg').val();
     let scramble = alg.replace(/[^FfBbRrLlUuDdxyzMES\'2+ ]/g, "").split(" ");
@@ -1148,25 +1116,24 @@ $('#scramble').click(function () {
 });
 
 //Select a pattern from the pattern select and put it in the algorithm field.
-$('#pattern').change(function () {
+$('#pattern').change(function() {
     $('#alg').val(document.getElementById("pattern").value)
 })
 
 //On click events for play/pause, next and prev
-$('#playpause').click(function () {
+$('#playpause').click(function() {
     if (paused) {
         paused = false;
         running = true;
         $('#playpause').html('<img src="static/pause.png" alt="pause"></img>');
-    }
-    else {
+    } else {
         paused = true;
         running = false;
         $('#playpause').html('<img src="static/play.png" alt="play"></img>');
     }
 });
 
-$('#next').click(function () {
+$('#next').click(function() {
     if (paused == false) {
         paused = true;
         running = false;
@@ -1175,7 +1142,7 @@ $('#next').click(function () {
     next_move(true);
 });
 
-$('#prev').click(function () {
+$('#prev').click(function() {
     if (paused == false) {
         paused = true;
         running = false;
@@ -1187,7 +1154,7 @@ $('#prev').click(function () {
 //Function to get the solution for the cube, show it in the solution div and add the moves to the steps array.
 function solve_cube() {
     //Send the pattern (if applied) and any moves done to it already to the solver
-    $.post("api/solver", { pattern: JSON.stringify(applied), scramble: movesDone.join(" ") }, function (data) {
+    $.post("api/solver", { pattern: JSON.stringify(applied), scramble: movesDone.join(" ") }, function(data) {
         //empty the steps array
         steps = [];
         //reset the curent step
@@ -1208,7 +1175,8 @@ function solve_cube() {
             for (let alg of step["algorithms"]) {
                 if (step["algorithms"] != "") {
                     //the id is dynamic so I can modify the CSS
-                    html += `<li id='alg${algs}' class='algorithm'>${alg.replace(/[^FfBbRrLlUuDdxyzMES\'2+ ]/g, "")}</li>\n`;
+                    html +=
+                        `<li id='alg${algs}' class='algorithm'>${alg.replace(/[^FfBbRrLlUuDdxyzMES\'2+ ]/g, "")}</li>\n`;
                     //add he alg into the steps array, ignoring everything but the moves.
                     steps.push(alg.replace(/[^FfBbRrLlUuDdxyzMES\'2 ]/g, "").split(" "))
                     //console.log(steps[algs]);
@@ -1232,20 +1200,20 @@ function solve_cube() {
 
 
 //On click events for solver and reset.
-$('#solve').click(function () {
+$('#solve').click(function() {
     window.scrollTo(0, 0); //In case of mobile, scroll to the top of the screen
     solve_cube();
 });
 
-$('#reset').click(function () {
+$('#reset').click(function() {
     //First finish the moves so no new moves happen after the rest
     running = false;
     finish_move(cur);
-    reset_cube(); 
+    reset_cube();
 });
 
 //Vary the movement speed.
-$('#speed').on('input', function () {
+$('#speed').on('input', function() {
     mspeed = $('#speed').val() / 100;
     console.log(mspeed);
 })
@@ -1269,61 +1237,49 @@ function animate() {
             moving.rotateY(-mspeed);
             yRemaining += mspeed;
         }
-    }
-    else if (yRemaining > 0) {
+    } else if (yRemaining > 0) {
         if (yRemaining < mspeed) {
             moving.rotateY(yRemaining);
             yRemaining = 0;
-        }
-        else {
+        } else {
             moving.rotateY(mspeed);
             yRemaining -= mspeed;
         }
-    }
-    else if (xRemaining < 0) {
+    } else if (xRemaining < 0) {
         if (xRemaining > -mspeed) {
             moving.rotateX(xRemaining);
             xRemaining = 0;
-        }
-        else {
+        } else {
             moving.rotateX(-mspeed);
             xRemaining += mspeed;
         }
-    }
-    else if (xRemaining > 0) {
+    } else if (xRemaining > 0) {
         if (xRemaining < mspeed) {
             moving.rotateX(xRemaining);
             xRemaining = 0;
-        }
-        else {
+        } else {
             moving.rotateX(mspeed);
             xRemaining -= mspeed;
         }
-    }
-    else if (zRemaining < 0) {
+    } else if (zRemaining < 0) {
         if (zRemaining > -mspeed) {
             moving.rotateZ(zRemaining);
             zRemaining = 0;
-        }
-        else {
+        } else {
             moving.rotateZ(-mspeed);
             zRemaining += mspeed;
         }
-    }
-    else if (zRemaining > 0) {
+    } else if (zRemaining > 0) {
         if (zRemaining < mspeed) {
             moving.rotateZ(zRemaining);
             zRemaining = 0;
-        }
-        else {
+        } else {
             moving.rotateZ(mspeed);
             zRemaining -= mspeed;
         }
-    }
-    else if (cur) {
+    } else if (cur) {
         finish_move(cur);
-    }
-    else if (running) {
+    } else if (running) {
         next_move();
     }
     controls.update();

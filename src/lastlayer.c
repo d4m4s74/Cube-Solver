@@ -57,7 +57,7 @@ bool load_olls(char *filename)
             }
             //To stop potential out of bound writes or reads, let's check the lengths
             //The trick is to find the first comma and the last comma.
-            //Between the buffer pointer and the first comma is the name, with a max length of 29. 
+            //Between the buffer pointer and the first comma is the name, with a max length of 29.
             //Between the comma's is the 12 character pattern (plus one for the comma itself)
             //And at the end we have the algorithm.
             char *tmp = strchr(buffer, ',');

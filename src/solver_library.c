@@ -25,25 +25,25 @@ int nstrings = 0;
 char **strings;
 
 //Function that stores all string (char *) pointers for later deletion
-bool store_string_pointer(char * ptr);
+bool store_string_pointer(char *ptr);
 //Free all stored strings
 void free_strings();
 
 //Version of solve that saves the string pointer for later deletion
-char* solve_safe(int cube[6][9]);
+char *solve_safe(int cube[6][9]);
 //Version of solve_scramble that saves the string pointer for later deletion
-char* solve_scramble_safe(char *scramble);
+char *solve_scramble_safe(char *scramble);
 //Version of solve_cross that saves the string pointer for later deletion
-char* solve_cross_safe(int cube[6][9]);
+char *solve_cross_safe(int cube[6][9]);
 //Version of solve_f2l that saves the string pointer for later deletion
-char* solve_f2l_safe(int cube[6][9]);
+char *solve_f2l_safe(int cube[6][9]);
 //Version of solve_oll that saves the string pointer for later deletion
-char* solve_oll_safe(int cube[6][9]);
+char *solve_oll_safe(int cube[6][9]);
 //Version of solve_pll that saves the string pointer for later deletion
-char* solve_pll_safe(int cube[6][9]);
+char *solve_pll_safe(int cube[6][9]);
 
 //Store a string pointer in an array to free later
-bool store_string_pointer(char * ptr)
+bool store_string_pointer(char *ptr)
 {
     //if ptr is NULL, there is nothing to store. Return false
     if (ptr == NULL)
@@ -58,7 +58,7 @@ bool store_string_pointer(char * ptr)
     }
     else
     {
-    tmp = realloc(strings, sizeof(ptr) * (nstrings + 1));
+        tmp = realloc(strings, sizeof(ptr) * (nstrings + 1));
     }
     //Put tmp in strings
     strings = tmp;
@@ -86,11 +86,12 @@ void free_strings()
 }
 
 //Get cross algorithms and save a pointer to the string
-char* solve_cross_safe(int cube[6][9]){
-    char * alg = solve_cross(cube);
+char *solve_cross_safe(int cube[6][9])
+{
+    char *alg = solve_cross(cube);
     if (store_string_pointer(alg))
     {
-    return alg;
+        return alg;
     }
     else
     {
@@ -99,11 +100,12 @@ char* solve_cross_safe(int cube[6][9]){
     }
 }
 //Get f2l algorithms and save a pointer to the string
-char* solve_f2l_safe(int cube[6][9]){
-    char * alg = solve_f2l(cube);
+char *solve_f2l_safe(int cube[6][9])
+{
+    char *alg = solve_f2l(cube);
     if (store_string_pointer(alg))
     {
-    return alg;
+        return alg;
     }
     else
     {
@@ -112,11 +114,12 @@ char* solve_f2l_safe(int cube[6][9]){
     }
 }
 //Get oll algorithms and save a pointer to the string
-char* solve_oll_safe(int cube[6][9]){
-    char * alg = solve_oll(cube);
+char *solve_oll_safe(int cube[6][9])
+{
+    char *alg = solve_oll(cube);
     if (store_string_pointer(alg))
     {
-    return alg;
+        return alg;
     }
     else
     {
@@ -125,21 +128,9 @@ char* solve_oll_safe(int cube[6][9]){
     }
 }
 //Get pll algorithms and save a pointer to the string
-char* solve_pll_safe(int cube[6][9]){
-    char * alg = solve_pll(cube);
-    if (store_string_pointer(alg))
-    {
-    return alg;
-    }
-    else
-    {
-        free(alg);
-        return NULL;
-    }
-}
-//Get solution algorithms and save a pointer to the string
-char* solve_safe(int cube[6][9]){
-    char * alg = solve(cube);
+char *solve_pll_safe(int cube[6][9])
+{
+    char *alg = solve_pll(cube);
     if (store_string_pointer(alg))
     {
         return alg;
@@ -151,11 +142,26 @@ char* solve_safe(int cube[6][9]){
     }
 }
 //Get solution algorithms and save a pointer to the string
-char* solve_scramble_safe(char *scramble){
-    char * alg = solve_scramble(scramble);
+char *solve_safe(int cube[6][9])
+{
+    char *alg = solve(cube);
     if (store_string_pointer(alg))
     {
-    return alg;
+        return alg;
+    }
+    else
+    {
+        free(alg);
+        return NULL;
+    }
+}
+//Get solution algorithms and save a pointer to the string
+char *solve_scramble_safe(char *scramble)
+{
+    char *alg = solve_scramble(scramble);
+    if (store_string_pointer(alg))
+    {
+        return alg;
     }
     else
     {
@@ -191,7 +197,7 @@ char *solve(int cube[6][9])
     //print_cube(cube);
     char *cross = solve_cross(cube);
     if (cross)
-    {  
+    {
         algs = append(algs, "Cross\n");
         algs = append(algs, cross);
 
@@ -271,9 +277,9 @@ bool setup(char *path)
 #else
     char slash =  '/';
 #endif
-    if (path[strlen(path)-1] == slash)
+    if (path[strlen(path) - 1] == slash)
     {
-        path[strlen(path)-1] = 0;
+        path[strlen(path) - 1] = 0;
     }
     //Make a string with the full path of the plls file
     char *pllfile = malloc(strlen(path) + strlen(pllFileName) + 2);
