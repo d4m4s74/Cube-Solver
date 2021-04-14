@@ -39,7 +39,7 @@ CS50 wants me to explain what every file does, and what's in it. So this readme 
 │   ├── [solver.c](#solverc)  
 │   ├── [solver_library.c](#solver_libraryc-and-cubesolverh)    
 │   ├── [utils.c](#utilsc-and-utilsh)  
-│   └── [utils.h](#utilsc-and-utilsh) 
+│   └── [utils.h](#utilsc-and-utilsh)  
 ├── test  
 │   ├── [randomtests.c](#randomtestsc)  
 │   └── randomtests   
