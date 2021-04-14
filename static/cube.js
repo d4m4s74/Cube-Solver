@@ -1122,6 +1122,7 @@ $('#algForm').submit(function (e) {
     e.preventDefault();
 })
 
+
 //Disable return on the algorithm field, because there are two submit buttons
 $('#algForm').on('keydown', function (event) {
     var x = event.which;
@@ -1129,11 +1130,6 @@ $('#algForm').on('keydown', function (event) {
         event.preventDefault();
     }
 });
-
-//Select a pattern from the pattern select and put it in the algorithm field.
-$('#pattern').change(function () {
-    $('#alg').val(document.getElementById("pattern").value)
-})
 
 //Run an algorithm on the cube without showing the moves
 $('#scramble').click(function () {
@@ -1150,6 +1146,11 @@ $('#scramble').click(function () {
     }
     movesDone = scramble;
 });
+
+//Select a pattern from the pattern select and put it in the algorithm field.
+$('#pattern').change(function () {
+    $('#alg').val(document.getElementById("pattern").value)
+})
 
 //On click events for play/pause, next and prev
 $('#playpause').click(function () {
@@ -1236,7 +1237,12 @@ $('#solve').click(function () {
     solve_cube();
 });
 
-$('#reset').click(function () { reset_cube(); });
+$('#reset').click(function () {
+    //First finish the moves so no new moves happen after the rest
+    running = false;
+    finish_move(cur);
+    reset_cube(); 
+});
 
 //Vary the movement speed.
 $('#speed').on('input', function () {
@@ -1317,7 +1323,7 @@ function animate() {
     else if (cur) {
         finish_move(cur);
     }
-    if (running) {
+    else if (running) {
         next_move();
     }
     controls.update();
