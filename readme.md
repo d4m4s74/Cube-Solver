@@ -13,45 +13,45 @@ Cross, F2L, OLL and PLL
 
 ## Structure
 CS50 wants me to explain what every file does, and what's in it. So this readme is longer than all but 3 of my files.
-```
-├── app.py
-├── bin
-│   ├── libcubesolver.so
-│   └── solver
-├── data
-│   ├── errors.txt
-│   ├── olls.csv
-│   ├── patterns.csv
-│   └── plls.csv
-├── makefile
-├── readme.md
-├── requirements.txt
-├── src
-│   ├── cross.c
-│   ├── cross.h
-│   ├── cube.c
-│   ├── cube.h
-│   ├── cubesolver.h
-│   ├── f2l.c
-│   ├── f2l.h
-│   ├── lastlayer.c
-│   ├── lastlayer.h
-│   ├── solver.c
-│   ├── solver_library.c
-│   ├── utils.c
-│   └── utils.h
-├── static
-│   ├── cube.css
-│   ├── cube.js
-│   ├── favicon.ico
-│   ├── next.png
-│   ├── pause.png
-│   ├── play.png
-│   └── prev.png
-├── templates
-│   ├── cube.html
-│   └── solver.html
-```
+
+├── app.py  
+├── bin  
+│   ├── libcubesolver.so  
+│   └── solver  
+├── data  
+│   ├── errors.txt  
+│   ├── olls.csv  
+│   ├── patterns.csv  
+│   └── plls.csv  
+├── makefile  
+├── readme.md  
+├── requirements.txt  
+├── [src](#src)  
+│   ├── cross.c  
+│   ├── cross.h  
+│   ├── cube.c  
+│   ├── cube.h  
+│   ├── cubesolver.h  
+│   ├── f2l.c  
+│   ├── f2l.h  
+│   ├── lastlayer.c  
+│   ├── lastlayer.h  
+│   ├── solver.c  
+│   ├── solver_library.c  
+│   ├── utils.c  
+│   └── utils.h  
+├── static  
+│   ├── cube.css  
+│   ├── cube.js  
+│   ├── favicon.ico  
+│   ├── next.png  
+│   ├── pause.png  
+│   ├── play.png  
+│   └── prev.png  
+├── templates  
+│   ├── cube.html  
+│   └── solver.html  
+
 ### src
 #### cube.c and cube.h
 Cube.c and cube.h contain all the code that controls the rubik's cube in memory.
@@ -164,7 +164,7 @@ Just to make everyone's life a little easier. Takes a path, and loads the olls a
 Because it's hard to free memory from Python, I decided to do it from C. I have "Safe" versions of every function you might want to use from outside of C. These store the generated pointers that need to be freed to a global array for freeing all at once.
 ##### free_strings()
 Free all stored trings
-##### solve_safe(int cube[6][9]), solve_scramble_safe(), solve_cross_safe(), solve_f2l_safe(), solve_oll_safe() and solve_pll_safe()
+##### solve_safe(), solve_scramble_safe(), solve_cross_safe(), solve_f2l_safe(), solve_oll_safe() and solve_pll_safe()
 Multiple functions return strings, that need to be freed in the end. These functions store the pointers to these strings for later deletion.
 #### solver.c
 For testing, and those who are better with keyboard than with mouse, a terminal interface.  
