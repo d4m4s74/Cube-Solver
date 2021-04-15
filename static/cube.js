@@ -1165,7 +1165,7 @@ controls.update();
 let cube = new Cube(scene);
 cube.set_solver_api("api/solver");
 cube.set_solution_div("#solution");
-cube.set_current_alg_div("currentAlg");
+cube.set_current_alg_div("#currentAlg");
 
 //A 2d list of the faces of a cube, for entering your own colors
 var faces = [[6, 6, 6, 6, 0, 6, 6, 6, 6],
