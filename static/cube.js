@@ -69,78 +69,516 @@ class Cube {
     Rotation is the degrees to rotate in radians.
     */
     #moveInstructions = {
-        "U": { 'cycles': [[2, 8, 6, 0], [5, 7, 3, 1]], 'swaps': [], 'centers': [4], 'axis': this.#yAxis, 'rotation': -(Math.PI / 2) },
-        "U2": { 'cycles': [], 'swaps': [[0, 8], [2, 6], [1, 7], [3, 5]], 'centers': [4], 'axis': this.#yAxis, 'rotation': -Math.PI },
-        "U2'": { 'cycles': [], 'swaps': [[0, 8], [2, 6], [1, 7], [3, 5]], 'centers': [4], 'axis': this.#yAxis, 'rotation': Math.PI },
-        "U'": { 'cycles': [[6, 8, 2, 0], [3, 7, 5, 1]], 'swaps': [], 'centers': [4], 'axis': this.#yAxis, 'rotation': (Math.PI / 2) },
-        "u": { 'cycles': [[2, 8, 6, 0], [5, 7, 3, 1], [11, 17, 15, 9], [14, 16, 12, 10]], 'swaps': [], 'centers': [4, 13], 'axis': this.#yAxis, 'rotation': -(Math.PI / 2) },
-        "u2": { 'cycles': [], 'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14]], 'centers': [4, 13], 'axis': this.#yAxis, 'rotation': -Math.PI },
-        "u2'": { 'cycles': [], 'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14]], 'centers': [4, 13], 'axis': this.#yAxis, 'rotation': Math.PI },
-        "u'": { 'cycles': [[6, 8, 2, 0], [3, 7, 5, 1], [15, 17, 11, 9], [12, 16, 14, 10]], 'swaps': [], 'centers': [4, 13], 'axis': this.#yAxis, 'rotation': (Math.PI / 2) },
-        "E": { 'cycles': [[15, 17, 11, 9], [12, 16, 14, 10]], 'swaps': [], 'centers': [13], 'axis': this.#yAxis, 'rotation': (Math.PI / 2) },
-        "E2": { 'cycles': [], 'swaps': [[9, 17], [11, 15], [10, 16], [12, 14]], 'centers': [13], 'axis': this.#yAxis, 'rotation': Math.PI },
-        "E2'": { 'cycles': [], 'swaps': [[9, 17], [11, 15], [10, 16], [12, 14]], 'centers': [13], 'axis': this.#yAxis, 'rotation': -Math.PI },
-        "E'": { 'cycles': [[11, 17, 15, 9], [14, 16, 12, 10]], 'swaps': [], 'centers': [13], 'axis': this.#yAxis, 'rotation': -(Math.PI / 2) },
-        "D": { 'cycles': [[24, 26, 20, 18], [21, 25, 23, 19]], 'swaps': [], 'centers': [22], 'axis': this.#yAxis, 'rotation': (Math.PI / 2) },
-        "D2": { 'cycles': [], 'swaps': [[18, 26], [20, 24], [19, 25], [21, 23]], 'centers': [22], 'axis': this.#yAxis, 'rotation': Math.PI },
-        "D2'": { 'cycles': [], 'swaps': [[18, 26], [20, 24], [19, 25], [21, 23]], 'centers': [22], 'axis': this.#yAxis, 'rotation': -Math.PI },
-        "D'": { 'cycles': [[20, 26, 24, 18], [23, 25, 21, 19]], 'swaps': [], 'centers': [22], 'axis': this.#yAxis, 'rotation': -(Math.PI / 2) },
-        "d": { 'cycles': [[24, 26, 20, 18], [21, 25, 23, 19], [15, 17, 11, 9], [12, 16, 14, 10]], 'swaps': [], 'centers': [22, 13], 'axis': this.#yAxis, 'rotation': (Math.PI / 2) },
-        "d2": { 'cycles': [], 'swaps': [[18, 26], [20, 24], [19, 25], [21, 23], [9, 17], [11, 15], [10, 16], [12, 14]], 'centers': [22, 13], 'axis': this.#yAxis, 'rotation': Math.PI },
-        "d2'": { 'cycles': [], 'swaps': [[18, 26], [20, 24], [19, 25], [21, 23], [9, 17], [11, 15], [10, 16], [12, 14]], 'centers': [22, 13], 'axis': this.#yAxis, 'rotation': -Math.PI },
-        "d'": { 'cycles': [[20, 26, 24, 18], [23, 25, 21, 19], [11, 17, 15, 9], [14, 16, 12, 10]], 'swaps': [], 'centers': [22, 13], 'axis': this.#yAxis, 'rotation': -(Math.PI / 2) },
-        "y": { 'cycles': [[2, 8, 6, 0], [5, 7, 3, 1], [11, 17, 15, 9], [14, 16, 12, 10], [20, 26, 24, 18], [23, 25, 21, 19]], 'swaps': [], 'centers': [22, 13, 4], 'axis': this.#yAxis, 'rotation': -(Math.PI / 2) },
-        "y2": { 'cycles': [], 'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14], [18, 26], [20, 24], [19, 25], [21, 23]], 'centers': [22, 13, 4], 'axis': this.#yAxis, 'rotation': -Math.PI },
-        "y2'": { 'cycles': [], 'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14], [18, 26], [20, 24], [19, 25], [21, 23]], 'centers': [22, 13, 4], 'axis': this.#yAxis, 'rotation': Math.PI },
-        "y'": { 'cycles': [[6, 8, 2, 0], [3, 7, 5, 1], [15, 17, 11, 9], [12, 16, 14, 10], [24, 26, 20, 18], [21, 25, 23, 19]], 'swaps': [], 'centers': [22, 13, 4], 'axis': this.#yAxis, 'rotation': (Math.PI / 2) },
-        "R": { 'cycles': [[20, 26, 8, 2], [11, 23, 17, 5]], 'swaps': [], 'centers': [14], 'axis': this.#xAxis, 'rotation': -(Math.PI / 2) },
-        "R2": { 'cycles': [], 'swaps': [[2, 26], [8, 20], [5, 23], [11, 17]], 'centers': [14], 'axis': this.#xAxis, 'rotation': -(Math.PI) },
-        "R2'": { 'cycles': [], 'swaps': [[2, 26], [8, 20], [5, 23], [11, 17]], 'centers': [14], 'axis': this.#xAxis, 'rotation': Math.PI },
-        "R'": { 'cycles': [[8, 26, 20, 2], [17, 23, 11, 5]], 'swaps': [], 'centers': [14], 'axis': this.#xAxis, 'rotation': (Math.PI / 2) },
-        "r": { 'cycles': [[20, 26, 8, 2], [11, 23, 17, 5], [19, 25, 7, 1], [10, 22, 16, 4]], 'swaps': [], 'centers': [14, 13], 'axis': this.#xAxis, 'rotation': -(Math.PI / 2) },
-        "r2": { 'cycles': [], 'swaps': [[2, 26], [8, 20], [5, 23], [11, 17], [1, 25], [7, 19], [4, 22], [10, 16]], 'centers': [14, 13], 'axis': this.#xAxis, 'rotation': -(Math.PI) },
-        "r2'": { 'cycles': [], 'swaps': [[2, 26], [8, 20], [5, 23], [11, 17], [1, 25], [7, 19], [4, 22], [10, 16]], 'centers': [14, 13], 'axis': this.#xAxis, 'rotation': Math.PI },
-        "r'": { 'cycles': [[8, 26, 20, 2], [17, 23, 11, 5], [7, 25, 19, 1], [16, 22, 10, 4]], 'centers': [14, 13], 'swaps': [], 'axis': this.#xAxis, 'rotation': (Math.PI / 2) },
-        "M": { 'cycles': [[7, 25, 19, 1], [16, 22, 10, 4]], 'swaps': [], 'centers': [13], 'axis': this.#xAxis, 'rotation': (Math.PI / 2) },
-        "M2": { 'cycles': [], 'swaps': [[1, 25], [7, 19], [4, 22], [10, 16]], 'centers': [13], 'axis': this.#xAxis, 'rotation': Math.PI },
-        "M2'": { 'cycles': [], 'swaps': [[1, 25], [7, 19], [4, 22], [10, 16]], 'centers': [13], 'axis': this.#xAxis, 'rotation': -(Math.PI) },
-        "M'": { 'cycles': [[19, 25, 7, 1], [10, 22, 16, 4]], 'swaps': [], 'centers': [13], 'axis': this.#xAxis, 'rotation': -(Math.PI / 2) },
-        "L": { 'cycles': [[6, 24, 18, 0], [15, 21, 9, 3]], 'swaps': [], 'centers': [12], 'axis': this.#xAxis, 'rotation': (Math.PI / 2) },
-        "L2": { 'cycles': [], 'swaps': [[0, 24], [6, 18], [3, 21], [9, 15]], 'centers': [12], 'axis': this.#xAxis, 'rotation': Math.PI },
-        "L2'": { 'cycles': [], 'swaps': [[0, 24], [6, 18], [3, 21], [9, 15]], 'centers': [12], 'axis': this.#xAxis, 'rotation': -(Math.PI) },
-        "L'": { 'cycles': [[18, 24, 6, 0], [9, 21, 15, 3]], 'swaps': [], 'centers': [12], 'axis': this.#xAxis, 'rotation': -(Math.PI / 2) },
-        "l": { 'cycles': [[6, 24, 18, 0], [15, 21, 9, 3], [7, 25, 19, 1], [16, 22, 10, 4]], 'swaps': [], 'centers': [12, 13], 'axis': this.#xAxis, 'rotation': (Math.PI / 2) },
-        "l2": { 'cycles': [], 'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16]], 'centers': [12, 13], 'axis': this.#xAxis, 'rotation': Math.PI },
-        "l2'": { 'cycles': [], 'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16]], 'centers': [12, 13], 'axis': this.#xAxis, 'rotation': -(Math.PI) },
-        "l'": { 'cycles': [[18, 24, 6, 0], [9, 21, 15, 3], [19, 25, 7, 1], [10, 22, 16, 4]], 'swaps': [], 'centers': [12, 13], 'axis': this.#xAxis, 'rotation': -(Math.PI / 2) },
-        "x": { 'cycles': [[18, 24, 6, 0], [9, 21, 15, 3], [19, 25, 7, 1], [10, 22, 16, 4], [8, 26, 20, 2], [17, 23, 11, 5]], 'swaps': [], 'centers': [12, 13, 14], 'axis': this.#xAxis, 'rotation': -(Math.PI / 2) },
-        "x2'": { 'cycles': [], 'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16], [2, 26], [8, 20], [5, 23], [11, 17]], 'centers': [12, 13, 14], 'axis': this.#xAxis, 'rotation': Math.PI },
-        "x2": { 'cycles': [], 'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16], [2, 26], [8, 20], [5, 23], [11, 17]], 'centers': [12, 13, 14], 'axis': this.#xAxis, 'rotation': -(Math.PI) },
-        "x'": { 'cycles': [[6, 24, 18, 0], [15, 21, 9, 3], [7, 25, 19, 1], [16, 22, 10, 4], [8, 26, 20, 2], [17, 23, 11, 5]], 'swaps': [], 'centers': [12, 13, 14], 'axis': this.#xAxis, 'rotation': (Math.PI / 2) },
-        "F": { 'cycles': [[8, 26, 24, 6], [17, 25, 15, 7]], 'swaps': [], 'centers': [16], 'axis': this.#zAxis, 'rotation': -(Math.PI / 2) },
-        "F2": { 'cycles': [], 'swaps': [[6, 26], [8, 24], [7, 25], [15, 17]], 'centers': [16], 'axis': this.#zAxis, 'rotation': -(Math.PI) },
-        "F2'": { 'cycles': [], 'swaps': [[6, 26], [8, 24], [7, 25], [15, 17]], 'centers': [16], 'axis': this.#zAxis, 'rotation': Math.PI },
-        "F'": { 'cycles': [[24, 26, 8, 6], [15, 25, 17, 7]], 'swaps': [], 'centers': [16], 'axis': this.#zAxis, 'rotation': Math.PI / 2 },
-        "f": { 'cycles': [[8, 26, 24, 6], [17, 25, 15, 7], [5, 23, 21, 3], [14, 22, 12, 4]], 'swaps': [], 'centers': [16, 13], 'axis': this.#zAxis, 'rotation': -(Math.PI / 2) },
-        "f2": { 'cycles': [], 'swaps': [[6, 26], [8, 24], [7, 25], [15, 17], [3, 23], [5, 21], [4, 22], [12, 14]], 'centers': [16, 13], 'axis': this.#zAxis, 'rotation': -(Math.PI) },
-        "f2'": { 'cycles': [], 'swaps': [[6, 26], [8, 24], [7, 25], [15, 17], [3, 23], [5, 21], [4, 22], [12, 14]], 'centers': [16, 13], 'axis': this.#zAxis, 'rotation': Math.PI },
-        "f'": { 'cycles': [[24, 26, 8, 6], [15, 25, 17, 7], [21, 23, 5, 3], [12, 22, 14, 4]], 'swaps': [], 'centers': [16, 13], 'axis': this.#zAxis, 'rotation': Math.PI / 2 },
-        "S": { 'cycles': [[21, 23, 5, 3], [12, 22, 14, 4]], 'swaps': [], 'centers': [13], 'axis': this.#zAxis, 'rotation': Math.PI / 2 },
-        "S2": { 'cycles': [], 'swaps': [[3, 23], [5, 21], [4, 22], [12, 14]], 'centers': [13], 'axis': this.#zAxis, 'rotation': Math.PI },
-        "S2'": { 'cycles': [], 'swaps': [[3, 23], [5, 21], [4, 22], [12, 14]], 'centers': [13], 'axis': this.#zAxis, 'rotation': -(Math.PI) },
-        "S'": { 'cycles': [[5, 23, 21, 3], [14, 22, 12, 4]], 'swaps': [], 'centers': [13], 'axis': this.#zAxis, 'rotation': -(Math.PI / 2) },
-        "B": { 'cycles': [[18, 20, 2, 0], [9, 19, 11, 1]], 'swaps': [], 'centers': [10], 'axis': this.#zAxis, 'rotation': Math.PI / 2 },
-        "B2": { 'cycles': [], 'swaps': [[0, 20], [2, 18], [1, 19], [9, 11]], 'centers': [10], 'axis': this.#zAxis, 'rotation': Math.PI },
-        "B2'": { 'cycles': [], 'swaps': [[0, 20], [2, 18], [1, 19], [9, 11]], 'centers': [10], 'axis': this.#zAxis, 'rotation': -(Math.PI) },
-        "B'": { 'cycles': [[2, 20, 18, 0], [11, 19, 9, 1]], 'swaps': [], 'centers': [10], 'axis': this.#zAxis, 'rotation': -(Math.PI / 2) },
-        "b": { 'cycles': [[18, 20, 2, 0], [9, 19, 11, 1], [21, 23, 5, 3], [12, 22, 14, 4]], 'swaps': [], 'centers': [10, 13], 'axis': this.#zAxis, 'rotation': Math.PI / 2 },
-        "b2": { 'cycles': [], 'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14]], 'centers': [10, 13], 'axis': this.#zAxis, 'rotation': Math.PI },
-        "b2'": { 'cycles': [], 'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14]], 'centers': [10, 13], 'axis': this.#zAxis, 'rotation': -(Math.PI) },
-        "b'": { 'cycles': [[2, 20, 18, 0], [11, 19, 9, 1], [5, 23, 21, 3], [14, 22, 12, 4]], 'swaps': [], 'centers': [10, 13,], 'axis': this.#zAxis, 'rotation': -(Math.PI / 2) },
-        "z": { 'cycles': [[2, 20, 18, 0], [11, 19, 9, 1], [5, 23, 21, 3], [14, 22, 12, 4], [8, 26, 24, 6], [17, 25, 15, 7]], 'swaps': [], 'centers': [10, 13, 16], 'axis': this.#zAxis, 'rotation': -(Math.PI / 2) },
-        "z2": { 'cycles': [], 'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14], [6, 26], [8, 24], [7, 25], [15, 17]], 'centers': [10, 13, 16], 'axis': this.#zAxis, 'rotation': -(Math.PI) },
-        "z2'": { 'cycles': [], 'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14], [6, 26], [8, 24], [7, 25], [15, 17]], 'centers': [10, 13, 16], 'axis': this.#zAxis, 'rotation': Math.PI },
-        "z'": { 'cycles': [[18, 20, 2, 0], [9, 19, 11, 1], [21, 23, 5, 3], [12, 22, 14, 4], [24, 26, 8, 6], [15, 25, 17, 7]], 'swaps': [], 'centers': [10, 13, 16], 'axis': this.#zAxis, 'rotation': Math.PI / 2 },
+        "U": {
+            'cycles': [[2, 8, 6, 0], [5, 7, 3, 1]],
+            'swaps': [],
+            'centers': [4],
+            'axis': this.#yAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "U2": {
+            'cycles': [],
+            'swaps': [[0, 8], [2, 6], [1, 7], [3, 5]],
+            'centers': [4],
+            'axis': this.#yAxis,
+            'rotation': -Math.PI
+        },
+        "U2'": {
+            'cycles': [],
+            'swaps': [[0, 8], [2, 6], [1, 7], [3, 5]],
+            'centers': [4],
+            'axis': this.#yAxis,
+            'rotation': Math.PI
+        },
+        "U'": {
+            'cycles': [[6, 8, 2, 0], [3, 7, 5, 1]],
+            'swaps': [],
+            'centers': [4],
+            'axis': this.#yAxis,
+            'rotation': (Math.PI / 2)
+        },
+        "u": {
+            'cycles': [[2, 8, 6, 0], [5, 7, 3, 1], [11, 17, 15, 9], [14, 16, 12, 10]],
+            'swaps': [],
+            'centers': [4, 13],
+            'axis': this.#yAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "u2": {
+            'cycles': [],
+            'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14]],
+            'centers': [4, 13],
+            'axis': this.#yAxis,
+            'rotation': -Math.PI
+        },
+        "u2'": {
+            'cycles': [],
+            'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14]],
+            'centers': [4, 13],
+            'axis': this.#yAxis,
+            'rotation': Math.PI
+        },
+        "u'": {
+            'cycles': [[6, 8, 2, 0], [3, 7, 5, 1], [15, 17, 11, 9], [12, 16, 14, 10]],
+            'swaps': [],
+            'centers': [4, 13],
+            'axis': this.#yAxis,
+            'rotation': (Math.PI / 2)
+        },
+        "E": {
+            'cycles': [[15, 17, 11, 9], [12, 16, 14, 10]],
+            'swaps': [],
+            'centers': [13],
+            'axis': this.#yAxis,
+            'rotation': (Math.PI / 2)
+        },
+        "E2": {
+            'cycles': [],
+            'swaps': [[9, 17], [11, 15], [10, 16], [12, 14]],
+            'centers': [13],
+            'axis': this.#yAxis,
+            'rotation': Math.PI
+        },
+        "E2'": {
+            'cycles': [],
+            'swaps': [[9, 17], [11, 15], [10, 16], [12, 14]],
+            'centers': [13],
+            'axis': this.#yAxis,
+            'rotation': -Math.PI
+        },
+        "E'": {
+            'cycles': [[11, 17, 15, 9], [14, 16, 12, 10]],
+            'swaps': [],
+            'centers': [13],
+            'axis': this.#yAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "D": {
+            'cycles': [[24, 26, 20, 18], [21, 25, 23, 19]],
+            'swaps': [],
+            'centers': [22],
+            'axis': this.#yAxis,
+            'rotation': (Math.PI / 2)
+        },
+        "D2": {
+            'cycles': [],
+            'swaps': [[18, 26], [20, 24], [19, 25], [21, 23]],
+            'centers': [22],
+            'axis': this.#yAxis,
+            'rotation': Math.PI
+        },
+        "D2'": {
+            'cycles': [],
+            'swaps': [[18, 26], [20, 24], [19, 25], [21, 23]],
+            'centers': [22],
+            'axis': this.#yAxis,
+            'rotation': -Math.PI
+        },
+        "D'": {
+            'cycles': [[20, 26, 24, 18], [23, 25, 21, 19]],
+            'swaps': [],
+            'centers': [22],
+            'axis': this.#yAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "d": {
+            'cycles': [[24, 26, 20, 18], [21, 25, 23, 19], [15, 17, 11, 9], [12, 16, 14, 10]],
+            'swaps': [],
+            'centers': [22, 13],
+            'axis': this.#yAxis,
+            'rotation': (Math.PI / 2)
+        },
+        "d2": {
+            'cycles': [],
+            'swaps': [[18, 26], [20, 24], [19, 25], [21, 23], [9, 17], [11, 15], [10, 16], [12, 14]],
+            'centers': [22, 13],
+            'axis': this.#yAxis,
+            'rotation': Math.PI
+        },
+        "d2'": {
+            'cycles': [],
+            'swaps': [[18, 26], [20, 24], [19, 25], [21, 23], [9, 17], [11, 15], [10, 16], [12, 14]],
+            'centers': [22, 13],
+            'axis': this.#yAxis,
+            'rotation': -Math.PI
+        },
+        "d'": {
+            'cycles': [[20, 26, 24, 18], [23, 25, 21, 19], [11, 17, 15, 9], [14, 16, 12, 10]],
+            'swaps': [],
+            'centers': [22, 13],
+            'axis': this.#yAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "y": {
+            'cycles': [[2, 8, 6, 0], [5, 7, 3, 1], [11, 17, 15, 9], [14, 16, 12, 10], [20, 26, 24, 18], [23, 25, 21, 19]],
+            'swaps': [],
+            'centers': [22, 13, 4],
+            'axis': this.#yAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "y2": {
+            'cycles': [],
+            'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14], [18, 26], [20, 24], [19, 25],
+                [21, 23]],
+            'centers': [22, 13, 4],
+            'axis': this.#yAxis,
+            'rotation': -Math.PI
+        },
+        "y2'": {
+            'cycles': [],
+            'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14], [18, 26], [20, 24], [19, 25],
+                [21, 23]],
+            'centers': [22, 13, 4],
+            'axis': this.#yAxis,
+            'rotation': Math.PI
+        },
+        "y'": {
+            'cycles': [[6, 8, 2, 0], [3, 7, 5, 1], [15, 17, 11, 9], [12, 16, 14, 10], [24, 26, 20, 18], [21, 25, 23, 19]],
+            'swaps': [],
+            'centers': [22, 13, 4],
+            'axis': this.#yAxis,
+            'rotation': (Math.PI / 2)
+        },
+        "R": {
+            'cycles': [[20, 26, 8, 2], [11, 23, 17, 5]],
+            'swaps': [],
+            'centers': [14],
+            'axis': this.#xAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "R2": {
+            'cycles': [],
+            'swaps': [[2, 26], [8, 20], [5, 23], [11, 17]],
+            'centers': [14],
+            'axis': this.#xAxis,
+            'rotation': -(Math.PI)
+        },
+        "R2'": {
+            'cycles': [],
+            'swaps': [[2, 26], [8, 20], [5, 23], [11, 17]],
+            'centers': [14],
+            'axis': this.#xAxis,
+            'rotation': Math.PI
+        },
+        "R'": {
+            'cycles': [[8, 26, 20, 2], [17, 23, 11, 5]],
+            'swaps': [],
+            'centers': [14],
+            'axis': this.#xAxis,
+            'rotation': (Math.PI / 2)
+        },
+        "r": {
+            'cycles': [[20, 26, 8, 2], [11, 23, 17, 5], [19, 25, 7, 1], [10, 22, 16, 4]],
+            'swaps': [],
+            'centers': [14, 13],
+            'axis': this.#xAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "r2": {
+            'cycles': [],
+            'swaps': [[2, 26], [8, 20], [5, 23], [11, 17], [1, 25], [7, 19], [4, 22], [10, 16]],
+            'centers': [14, 13],
+            'axis': this.#xAxis,
+            'rotation': -(Math.PI)
+        },
+        "r2'": {
+            'cycles': [],
+            'swaps': [[2, 26], [8, 20], [5, 23], [11, 17], [1, 25], [7, 19], [4, 22], [10, 16]],
+            'centers': [14, 13],
+            'axis': this.#xAxis,
+            'rotation': Math.PI
+        },
+        "r'": {
+            'cycles': [[8, 26, 20, 2], [17, 23, 11, 5], [7, 25, 19, 1], [16, 22, 10, 4]],
+            'centers': [14, 13],
+            'swaps': [],
+            'axis': this.#xAxis,
+            'rotation': (Math.PI / 2)
+        },
+        "M": {
+            'cycles': [[7, 25, 19, 1], [16, 22, 10, 4]],
+            'swaps': [],
+            'centers': [13],
+            'axis': this.#xAxis,
+            'rotation': (Math.PI / 2)
+        },
+        "M2": {
+            'cycles': [],
+            'swaps': [[1, 25], [7, 19], [4, 22], [10, 16]],
+            'centers': [13],
+            'axis': this.#xAxis,
+            'rotation': Math.PI
+        },
+        "M2'": {
+            'cycles': [],
+            'swaps': [[1, 25], [7, 19], [4, 22], [10, 16]],
+            'centers': [13],
+            'axis': this.#xAxis,
+            'rotation': -(Math.PI)
+        },
+        "M'": {
+            'cycles': [[19, 25, 7, 1], [10, 22, 16, 4]],
+            'swaps': [],
+            'centers': [13],
+            'axis': this.#xAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "L": {
+            'cycles': [[6, 24, 18, 0], [15, 21, 9, 3]],
+            'swaps': [],
+            'centers': [12],
+            'axis': this.#xAxis,
+            'rotation': (Math.PI / 2)
+        },
+        "L2": {
+            'cycles': [],
+            'swaps': [[0, 24], [6, 18], [3, 21], [9, 15]],
+            'centers': [12],
+            'axis': this.#xAxis,
+            'rotation': Math.PI
+        },
+        "L2'": {
+            'cycles': [],
+            'swaps': [[0, 24], [6, 18], [3, 21], [9, 15]],
+            'centers': [12],
+            'axis': this.#xAxis,
+            'rotation': -(Math.PI)
+        },
+        "L'": {
+            'cycles': [[18, 24, 6, 0], [9, 21, 15, 3]],
+            'swaps': [],
+            'centers': [12],
+            'axis': this.#xAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "l": {
+            'cycles': [[6, 24, 18, 0], [15, 21, 9, 3], [7, 25, 19, 1], [16, 22, 10, 4]],
+            'swaps': [],
+            'centers': [12, 13],
+            'axis': this.#xAxis,
+            'rotation': (Math.PI / 2)
+        },
+        "l2": {
+            'cycles': [],
+            'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16]],
+            'centers': [12, 13],
+            'axis': this.#xAxis,
+            'rotation': Math.PI
+        },
+        "l2'": {
+            'cycles': [],
+            'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16]],
+            'centers': [12, 13],
+            'axis': this.#xAxis,
+            'rotation': -(Math.PI)
+        },
+        "l'": {
+            'cycles': [[18, 24, 6, 0], [9, 21, 15, 3], [19, 25, 7, 1], [10, 22, 16, 4]],
+            'swaps': [],
+            'centers': [12, 13],
+            'axis': this.#xAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "x": {
+            'cycles': [[18, 24, 6, 0], [9, 21, 15, 3], [19, 25, 7, 1], [10, 22, 16, 4], [8, 26, 20, 2], [17, 23, 11, 5]],
+            'swaps': [],
+            'centers': [12, 13, 14],
+            'axis': this.#xAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "x2'": {
+            'cycles': [],
+            'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16], [2, 26], [8, 20], [5, 23],
+                [11, 17]],
+            'centers': [12, 13, 14],
+            'axis': this.#xAxis,
+            'rotation': Math.PI
+        },
+        "x2": {
+            'cycles': [],
+            'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16], [2, 26], [8, 20], [5, 23],
+                [11, 17]],
+            'centers': [12, 13, 14],
+            'axis': this.#xAxis,
+            'rotation': -(Math.PI)
+        },
+        "x'": {
+            'cycles': [[6, 24, 18, 0], [15, 21, 9, 3], [7, 25, 19, 1], [16, 22, 10, 4], [8, 26, 20, 2], [17, 23, 11, 5]],
+            'swaps': [],
+            'centers': [12, 13, 14],
+            'axis': this.#xAxis,
+            'rotation': (Math.PI / 2)
+        },
+        "F": {
+            'cycles': [[8, 26, 24, 6], [17, 25, 15, 7]],
+            'swaps': [],
+            'centers': [16],
+            'axis': this.#zAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "F2": {
+            'cycles': [],
+            'swaps': [[6, 26], [8, 24], [7, 25], [15, 17]],
+            'centers': [16],
+            'axis': this.#zAxis,
+            'rotation': -(Math.PI)
+        },
+        "F2'": {
+            'cycles': [],
+            'swaps': [[6, 26], [8, 24], [7, 25], [15, 17]],
+            'centers': [16],
+            'axis': this.#zAxis,
+            'rotation': Math.PI
+        },
+        "F'": {
+            'cycles': [[24, 26, 8, 6], [15, 25, 17, 7]],
+            'swaps': [],
+            'centers': [16],
+            'axis': this.#zAxis,
+            'rotation': Math.PI / 2
+        },
+        "f": {
+            'cycles': [[8, 26, 24, 6], [17, 25, 15, 7], [5, 23, 21, 3], [14, 22, 12, 4]],
+            'swaps': [],
+            'centers': [16, 13],
+            'axis': this.#zAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "f2": {
+            'cycles': [],
+            'swaps': [[6, 26], [8, 24], [7, 25], [15, 17], [3, 23], [5, 21], [4, 22], [12, 14]],
+            'centers': [16, 13],
+            'axis': this.#zAxis,
+            'rotation': -(Math.PI)
+        },
+        "f2'": {
+            'cycles': [],
+            'swaps': [[6, 26], [8, 24], [7, 25], [15, 17], [3, 23], [5, 21], [4, 22], [12, 14]],
+            'centers': [16, 13],
+            'axis': this.#zAxis,
+            'rotation': Math.PI
+        },
+        "f'": {
+            'cycles': [[24, 26, 8, 6], [15, 25, 17, 7], [21, 23, 5, 3], [12, 22, 14, 4]],
+            'swaps': [],
+            'centers': [16, 13],
+            'axis': this.#zAxis,
+            'rotation': Math.PI / 2
+        },
+        "S": {
+            'cycles': [[21, 23, 5, 3], [12, 22, 14, 4]],
+            'swaps': [],
+            'centers': [13],
+            'axis': this.#zAxis,
+            'rotation': Math.PI / 2
+        },
+        "S2": {
+            'cycles': [],
+            'swaps': [[3, 23], [5, 21], [4, 22], [12, 14]],
+            'centers': [13],
+            'axis': this.#zAxis,
+            'rotation': Math.PI
+        },
+        "S2'": {
+            'cycles': [],
+            'swaps': [[3, 23], [5, 21], [4, 22], [12, 14]],
+            'centers': [13],
+            'axis': this.#zAxis,
+            'rotation': -(Math.PI)
+        },
+        "S'": {
+            'cycles': [[5, 23, 21, 3], [14, 22, 12, 4]],
+            'swaps': [],
+            'centers': [13],
+            'axis': this.#zAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "B": {
+            'cycles': [[18, 20, 2, 0], [9, 19, 11, 1]],
+            'swaps': [],
+            'centers': [10],
+            'axis': this.#zAxis,
+            'rotation': Math.PI / 2
+        },
+        "B2": {
+            'cycles': [],
+            'swaps': [[0, 20], [2, 18], [1, 19], [9, 11]],
+            'centers': [10],
+            'axis': this.#zAxis,
+            'rotation': Math.PI
+        },
+        "B2'": {
+            'cycles': [],
+            'swaps': [[0, 20], [2, 18], [1, 19], [9, 11]],
+            'centers': [10],
+            'axis': this.#zAxis,
+            'rotation': -(Math.PI)
+        },
+        "B'": {
+            'cycles': [[2, 20, 18, 0], [11, 19, 9, 1]],
+            'swaps': [],
+            'centers': [10],
+            'axis': this.#zAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "b": {
+            'cycles': [[18, 20, 2, 0], [9, 19, 11, 1], [21, 23, 5, 3], [12, 22, 14, 4]],
+            'swaps': [],
+            'centers': [10, 13],
+            'axis': this.#zAxis,
+            'rotation': Math.PI / 2
+        },
+        "b2": {
+            'cycles': [],
+            'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14]],
+            'centers': [10, 13],
+            'axis': this.#zAxis,
+            'rotation': Math.PI
+        },
+        "b2'": {
+            'cycles': [],
+            'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14]],
+            'centers': [10, 13],
+            'axis': this.#zAxis,
+            'rotation': -(Math.PI)
+        },
+        "b'": {
+            'cycles': [[2, 20, 18, 0], [11, 19, 9, 1], [5, 23, 21, 3], [14, 22, 12, 4]],
+            'swaps': [],
+            'centers': [10, 13],
+            'axis': this.#zAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "z": {
+            'cycles': [[2, 20, 18, 0], [11, 19, 9, 1], [5, 23, 21, 3], [14, 22, 12, 4], [8, 26, 24, 6], [17, 25, 15, 7]],
+            'swaps': [],
+            'centers': [10, 13, 16],
+            'axis': this.#zAxis,
+            'rotation': -(Math.PI / 2)
+        },
+        "z2": {
+            'cycles': [],
+            'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14], [6, 26], [8, 24], [7, 25],
+                [15, 17]],
+            'centers': [10, 13, 16],
+            'axis': this.#zAxis,
+            'rotation': -(Math.PI)
+        },
+        "z2'": {
+            'cycles': [],
+            'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14], [6, 26], [8, 24], [7, 25],
+                [15, 17]],
+            'centers': [10, 13, 16],
+            'axis': this.#zAxis,
+            'rotation': Math.PI
+        },
+        "z'": {
+            'cycles': [[18, 20, 2, 0], [9, 19, 11, 1], [21, 23, 5, 3], [12, 22, 14, 4], [24, 26, 8, 6], [15, 25, 17, 7]],
+            'swaps': [],
+            'centers': [10, 13, 16],
+            'axis': this.#zAxis,
+            'rotation': Math.PI / 2
+        },
     }
 
     //set the last applied cube
@@ -157,14 +595,17 @@ class Cube {
     #scene;
     constructor(scene, applied = this.#solvedCube) {
         this.#scene = scene;
-        this.#applied = applied.map(function (arr) { return arr.slice() });
+        this.#applied = applied.map(function(arr) { return arr.slice() });
         for (let i = 0; i < 27; i++) {
             //make a mesh based on the before box
             this.#cubies.push(new THREE.Mesh(this.#geometry, this.#cubeMaterials));
             //add it to the scene
             this.#scene.add(this.#cubies[i]);
             //create the outlines and add it to the scene.
-            this.#outlines.push(new THREE.LineSegments(this.#edges, new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 0.015 })));
+            this.#outlines.push(new THREE.LineSegments(this.#edges, new THREE.LineBasicMaterial({
+                color: 0x000000,
+                linewidth: 0.015
+            })));
             this.#scene.add(this.#outlines[i]);
         }
         //Position the cubes
@@ -209,7 +650,7 @@ class Cube {
         this.#movenumber = 0;
         this.#steps = [];
         $(this.#current_alg_div).html("");
-        this.#applied = this.#solvedCube.map(function (arr) { return arr.slice() });
+        this.#applied = this.#solvedCube.map(function(arr) { return arr.slice() });
         for (let i = 0; i < 27; i++) {
             this.#cubies[i].rotation.x = 0;
             this.#cubies[i].rotation.y = 0;
@@ -278,13 +719,15 @@ class Cube {
         this.#moving.rotation.z = 0;
         //Iterate over the cubies in the cycles array
         for (let cycle of this.#moveInstructions[move]['cycles']) {
-            this.cycle_rotations(this.#cubies[cycle[0]], this.#cubies[cycle[1]], this.#cubies[cycle[2]], this.#cubies[cycle[3]]);
+            this.cycle_rotations(this.#cubies[cycle[0]], this.#cubies[cycle[1]], this.#cubies[cycle[2]], this.#cubies[cycle[
+                3]]);
             for (let cubie of cycle) {
                 //Add all cubies in the cycles back to the scene
                 this.#scene.add(this.#cubies[cubie]);
                 this.#scene.add(this.#outlines[cubie]);
                 //rotate all cubies in the cycles
-                this.#cubies[cubie].rotateOnWorldAxis(this.#moveInstructions[move]['axis'], this.#moveInstructions[move]['rotation']);
+                this.#cubies[cubie].rotateOnWorldAxis(this.#moveInstructions[move]['axis'], this.#moveInstructions[move][
+                    'rotation']);
             }
         }
         //Iterate over the cubies in the swaps array
@@ -295,7 +738,8 @@ class Cube {
                 this.#scene.add(this.#cubies[cubie]);
                 this.#scene.add(this.#outlines[cubie]);
                 //rotate all cubies in the swaps
-                this.#cubies[cubie].rotateOnWorldAxis(this.#moveInstructions[move]['axis'], this.#moveInstructions[move]['rotation']);
+                this.#cubies[cubie].rotateOnWorldAxis(this.#moveInstructions[move]['axis'], this.#moveInstructions[move][
+                    'rotation']);
             }
         }
         //Add all center cubies back to the scene
@@ -327,7 +771,7 @@ class Cube {
                 }
                 //If we're finished with the last step, asssume the cube is solved and clear the screen.
                 else if (this.#stepnumber == this.#steps.length - 1) {
-                    this.#applied = this.#solvedCube.map(function (arr) { return arr.slice() });
+                    this.#applied = this.#solvedCube.map(function(arr) { return arr.slice() });
                     this.#movesDone = [];
                     this.running = false;
                     $(this.#current_alg_div).html("");
@@ -526,7 +970,7 @@ class Cube {
         apply_color(this.#cubies[24], pattern[0][6], pattern[3][8]);
         apply_color(this.#cubies[25], pattern[0][7], opposite_color(pattern[5][1]), false, true);
         apply_color(this.#cubies[26], pattern[0][8], opposite_color(pattern[1][6]));
-        this.#applied = pattern.map(function (arr) { return arr.slice() });
+        this.#applied = pattern.map(function(arr) { return arr.slice() });
     }
 
     //Method to run and animate an algorithm on the cube
@@ -586,7 +1030,8 @@ class Cube {
         //in order to call class functions and use variables I need to make a reference to this
         var thisClass = this;
         //Send the pattern (if applied) and any moves done to it already to the solver
-        $.post(thisClass.#solver_api, { pattern: JSON.stringify(this.#applied), scramble: this.#movesDone.join(" ") }, function (data) {
+        $.post(thisClass.#solver_api, { pattern: JSON.stringify(this.#applied), scramble: this.#movesDone.join(" ") }, function(
+            data) {
             //empty the steps array
             thisClass.#steps = [];
             //reset the curent step
@@ -764,7 +1209,7 @@ if (urlparam("scramble")) {
 const colors = ["green", "red", "blue", "orange", "white", "yellow", "grey"]
 var color = 6;
 //If one of the squared is clicked, apply a color
-$('.square').click(function () {
+$('.square').click(function() {
     //If the square is one of the color pickers
     if (colors.includes(this.id)) {
         //set the color to the number of that color
@@ -793,7 +1238,7 @@ $('.square').click(function () {
 });
 
 //Clear the color picker
-$('#clear').click(function () {
+$('#clear').click(function() {
     for (let i = 0; i < 6; i++) {
         for (let j = 0; j < 9; j++) {
             if (j != 4) {
@@ -808,9 +1253,9 @@ const errors = ["Success", "No pattern entered", "Invalid color combination", "O
     "Error in solving algorithm"]
 //If a user applies a pattern
 //Apply a pattern to the cube
-$('#apply').click(function () {
+$('#apply').click(function() {
     //First validate the pattern
-    $.post("api/validator", { pattern: JSON.stringify(faces) }, function (data) {
+    $.post("api/validator", { pattern: JSON.stringify(faces) }, function(data) {
         //If it fails, give the error
         let reply = parseInt(data);
         if (reply != 0) {
@@ -826,7 +1271,7 @@ $('#apply').click(function () {
 });
 
 //Run an algorithm on the cube
-$('#algForm').submit(function (e) {
+$('#algForm').submit(function(e) {
     //run the alg
     cube.run_alg($('#alg').val());
     //and do not submit.
@@ -834,7 +1279,7 @@ $('#algForm').submit(function (e) {
 })
 
 //Disable return on the algorithm field, because there are two submit buttons
-$('#algForm').on('keydown', function (event) {
+$('#algForm').on('keydown', function(event) {
     var x = event.which;
     if (x === 13) {
         event.preventDefault();
@@ -842,15 +1287,15 @@ $('#algForm').on('keydown', function (event) {
 });
 
 //Run an algorithm on the cube without showing the moves
-$('#scramble').click(function () {
+$('#scramble').click(function() {
     cube.apply_alg($('#alg').val());
 });
 //Select a pattern from the pattern select and put it in the algorithm field.
-$('#pattern').change(function () {
+$('#pattern').change(function() {
     $('#alg').val(document.getElementById("pattern").value)
 })
 //On click events for play/pause, next and prev
-$('#playpause').click(function () {
+$('#playpause').click(function() {
     if (cube.paused) {
         cube.paused = false;
         cube.running = true;
@@ -862,7 +1307,7 @@ $('#playpause').click(function () {
     }
 });
 
-$('#next').click(function () {
+$('#next').click(function() {
     if (cube.paused == false) {
         cube.paused = true;
         cube.running = false;
@@ -871,7 +1316,7 @@ $('#next').click(function () {
     cube.next_move(true);
 });
 
-$('#prev').click(function () {
+$('#prev').click(function() {
     if (cube.paused == false) {
         cube.paused = true;
         cube.running = false;
@@ -881,12 +1326,12 @@ $('#prev').click(function () {
 });
 
 //On click events for solver and reset.
-$('#solve').click(function () {
+$('#solve').click(function() {
     window.scrollTo(0, 0); //In case of mobile, scroll to the top of the screen
     cube.solve_cube();
 });
 
-$('#reset').click(function () {
+$('#reset').click(function() {
     //First finish the moves so no new moves happen after the rest
     cube.running = false;
     cube.finish_move(this.cur);
@@ -894,7 +1339,7 @@ $('#reset').click(function () {
 });
 
 //Vary the movement speed.
-$('#speed').on('input', function () {
+$('#speed').on('input', function() {
     cube.set_movement_speed($('#speed').val() / 100);
 })
 
