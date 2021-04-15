@@ -104,7 +104,7 @@ class Cube {
         "M": { 'cycles': [[7, 25, 19, 1], [16, 22, 10, 4]], 'swaps': [], 'centers': [13], 'axis': this.#xAxis, 'rotation': (Math.PI / 2) },
         "M2": { 'cycles': [], 'swaps': [[1, 25], [7, 19], [4, 22], [10, 16]], 'centers': [13], 'axis': this.#xAxis, 'rotation': Math.PI },
         "M2'": { 'cycles': [], 'swaps': [[1, 25], [7, 19], [4, 22], [10, 16]], 'centers': [13], 'axis': this.#xAxis, 'rotation': -(Math.PI) },
-        "M'": { 'cycles': [], 'swaps': [[19, 25, 7, 1], [10, 22, 16, 4]], 'centers': [13], 'axis': this.#xAxis, 'rotation': -(Math.PI / 2) },
+        "M'": { 'cycles': [[19, 25, 7, 1], [10, 22, 16, 4]], 'swaps': [], 'centers': [13], 'axis': this.#xAxis, 'rotation': -(Math.PI / 2) },
         "L": { 'cycles': [[6, 24, 18, 0], [15, 21, 9, 3]], 'swaps': [], 'centers': [12], 'axis': this.#xAxis, 'rotation': (Math.PI / 2) },
         "L2": { 'cycles': [], 'swaps': [[0, 24], [6, 18], [3, 21], [9, 15]], 'centers': [12], 'axis': this.#xAxis, 'rotation': Math.PI },
         "L2'": { 'cycles': [], 'swaps': [[0, 24], [6, 18], [3, 21], [9, 15]], 'centers': [12], 'axis': this.#xAxis, 'rotation': -(Math.PI) },
@@ -278,6 +278,7 @@ class Cube {
         this.#moving.rotation.z = 0;
         //Iterate over the cubies in the cycles array
         for (let cycle of this.#moveInstructions[move]['cycles']) {
+            this.cycle_rotations(this.#cubies[cycle[0]], this.#cubies[cycle[1]], this.#cubies[cycle[2]], this.#cubies[cycle[3]]);
             for (let cubie of cycle) {
                 //Add all cubies in the cycles back to the scene
                 this.#scene.add(this.#cubies[cubie]);
@@ -285,10 +286,10 @@ class Cube {
                 //rotate all cubies in the cycles
                 this.#cubies[cubie].rotateOnWorldAxis(this.#moveInstructions[move]['axis'], this.#moveInstructions[move]['rotation']);
             }
-            this.cycle_rotations(this.#cubies[cycle[0]], this.#cubies[cycle[1]], this.#cubies[cycle[2]], this.#cubies[cycle[3]]);
         }
         //Iterate over the cubies in the swaps array
         for (let swap of this.#moveInstructions[move]['swaps']) {
+            this.swap_rotations(this.#cubies[swap[0]], this.#cubies[swap[1]]);
             for (let cubie of swap) {
                 //Add all cubies in the swaps back to the scene
                 this.#scene.add(this.#cubies[cubie]);
@@ -296,7 +297,6 @@ class Cube {
                 //rotate all cubies in the swaps
                 this.#cubies[cubie].rotateOnWorldAxis(this.#moveInstructions[move]['axis'], this.#moveInstructions[move]['rotation']);
             }
-            this.swap_rotations(this.#cubies[swap[0]], this.#cubies[swap[1]]);
         }
         //Add all center cubies back to the scene
         for (let cubie of this.#moveInstructions[move]['centers']) {
