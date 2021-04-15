@@ -1,7 +1,7 @@
 import * as THREE from 'https://unpkg.com/three/build/three.module.js';
 import { OrbitControls } from 'https://unpkg.com/three/examples/jsm/controls/OrbitControls.js';
 
-//Copied from the jquery codebase
+
 class Cube {
     #geometry = new THREE.BoxGeometry(1.985, 1.985, 1.985); //including outline it's a perfect 2
     //give it colors
@@ -1140,6 +1140,7 @@ var faces = [[6, 6, 6, 6, 0, 6, 6, 6, 6],
 [6, 6, 6, 6, 4, 6, 6, 6, 6],
 [6, 6, 6, 6, 5, 6, 6, 6, 6]]
 
+//Copied from the jquery codebase
 function urlparam(name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     if (results == null) {
