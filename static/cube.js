@@ -61,12 +61,12 @@ class Cube {
     applied;
     scene;
 
-/*
-    A huge dictionary with the info needed to do moves. This so I can change do_move and finish_move from a huge decision tree to a few for loops
-    Cycles contain sets of four cubies that need to be cycled. Swaps contain sets of 2 cubies that need to be swapped.
-    Centers contain the center cubie of the slices
-    Axis is the axis of rotation
-    Rotation is the degrees to rotate in radians.
+    /*
+        A huge dictionary with the info needed to do moves. This so I can change do_move and finish_move from a huge decision tree to a few for loops
+        Cycles contain sets of four cubies that need to be cycled. Swaps contain sets of 2 cubies that need to be swapped.
+        Centers contain the center cubie of the slices
+        Axis is the axis of rotation
+        Rotation is the degrees to rotate in radians.
     */
     moveInstructions = {
         "U": {
@@ -268,7 +268,7 @@ class Cube {
             'rotation': (Math.PI / 2)
         },
         "r": {
-            'cycles': [[20, 26, 8, 2], [11, 23, 17, 5]  , [19, 25, 7, 1], [10, 22, 16, 4]],
+            'cycles': [[20, 26, 8, 2], [11, 23, 17, 5], [19, 25, 7, 1], [10, 22, 16, 4]],
             'swaps': [],
             'centers': [14, 13],
             'axis': this.xAxis,
@@ -584,7 +584,7 @@ class Cube {
     constructor(scene, applied) {
         this.scene = scene;
         if (applied)
-            this.applied = applied.map(function(arr) { return arr.slice() });
+            apply_color(applied);
         else
             this.applied = this.solvedCube.map(function(arr) { return arr.slice() });
         for (let i = 0; i < 27; i++) {
@@ -630,18 +630,27 @@ class Cube {
     }
     //Method to reset the cube
     reset_cube() {
+        //First stop the animation from running
         this.running = false;
+        //Finish whatever move is running so it doesn't finish after te reset
         this.finish_move(this.cur)
+        //Set any remaining animation to 0
         this.xRemaining = 0;
         this.yRemaining = 0;
         this.zRemaining = 0;
+        //Set wait to 0
         this.wait = 0;
+        //Reset all moves
         this.movesDone = [];
         this.moves = [];
         this.movenumber = 0;
         this.steps = [];
+        //clear the current field and solution
         $(this.current_alg_div).html("");
+        $(this.solution_div).html("");
+        //set the applied cube back to the solved cube
         this.applied = this.solvedCube.map(function(arr) { return arr.slice() });
+        //Finally set the rotatation back to 0 for every cubie.
         for (let i = 0; i < 27; i++) {
             this.cubies[i].rotation.x = 0;
             this.cubies[i].rotation.y = 0;
@@ -1015,6 +1024,8 @@ class Cube {
 
     //Method to solve the cube
     solve_cube() {
+        this.running = false;
+        this.finish_move(this.cur);
         //if no solver api is set, return false
         if (this.solver_api == "")
             return false;
@@ -1072,8 +1083,9 @@ class Cube {
         this.mspeed = mspeed;
     }
 
-    //Method to grab the next animation frame
+    //Method to prepare the next animation frame
     animate() {
+        //First wait for x frames
         if (this.wait > 0) {
             this.wait -= Math.max(10 * this.mspeed, 1);
         }
@@ -1175,7 +1187,7 @@ var faces = [[6, 6, 6, 6, 0, 6, 6, 6, 6],
 [6, 6, 6, 6, 4, 6, 6, 6, 6],
 [6, 6, 6, 6, 5, 6, 6, 6, 6]]
 
-//Copied from the jquery codebase
+//Copied from the jquery codebase. Function to get variables from get
 function urlparam(name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     if (results == null) {
@@ -1298,6 +1310,21 @@ $('#playpause').click(function() {
     }
 });
 
+$(document).keypress(function(event) {
+    if (event.charCode == 32){
+        if (cube.paused) {
+            cube.paused = false;
+            cube.running = true;
+            $('#playpause').html('<img src="static/pause.png" alt="pause"></img>');
+        } else {
+            cube.paused = true;
+            cube.running = false;
+            $('#playpause').html('<img src="static/play.png" alt="play"></img>');
+        }
+    }
+    event.preventDefault();
+});
+
 $('#next').click(function() {
     if (cube.paused == false) {
         cube.paused = true;
@@ -1320,6 +1347,7 @@ $('#prev').click(function() {
 $('#solve').click(function() {
     window.scrollTo(0, 0); //In case of mobile, scroll to the top of the screen
     cube.solve_cube();
+    document.getElementById('solve').blur();
 });
 
 $('#reset').click(function() {
