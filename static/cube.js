@@ -258,7 +258,8 @@ class Cube {
         else if (this.#moveInstructions[move]['axis'] == this.#zAxis)
             this.#zRemaining = this.#moveInstructions[move]['rotation']
     }
-    //Method actually moves the pieces (or gives the same effect)
+
+    //Method that actually moves the pieces (or gives the same effect)
     finish_move(move) {
 
         //Once the move animation is done, actually turn the cubies
@@ -385,7 +386,7 @@ class Cube {
             html += "</p>"
             $(this.#current_alg_div).html(html);
             //actually do the move in reverse
-            do_move(invert_move(this.#moves[this.#movenumber]));
+            this.do_move(invert_move(this.#moves[this.#movenumber]));
             //If this was the first move,
             if (this.#movenumber == 0) {
                 //check for earlier steps, and show the last one.
