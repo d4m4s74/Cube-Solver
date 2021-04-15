@@ -580,21 +580,21 @@ class Cube {
     solution_div = "";
     current_alg_div = "";
     applied;
-    #scene;
+    scene;
     constructor(scene, applied = this.zAxis) {
-        this.#scene = scene;
+        this.scene = scene;
         this.applied = applied.map(function(arr) { return arr.slice() });
         for (let i = 0; i < 27; i++) {
             //make a mesh based on the before box
             this.cubies.push(new THREE.Mesh(this.geometry, this.cubeMaterials));
             //add it to the scene
-            this.#scene.add(this.cubies[i]);
+            this.scene.add(this.cubies[i]);
             //create the outlines and add it to the scene.
             this.outlines.push(new THREE.LineSegments(this.edges, new THREE.LineBasicMaterial({
                 color: 0x000000,
                 linewidth: 0.015
             })));
-            this.#scene.add(this.outlines[i]);
+            this.scene.add(this.outlines[i]);
         }
         //Position the cubes
         //Set the locations left to right, back to front, top to bottom.
@@ -678,7 +678,7 @@ class Cube {
             this.moving.add(this.outlines[cubie]);
         }
         //Add the moving group back to the scene
-        this.#scene.add(this.moving);
+        this.scene.add(this.moving);
         //Add the rotation to the right axis
         if (this.moveInstructions[move]['axis'] == this.xAxis)
             this.xRemaining = this.moveInstructions[move]['rotation']
@@ -711,8 +711,8 @@ class Cube {
                 3]]);
             for (let cubie of cycle) {
                 //Add all cubies in the cycles back to the scene
-                this.#scene.add(this.cubies[cubie]);
-                this.#scene.add(this.outlines[cubie]);
+                this.scene.add(this.cubies[cubie]);
+                this.scene.add(this.outlines[cubie]);
                 //rotate all cubies in the cycles
                 this.cubies[cubie].rotateOnWorldAxis(this.moveInstructions[move]['axis'], this.moveInstructions[move][
                     'rotation']);
@@ -723,8 +723,8 @@ class Cube {
             this.swap_rotations(this.cubies[swap[0]], this.cubies[swap[1]]);
             for (let cubie of swap) {
                 //Add all cubies in the swaps back to the scene
-                this.#scene.add(this.cubies[cubie]);
-                this.#scene.add(this.outlines[cubie]);
+                this.scene.add(this.cubies[cubie]);
+                this.scene.add(this.outlines[cubie]);
                 //rotate all cubies in the swaps
                 this.cubies[cubie].rotateOnWorldAxis(this.moveInstructions[move]['axis'], this.moveInstructions[move][
                     'rotation']);
@@ -732,8 +732,8 @@ class Cube {
         }
         //Add all center cubies back to the scene
         for (let cubie of this.moveInstructions[move]['centers']) {
-            this.#scene.add(this.cubies[cubie]);
-            this.#scene.add(this.outlines[cubie]);
+            this.scene.add(this.cubies[cubie]);
+            this.scene.add(this.outlines[cubie]);
         }
         //reset cur to ""
         this.movesDone.push(this.cur);
