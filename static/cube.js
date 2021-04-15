@@ -48,8 +48,20 @@ class Cube {
     xAxis = new THREE.Vector3(1, 0, 0);
     yAxis = new THREE.Vector3(0, 1, 0);
     zAxis = new THREE.Vector3(0, 0, 1);
+    //The pattern for the default solved cube
+    solvedCube = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [2, 2, 2, 2, 2, 2, 2, 2, 2],
+    [3, 3, 3, 3, 3, 3, 3, 3, 3],
+    [4, 4, 4, 4, 4, 4, 4, 4, 4],
+    [5, 5, 5, 5, 5, 5, 5, 5, 5]];
+    solver_api = "";
+    solution_div = "";
+    current_alg_div = "";
+    applied;
+    scene;
 
-    /*
+/*
     A huge dictionary with the info needed to do moves. This so I can change do_move and finish_move from a huge decision tree to a few for loops
     Cycles contain sets of four cubies that need to be cycled. Swaps contain sets of 2 cubies that need to be swapped.
     Centers contain the center cubie of the slices
@@ -256,7 +268,7 @@ class Cube {
             'rotation': (Math.PI / 2)
         },
         "r": {
-            'cycles': [[20, 26, 8, 2], [11, 23, 17, 5], [19, 25, 7, 1], [10, 22, 16, 4]],
+            'cycles': [[20, 26, 8, 2], [11, 23, 17, 5]  , [19, 25, 7, 1], [10, 22, 16, 4]],
             'swaps': [],
             'centers': [14, 13],
             'axis': this.xAxis,
@@ -569,18 +581,6 @@ class Cube {
         },
     }
 
-    //The pattern for the default solved cube
-    solvedCube = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [2, 2, 2, 2, 2, 2, 2, 2, 2],
-    [3, 3, 3, 3, 3, 3, 3, 3, 3],
-    [4, 4, 4, 4, 4, 4, 4, 4, 4],
-    [5, 5, 5, 5, 5, 5, 5, 5, 5]];
-    solver_api = "";
-    solution_div = "";
-    current_alg_div = "";
-    applied;
-    scene;
     constructor(scene, applied) {
         this.scene = scene;
         if (applied)
