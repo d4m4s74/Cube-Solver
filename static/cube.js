@@ -60,7 +60,89 @@ class Cube {
         'S': [3, 4, 5, 12, 13, 14, 21, 22, 23],
         'F': [6, 7, 8, 15, 16, 17, 24, 25, 26]
     };
-    
+
+    /*
+    A huge dictionary with the info needed to do moves. This so I can change do_move and finish_move from a huge decision tree to a few for loops
+    Cycles contain sets of four cubies that need to be cycled. Swaps contain sets of 2 cubies that need to be swapped.
+    Centers contain the center cubie of the slices
+    Axis is the axis of rotation
+    Rotation is the degrees to rotate in radians.
+    */
+    #moveInstructions = {
+        "U": { 'cycles': [[2, 8, 6, 0], [5, 7, 3, 1]], 'swaps': [], 'centers': [4], 'axis': this.#yAxis, 'rotation': -(Math.PI / 2) },
+        "U2": { 'cycles': [], 'swaps': [[0, 8], [2, 6], [1, 7], [3, 5]], 'centers': [4], 'axis': this.#yAxis, 'rotation': -Math.PI },
+        "U2'": { 'cycles': [], 'swaps': [[0, 8], [2, 6], [1, 7], [3, 5]], 'centers': [4], 'axis': this.#yAxis, 'rotation': Math.PI },
+        "U'": { 'cycles': [[6, 8, 2, 0], [3, 7, 5, 1]], 'swaps': [], 'centers': [4], 'axis': this.#yAxis, 'rotation': (Math.PI / 2) },
+        "u": { 'cycles': [[2, 8, 6, 0], [5, 7, 3, 1], [11, 17, 15, 9], [14, 16, 12, 10]], 'swaps': [], 'centers': [4, 13], 'axis': this.#yAxis, 'rotation': -(Math.PI / 2) },
+        "u2": { 'cycles': [], 'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14]], 'centers': [4, 13], 'axis': this.#yAxis, 'rotation': -Math.PI },
+        "u2'": { 'cycles': [], 'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14]], 'centers': [4, 13], 'axis': this.#yAxis, 'rotation': Math.PI },
+        "u'": { 'cycles': [[6, 8, 2, 0], [3, 7, 5, 1], [15, 17, 11, 9], [12, 16, 14, 10]], 'swaps': [], 'centers': [4, 13], 'axis': this.#yAxis, 'rotation': (Math.PI / 2) },
+        "E": { 'cycles': [[15, 17, 11, 9], [12, 16, 14, 10]], 'swaps': [], 'centers': [13], 'axis': this.#yAxis, 'rotation': (Math.PI / 2) },
+        "E2": { 'cycles': [], 'swaps': [[9, 17], [11, 15], [10, 16], [12, 14]], 'centers': [13], 'axis': this.#yAxis, 'rotation': Math.PI },
+        "E2'": { 'cycles': [], 'swaps': [[9, 17], [11, 15], [10, 16], [12, 14]], 'centers': [13], 'axis': this.#yAxis, 'rotation': -Math.PI },
+        "E'": { 'cycles': [[11, 17, 15, 9], [14, 16, 12, 10]], 'swaps': [], 'centers': [13], 'axis': this.#yAxis, 'rotation': -(Math.PI / 2) },
+        "D": { 'cycles': [[24, 26, 20, 18], [21, 25, 23, 19]], 'swaps': [], 'centers': [22], 'axis': this.#yAxis, 'rotation': (Math.PI / 2) },
+        "D2": { 'cycles': [], 'swaps': [[18, 26], [20, 24], [19, 25], [21, 23]], 'centers': [22], 'axis': this.#yAxis, 'rotation': Math.PI },
+        "D2'": { 'cycles': [], 'swaps': [[18, 26], [20, 24], [19, 25], [21, 23]], 'centers': [22], 'axis': this.#yAxis, 'rotation': -Math.PI },
+        "D'": { 'cycles': [[20, 26, 24, 18], [23, 25, 21, 19]], 'swaps': [], 'centers': [22], 'axis': this.#yAxis, 'rotation': -(Math.PI / 2) },
+        "d": { 'cycles': [[24, 26, 20, 18], [21, 25, 23, 19], [15, 17, 11, 9], [12, 16, 14, 10]], 'swaps': [], 'centers': [22, 13], 'axis': this.#yAxis, 'rotation': (Math.PI / 2) },
+        "d2": { 'cycles': [], 'swaps': [[18, 26], [20, 24], [19, 25], [21, 23], [9, 17], [11, 15], [10, 16], [12, 14]], 'centers': [22, 13], 'axis': this.#yAxis, 'rotation': Math.PI },
+        "d2'": { 'cycles': [], 'swaps': [[18, 26], [20, 24], [19, 25], [21, 23], [9, 17], [11, 15], [10, 16], [12, 14]], 'centers': [22, 13], 'axis': this.#yAxis, 'rotation': -Math.PI },
+        "d'": { 'cycles': [[20, 26, 24, 18], [23, 25, 21, 19], [11, 17, 15, 9], [14, 16, 12, 10]], 'swaps': [], 'centers': [22, 13], 'axis': this.#yAxis, 'rotation': -(Math.PI / 2) },
+        "y": { 'cycles': [[2, 8, 6, 0], [5, 7, 3, 1], [11, 17, 15, 9], [14, 16, 12, 10], [20, 26, 24, 18], [23, 25, 21, 19]], 'swaps': [], 'centers': [22, 13, 4], 'axis': this.#yAxis, 'rotation': -(Math.PI / 2) },
+        "y2": { 'cycles': [], 'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14], [18, 26], [20, 24], [19, 25], [21, 23]], 'centers': [22, 13, 4], 'axis': this.#yAxis, 'rotation': -Math.PI },
+        "y2'": { 'cycles': [], 'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14], [18, 26], [20, 24], [19, 25], [21, 23]], 'centers': [22, 13, 4], 'axis': this.#yAxis, 'rotation': Math.PI },
+        "y'": { 'cycles': [[6, 8, 2, 0], [3, 7, 5, 1], [15, 17, 11, 9], [12, 16, 14, 10], [24, 26, 20, 18], [21, 25, 23, 19]], 'swaps': [], 'centers': [22, 13, 4], 'axis': this.#yAxis, 'rotation': (Math.PI / 2) },
+        "R": { 'cycles': [[20, 26, 8, 2], [11, 23, 17, 5]], 'swaps': [], 'centers': [14], 'axis': this.#xAxis, 'rotation': -(Math.PI / 2) },
+        "R2": { 'cycles': [], 'swaps': [[2, 26], [8, 20], [5, 23], [11, 17]], 'centers': [14], 'axis': this.#xAxis, 'rotation': -(Math.PI) },
+        "R2'": { 'cycles': [], 'swaps': [[2, 26], [8, 20], [5, 23], [11, 17]], 'centers': [14], 'axis': this.#xAxis, 'rotation': Math.PI },
+        "R'": { 'cycles': [[8, 26, 20, 2], [17, 23, 11, 5]], 'swaps': [], 'centers': [14], 'axis': this.#xAxis, 'rotation': (Math.PI / 2) },
+        "r": { 'cycles': [[20, 26, 8, 2], [11, 23, 17, 5], [19, 25, 7, 1], [10, 22, 16, 4]], 'swaps': [], 'centers': [14, 13], 'axis': this.#xAxis, 'rotation': -(Math.PI / 2) },
+        "r2": { 'cycles': [], 'swaps': [[2, 26], [8, 20], [5, 23], [11, 17], [1, 25], [7, 19], [4, 22], [10, 16]], 'centers': [14, 13], 'axis': this.#xAxis, 'rotation': -(Math.PI) },
+        "r2'": { 'cycles': [], 'swaps': [[2, 26], [8, 20], [5, 23], [11, 17], [1, 25], [7, 19], [4, 22], [10, 16]], 'centers': [14, 13], 'axis': this.#xAxis, 'rotation': Math.PI },
+        "r'": { 'cycles': [[8, 26, 20, 2], [17, 23, 11, 5], [7, 25, 19, 1], [16, 22, 10, 4]], 'centers': [14, 13], 'swaps': [], 'axis': this.#xAxis, 'rotation': (Math.PI / 2) },
+        "M": { 'cycles': [[7, 25, 19, 1], [16, 22, 10, 4]], 'swaps': [], 'centers': [13], 'axis': this.#xAxis, 'rotation': (Math.PI / 2) },
+        "M2": { 'cycles': [], 'swaps': [[1, 25], [7, 19], [4, 22], [10, 16]], 'centers': [13], 'axis': this.#xAxis, 'rotation': Math.PI },
+        "M2'": { 'cycles': [], 'swaps': [[1, 25], [7, 19], [4, 22], [10, 16]], 'centers': [13], 'axis': this.#xAxis, 'rotation': -(Math.PI) },
+        "M'": { 'cycles': [], 'swaps': [[19, 25, 7, 1], [10, 22, 16, 4]], 'centers': [13], 'axis': this.#xAxis, 'rotation': -(Math.PI / 2) },
+        "L": { 'cycles': [[6, 24, 18, 0], [15, 21, 9, 3]], 'swaps': [], 'centers': [12], 'axis': this.#xAxis, 'rotation': (Math.PI / 2) },
+        "L2": { 'cycles': [], 'swaps': [[0, 24], [6, 18], [3, 21], [9, 15]], 'centers': [12], 'axis': this.#xAxis, 'rotation': Math.PI },
+        "L2'": { 'cycles': [], 'swaps': [[0, 24], [6, 18], [3, 21], [9, 15]], 'centers': [12], 'axis': this.#xAxis, 'rotation': -(Math.PI) },
+        "L'": { 'cycles': [[18, 24, 6, 0], [9, 21, 15, 3]], 'swaps': [], 'centers': [12], 'axis': this.#xAxis, 'rotation': -(Math.PI / 2) },
+        "l": { 'cycles': [[6, 24, 18, 0], [15, 21, 9, 3], [7, 25, 19, 1], [16, 22, 10, 4]], 'swaps': [], 'centers': [12, 13], 'axis': this.#xAxis, 'rotation': (Math.PI / 2) },
+        "l2": { 'cycles': [], 'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16]], 'centers': [12, 13], 'axis': this.#xAxis, 'rotation': Math.PI },
+        "l2'": { 'cycles': [], 'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16]], 'centers': [12, 13], 'axis': this.#xAxis, 'rotation': -(Math.PI) },
+        "l'": { 'cycles': [[18, 24, 6, 0], [9, 21, 15, 3], [19, 25, 7, 1], [10, 22, 16, 4]], 'swaps': [], 'centers': [12, 13], 'axis': this.#xAxis, 'rotation': -(Math.PI / 2) },
+        "x": { 'cycles': [[18, 24, 6, 0], [9, 21, 15, 3], [19, 25, 7, 1], [10, 22, 16, 4], [8, 26, 20, 2], [17, 23, 11, 5]], 'swaps': [], 'centers': [12, 13, 14], 'axis': this.#xAxis, 'rotation': -(Math.PI / 2) },
+        "x2'": { 'cycles': [], 'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16], [2, 26], [8, 20], [5, 23], [11, 17]], 'centers': [12, 13, 14], 'axis': this.#xAxis, 'rotation': Math.PI },
+        "x2": { 'cycles': [], 'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16], [2, 26], [8, 20], [5, 23], [11, 17]], 'centers': [12, 13, 14], 'axis': this.#xAxis, 'rotation': -(Math.PI) },
+        "x'": { 'cycles': [[6, 24, 18, 0], [15, 21, 9, 3], [7, 25, 19, 1], [16, 22, 10, 4], [8, 26, 20, 2], [17, 23, 11, 5]], 'swaps': [], 'centers': [12, 13, 14], 'axis': this.#xAxis, 'rotation': (Math.PI / 2) },
+        "F": { 'cycles': [[8, 26, 24, 6], [17, 25, 15, 7]], 'swaps': [], 'centers': [16], 'axis': this.#zAxis, 'rotation': -(Math.PI / 2) },
+        "F2": { 'cycles': [], 'swaps': [[6, 26], [8, 24], [7, 25], [15, 17]], 'centers': [16], 'axis': this.#zAxis, 'rotation': -(Math.PI) },
+        "F2'": { 'cycles': [], 'swaps': [[6, 26], [8, 24], [7, 25], [15, 17]], 'centers': [16], 'axis': this.#zAxis, 'rotation': Math.PI },
+        "F'": { 'cycles': [[24, 26, 8, 6], [15, 25, 17, 7]], 'swaps': [], 'centers': [16], 'axis': this.#zAxis, 'rotation': Math.PI / 2 },
+        "f": { 'cycles': [[8, 26, 24, 6], [17, 25, 15, 7], [5, 23, 21, 3], [14, 22, 12, 4]], 'swaps': [], 'centers': [16, 13], 'axis': this.#zAxis, 'rotation': -(Math.PI / 2) },
+        "f2": { 'cycles': [], 'swaps': [[6, 26], [8, 24], [7, 25], [15, 17], [3, 23], [5, 21], [4, 22], [12, 14]], 'centers': [16, 13], 'axis': this.#zAxis, 'rotation': -(Math.PI) },
+        "f2'": { 'cycles': [], 'swaps': [[6, 26], [8, 24], [7, 25], [15, 17], [3, 23], [5, 21], [4, 22], [12, 14]], 'centers': [16, 13], 'axis': this.#zAxis, 'rotation': Math.PI },
+        "f'": { 'cycles': [[24, 26, 8, 6], [15, 25, 17, 7], [21, 23, 5, 3], [12, 22, 14, 4]], 'swaps': [], 'centers': [16, 13], 'axis': this.#zAxis, 'rotation': Math.PI / 2 },
+        "S": { 'cycles': [[21, 23, 5, 3], [12, 22, 14, 4]], 'swaps': [], 'centers': [13], 'axis': this.#zAxis, 'rotation': Math.PI / 2 },
+        "S2": { 'cycles': [], 'swaps': [[3, 23], [5, 21], [4, 22], [12, 14]], 'centers': [13], 'axis': this.#zAxis, 'rotation': Math.PI },
+        "S2'": { 'cycles': [], 'swaps': [[3, 23], [5, 21], [4, 22], [12, 14]], 'centers': [13], 'axis': this.#zAxis, 'rotation': -(Math.PI) },
+        "S'": { 'cycles': [[5, 23, 21, 3], [14, 22, 12, 4]], 'swaps': [], 'centers': [13], 'axis': this.#zAxis, 'rotation': -(Math.PI / 2) },
+        "B": { 'cycles': [[18, 20, 2, 0], [9, 19, 11, 1]], 'swaps': [], 'centers': [10], 'axis': this.#zAxis, 'rotation': Math.PI / 2 },
+        "B2": { 'cycles': [], 'swaps': [[0, 20], [2, 18], [1, 19], [9, 11]], 'centers': [10], 'axis': this.#zAxis, 'rotation': Math.PI },
+        "B2'": { 'cycles': [], 'swaps': [[0, 20], [2, 18], [1, 19], [9, 11]], 'centers': [10], 'axis': this.#zAxis, 'rotation': -(Math.PI) },
+        "B'": { 'cycles': [[2, 20, 18, 0], [11, 19, 9, 1]], 'swaps': [], 'centers': [10], 'axis': this.#zAxis, 'rotation': -(Math.PI / 2) },
+        "b": { 'cycles': [[18, 20, 2, 0], [9, 19, 11, 1], [21, 23, 5, 3], [12, 22, 14, 4]], 'swaps': [], 'centers': [10, 13], 'axis': this.#zAxis, 'rotation': Math.PI / 2 },
+        "b2": { 'cycles': [], 'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14]], 'centers': [10, 13], 'axis': this.#zAxis, 'rotation': Math.PI },
+        "b2'": { 'cycles': [], 'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14]], 'centers': [10, 13], 'axis': this.#zAxis, 'rotation': -(Math.PI) },
+        "b'": { 'cycles': [[2, 20, 18, 0], [11, 19, 9, 1], [5, 23, 21, 3], [14, 22, 12, 4]], 'swaps': [], 'centers': [10, 13,], 'axis': this.#zAxis, 'rotation': -(Math.PI / 2) },
+        "z": { 'cycles': [[2, 20, 18, 0], [11, 19, 9, 1], [5, 23, 21, 3], [14, 22, 12, 4], [8, 26, 24, 6], [17, 25, 15, 7]], 'swaps': [], 'centers': [10, 13, 16], 'axis': this.#zAxis, 'rotation': -(Math.PI / 2) },
+        "z2": { 'cycles': [], 'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14], [6, 26], [8, 24], [7, 25], [15, 17]], 'centers': [10, 13, 16], 'axis': this.#zAxis, 'rotation': -(Math.PI) },
+        "z2'": { 'cycles': [], 'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14], [6, 26], [8, 24], [7, 25], [15, 17]], 'centers': [10, 13, 16], 'axis': this.#zAxis, 'rotation': Math.PI },
+        "z'": { 'cycles': [[18, 20, 2, 0], [9, 19, 11, 1], [21, 23, 5, 3], [12, 22, 14, 4], [24, 26, 8, 6], [15, 25, 17, 7]], 'swaps': [], 'centers': [10, 13, 16], 'axis': this.#zAxis, 'rotation': Math.PI / 2 },
+    }
+
     //set the last applied cube
     #solvedCube = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -147,169 +229,34 @@ class Cube {
         this.#cur = move;
         //console.log(move);
         this.#moving.clear();
-        //If the first letter of the move is U or u, add the up layer to the moving group
-        if (move[0] == "U" || move[0] == "u" || move[0] == "y") {
-            for (let i of this.#slices['U']) {
-                this.#moving.add(this.#cubies[i]);
-                this.#moving.add(this.#outlines[i]);
-                this.#scene.add(this.#moving);
-            }
-            //Set up the movement for U or u
-            if (move == "U" || move == "u" || move == "y") {
-                this.#yRemaining = -(Math.PI / 2);
-            } else if (move == "U2" || move == "u2" || move == "y2") {
-                this.#yRemaining = -Math.PI;
-            } else if (move == "U2'" || move == "u2'" || move == "y2'") {
-                this.#yRemaining = Math.PI;
-            } else if (move == "U'" || move == "u'" || move == "y'") {
-                this.#yRemaining = (Math.PI / 2);
+        //Add all cubies in the cycles to the moving group
+        for (let cycle of this.#moveInstructions[move]['cycles']) {
+            for (let cubie of cycle) {
+                this.#moving.add(this.#cubies[cubie]);
+                this.#moving.add(this.#outlines[cubie]);
             }
         }
-        //If the first letter of the move is E or u or d, add the equator layer to the moving group
-        if (move[0] == "E" || move[0] == "u" || move[0] == "d" || move[0] == "y") {
-            for (let i of this.#slices['E']) {
-                this.#moving.add(this.#cubies[i]);
-                this.#moving.add(this.#outlines[i]);
-                this.#scene.add(this.#moving);
-            }
-            //only set up moves for E
-            if (move == "E'") {
-                this.#yRemaining = -(Math.PI / 2);
-            } else if (move == "E2") {
-                this.#yRemaining = -Math.PI;
-            } else if (move == "E2'") {
-                this.#yRemaining = Math.PI;
-            } else if (move == "E") {
-                this.#yRemaining = (Math.PI / 2);
+        //Add all cubies in the swaps to the moving group
+        for (let swap of this.#moveInstructions[move]['swaps']) {
+            for (let cubie of swap) {
+                this.#moving.add(this.#cubies[cubie]);
+                this.#moving.add(this.#outlines[cubie]);
             }
         }
-        //If the first letter of the move is D or d, add the D layer to the moving group
-        if (move[0] == "D" || move[0] == "d" || move[0] == "y") {
-            for (let i of this.#slices['D']) {
-                this.#moving.add(this.#cubies[i]);
-                this.#moving.add(this.#outlines[i]);
-                this.#scene.add(this.#moving);
-            }
-            //set up moves for D and d
-            if (move == "D'" || move == "d'") {
-                this.#yRemaining = -(Math.PI / 2);
-            } else if (move == "D2" || move == "d2") {
-                this.#yRemaining = -Math.PI;
-            } else if (move == "D2'" || move == "d2'") {
-                this.#yRemaining = Math.PI;
-            } else if (move == "D" || move == "d") {
-                this.#yRemaining = (Math.PI / 2);
-            }
+        //Add all centers to the moving group
+        for (let cubie of this.#moveInstructions[move]['centers']) {
+            this.#moving.add(this.#cubies[cubie]);
+            this.#moving.add(this.#outlines[cubie]);
         }
-        //If the first letter of the move is R or r, add the R layer to the moving group,
-        if (move[0] == "R" || move[0] == "r" || move[0] == "x") {
-            for (let i of this.#slices['R']) {
-                this.#moving.add(this.#cubies[i]);
-                this.#moving.add(this.#outlines[i]);
-                this.#scene.add(this.#moving);
-            }
-            //Set up the movement for R or r
-            if (move == "R" || move == "r" || move == "x") {
-                this.#xRemaining = -(Math.PI / 2);
-            } else if (move == "R2" || move == "r2" || move == "x2") {
-                this.#xRemaining = -Math.PI;
-            } else if (move == "R2'" || move == "r2'" || move == "x2'") {
-                this.#xRemaining = Math.PI;
-            } else if (move == "R'" || move == "r'" || move == "x'") {
-                this.#xRemaining = (Math.PI / 2);
-            }
-        }
-        //If the first letter of the move is M or r or l, add the middle  layer to the moving group
-        if (move[0] == "M" || move[0] == "r" || move[0] == "l" || move[0] == "x") {
-            for (let i of this.#slices['M']) {
-                this.#moving.add(this.#cubies[i]);
-                this.#moving.add(this.#outlines[i]);
-                this.#scene.add(this.#moving);
-            }
-            //only set up moves for M
-            if (move == "M'") {
-                this.#xRemaining = -(Math.PI / 2);
-            } else if (move == "M2") {
-                this.#xRemaining = Math.PI;
-            } else if (move == "M2'") {
-                this.#xRemaining = -Math.PI;
-            } else if (move == "M") {
-                this.#xRemaining = (Math.PI / 2);
-            }
-        }
-        //If the first letter of the move is L or l, add the L  layer to the moving group
-        if (move[0] == "L" || move[0] == "l" || move[0] == "x") {
-            for (let i of this.#slices['L']) {
-                this.#moving.add(this.#cubies[i]);
-                this.#moving.add(this.#outlines[i]);
-                this.#scene.add(this.#moving);
-            }
-            //set up moves for L and l
-            if (move == "L'" || move == "l'") {
-                this.#xRemaining = -(Math.PI / 2);
-            } else if (move == "L2" || move == "l2") {
-                this.#xRemaining = Math.PI;
-            } else if (move == "L2'" || move == "l2'") {
-                this.#xRemaining = -Math.PI;
-            } else if (move == "L" || move == "l") {
-                this.#xRemaining = (Math.PI / 2);
-            }
-        }
-        //FSB
-        //If the first letter of the move is F or f, add the F layer to the moving group,
-        if (move[0] == "F" || move[0] == "f" || move[0] == "z") {
-            for (let i of this.#slices['F']) {
-                this.#moving.add(this.#cubies[i]);
-                this.#moving.add(this.#outlines[i]);
-                this.#scene.add(this.#moving);
-            }
-            //Set up the movement for F or f
-            if (move == "F" || move == "f" || move == "z") {
-                this.#zRemaining = -(Math.PI / 2);
-            } else if (move == "F2" || move == "f2" || move == "z2") {
-                this.#zRemaining = -Math.PI;
-            } else if (move == "F2'" || move == "f2'" || move == "z2'") {
-                this.#zRemaining = Math.PI;
-            } else if (move == "F'" || move == "f'" || move == "z'") {
-                this.#zRemaining = (Math.PI / 2);
-            }
-        }
-        //If the first letter of the move is S or f or b, add the middle  layer to the moving group
-        if (move[0] == "S" || move[0] == "f" || move[0] == "b" || move[0] == "z") {
-            for (let i of this.#slices['S']) {
-                this.#moving.add(this.#cubies[i]);
-                this.#moving.add(this.#outlines[i]);
-                this.#scene.add(this.#moving);
-            }
-            //only set up moves for S
-            if (move == "S'") {
-                this.#zRemaining = -(Math.PI / 2);
-            } else if (move == "S2") {
-                this.#zRemaining = Math.PI;
-            } else if (move == "S2'") {
-                this.#zRemaining = -Math.PI;
-            } else if (move == "S") {
-                this.#zRemaining = (Math.PI / 2);
-            }
-        }
-        //If the first letter of the move is B or b, add the B  layer to the moving group
-        if (move[0] == "B" || move[0] == "b" || move[0] == "z") {
-            for (let i of this.#slices['B']) {
-                this.#moving.add(this.#cubies[i]);
-                this.#moving.add(this.#outlines[i]);
-                this.#scene.add(this.#moving);
-            }
-            //set up moves for B and b
-            if (move == "B'" || move == "b'") {
-                this.#zRemaining = -(Math.PI / 2);
-            } else if (move == "B2" || move == "b2") {
-                this.#zRemaining = Math.PI;
-            } else if (move == "B2'" || move == "b2'") {
-                this.#zRemaining = -Math.PI;
-            } else if (move == "B" || move == "b") {
-                this.#zRemaining = (Math.PI / 2);
-            }
-        }
+        //Add the moving group back to the scene
+        this.#scene.add(this.#moving);
+        //Add the rotation to the right axis
+        if (this.#moveInstructions[move]['axis'] == this.#xAxis)
+            this.#xRemaining = this.#moveInstructions[move]['rotation']
+        else if (this.#moveInstructions[move]['axis'] == this.#yAxis)
+            this.#yRemaining = this.#moveInstructions[move]['rotation']
+        else if (this.#moveInstructions[move]['axis'] == this.#zAxis)
+            this.#zRemaining = this.#moveInstructions[move]['rotation']
     }
     //Method actually moves the pieces (or gives the same effect)
     finish_move(move) {
@@ -328,381 +275,32 @@ class Cube {
         this.#moving.rotation.x = 0;
         this.#moving.rotation.y = 0;
         this.#moving.rotation.z = 0;
-
-        if (move[0] == "U" || move[0] == "u" || move[0] == 'y') {
-            //for the first nine cubies
-            for (let i of this.#slices['U']) {
-                //add them back to the scene
-                this.#scene.add(this.#cubies[i]);
-                this.#scene.add(this.#outlines[i]);
+        //Iterate over the cubies in the cycles array
+        for (let cycle of this.#moveInstructions[move]['cycles']) {
+            for (let cubie of cycle) {
+                //Add all cubies in the cycles back to the scene
+                this.#scene.add(this.#cubies[cubie]);
+                this.#scene.add(this.#outlines[cubie]);
+                //rotate all cubies in the cycles
+                this.#cubies[cubie].rotateOnWorldAxis(this.#moveInstructions[move]['axis'], this.#moveInstructions[move]['rotation']);
             }
-            //If the move is U or u
-            if (move == "U" || move == "u" || move == "y") {
-                //Cycle the rotation of the corners
-                this.cycle_rotations(this.#cubies[2], this.#cubies[8], this.#cubies[6], this.#cubies[0]);
-                //Cycle the rotation of the edges
-                this.cycle_rotations(this.#cubies[5], this.#cubies[7], this.#cubies[3], this.#cubies[1]);
-                for (let i of this.#slices['U']) {
-                    //rotate them all clockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#yAxis, -(Math.PI / 2));
-                }
-            }
-            //for 2 moves,
-            else if (move == "U2" || move == "u2" || move == "y2" || move == "U2'" || move == "u2'" || move == "y2'") {
-                //swap the corners
-                this.swap_rotations(this.#cubies[0], this.#cubies[8]);
-                this.swap_rotations(this.#cubies[2], this.#cubies[6]);
-                //swap the edges
-                this.swap_rotations(this.#cubies[1], this.#cubies[7]);
-                this.swap_rotations(this.#cubies[3], this.#cubies[5]);
-                for (let i of this.#slices['U']) {
-                    //rote them 180
-                    this.#cubies[i].rotateOnWorldAxis(this.#yAxis, Math.PI);
-                }
-            }
-            //Inverted move
-            else if (move == "U'" || move == "u'" || move == "y'") {
-                //Cycle the rotation of the corners
-                this.cycle_rotations(this.#cubies[6], this.#cubies[8], this.#cubies[2], this.#cubies[0]);
-                //Cycle the rotation of the edges
-                this.cycle_rotations(this.#cubies[3], this.#cubies[7], this.#cubies[5], this.#cubies[1]);
-                for (let i of this.#slices['U']) {
-                    //rotate them counterclockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#yAxis, (Math.PI / 2));
-                }
-            }
+            this.cycle_rotations(this.#cubies[cycle[0]], this.#cubies[cycle[1]], this.#cubies[cycle[2]], this.#cubies[cycle[3]]);
         }
-        if (move[0] == "E" || move[0] == "u" || move[0] == "d" || move[0] == 'y') {
-            //for the next nine cubies
-            for (let i of this.#slices['E']) {
-                //add them back to the scene
-                this.#scene.add(this.#cubies[i]);
-                this.#scene.add(this.#outlines[i]);
+        //Iterate over the cubies in the swaps array
+        for (let swap of this.#moveInstructions[move]['swaps']) {
+            for (let cubie of swap) {
+                //Add all cubies in the swaps back to the scene
+                this.#scene.add(this.#cubies[cubie]);
+                this.#scene.add(this.#outlines[cubie]);
+                //rotate all cubies in the swaps
+                this.#cubies[cubie].rotateOnWorldAxis(this.#moveInstructions[move]['axis'], this.#moveInstructions[move]['rotation']);
             }
-            //If the move is E', d' or u
-            if (move == "E'" || move == "u" || move == "d'" || move == "y") {
-                //Cycle the rotation of the edges
-                this.cycle_rotations(this.#cubies[11], this.#cubies[17], this.#cubies[15], this.#cubies[9]);
-                //Cycle the rotation of the centers
-                this.cycle_rotations(this.#cubies[14], this.#cubies[16], this.#cubies[12], this.#cubies[10]);
-                for (let i of this.#slices['E']) {
-                    //rotate them clockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#yAxis, -(Math.PI / 2));
-                }
-            }
-            //for 2 moves,
-            else if (move == "E2" || move == "u2" || move == "d2" || move == "y2" || move == "E2'" || move == "u2'" || move == "d2'" ||
-                move == "y2'") {
-                //swap the edges
-                this.swap_rotations(this.#cubies[9], this.#cubies[17]);
-                this.swap_rotations(this.#cubies[11], this.#cubies[15]);
-                //swap the centers
-                this.swap_rotations(this.#cubies[10], this.#cubies[16]);
-                this.swap_rotations(this.#cubies[12], this.#cubies[14]);
-                for (let i of this.#slices['E']) {
-                    //rotate them 180
-                    this.#cubies[i].rotateOnWorldAxis(this.#yAxis, Math.PI);
-                }
-            } else if (move == "E" || move == "u'" || move == "d" || move == "y'") {
-                //Cycle the rotation of the edges
-                this.cycle_rotations(this.#cubies[15], this.#cubies[17], this.#cubies[11], this.#cubies[9]);
-                //Cycle the rotation of the centers
-                this.cycle_rotations(this.#cubies[12], this.#cubies[16], this.#cubies[14], this.#cubies[10]);
-                for (let i of this.#slices['E']) {
-                    //rotate them counterclockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#yAxis, (Math.PI / 2));
-                }
-            }
+            this.swap_rotations(this.#cubies[swap[0]], this.#cubies[swap[1]]);
         }
-        if (move[0] == "D" || move[0] == "d" || move[0] == 'y') {
-            //for the next nine cubies
-            for (let i of this.#slices['D']) {
-                //add them back to the this.#scene
-                this.#scene.add(this.#cubies[i]);
-                this.#scene.add(this.#outlines[i]);
-            }
-            //If the move is E', d' or u
-            if (move == "D'" || move == "d'" || move == "y") {
-                //Cycle the rotation of the corners
-                this.cycle_rotations(this.#cubies[20], this.#cubies[26], this.#cubies[24], this.#cubies[18]);
-                //Cycle the rotation of the edges
-                this.cycle_rotations(this.#cubies[23], this.#cubies[25], this.#cubies[21], this.#cubies[19]);
-                for (let i of this.#slices['D']) {
-                    //rotate them clockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#yAxis, -(Math.PI / 2));
-                }
-            }
-            //for 2 moves,
-            else if (move == "D2" || move == "d2" || move == "y2" || move == "D2'" || move == "d2'" || move == "y2'") {
-                //swap the corners
-                this.swap_rotations(this.#cubies[18], this.#cubies[26]);
-                this.swap_rotations(this.#cubies[20], this.#cubies[24]);
-                //swap the edges
-                this.swap_rotations(this.#cubies[19], this.#cubies[25]);
-                this.swap_rotations(this.#cubies[21], this.#cubies[23]);
-                for (let i of this.#slices['D']) {
-                    //rote them 180
-                    this.#cubies[i].rotateOnWorldAxis(this.#yAxis, Math.PI);
-                }
-            } else if (move == "D" || move == "d" || move == "y'") {
-                //Cycle the rotation of the corners
-                this.cycle_rotations(this.#cubies[24], this.#cubies[26], this.#cubies[20], this.#cubies[18]);
-                //Cycle the rotation of the edges
-                this.cycle_rotations(this.#cubies[21], this.#cubies[25], this.#cubies[23], this.#cubies[19]);
-                for (let i of this.#slices['D']) {
-                    //rotate them counterclockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#yAxis, (Math.PI / 2));
-                }
-            }
-        }
-        //Now the X direction
-        if (move[0] == "R" || move[0] == "r" || move[0] == "x") {
-            //for the first nine cubies
-            for (let i of this.#slices['R']) {
-                //add them back to the this.#scene
-                this.#scene.add(this.#cubies[i]);
-                this.#scene.add(this.#outlines[i]);
-            }
-            //If the move is U or u
-            if (move == "R" || move == "r" || move == "x") {
-                //cycle the corners
-                this.cycle_rotations(this.#cubies[20], this.#cubies[26], this.#cubies[8], this.#cubies[2]);
-                //cycle the edges
-                this.cycle_rotations(this.#cubies[11], this.#cubies[23], this.#cubies[17], this.#cubies[5]);
-                for (let i of this.#slices['R']) {
-                    //rotate them clockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#xAxis, -(Math.PI / 2));
-                }
-            }
-            //for 2 moves,
-            else if (move == "R2" || move == "r2" || move == "x2" || move == "R2'" || move == "r2'" || move == "x2'") {
-                //swap the corners
-                this.swap_rotations(this.#cubies[2], this.#cubies[26]);
-                this.swap_rotations(this.#cubies[8], this.#cubies[20]);
-                //swap the edges
-                this.swap_rotations(this.#cubies[5], this.#cubies[23]);
-                this.swap_rotations(this.#cubies[11], this.#cubies[17]);
-                for (let i of this.#slices['R']) {
-                    //rotate them 180
-                    this.#cubies[i].rotateOnWorldAxis(this.#xAxis, Math.PI);
-                }
-            } else if (move == "R'" || move == "r'" || move == "x'") {
-                //cycle the corners
-                this.cycle_rotations(this.#cubies[8], this.#cubies[26], this.#cubies[20], this.#cubies[2]);
-                //cycle the edges
-                this.cycle_rotations(this.#cubies[17], this.#cubies[23], this.#cubies[11], this.#cubies[5]);
-                for (let i of this.#slices['R']) {
-                    //rotate them counterclockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#xAxis, (Math.PI / 2));
-                }
-            }
-        }
-        if (move[0] == "M" || move[0] == "r" || move[0] == "l" || move[0] == "x") {
-            //for the next nine cubies
-            for (let i of this.#slices['M']) {
-                //add them back to the this.#scene
-                this.#scene.add(this.#cubies[i]);
-                this.#scene.add(this.#outlines[i]);
-            }
-            //If the move is E', d' or u
-            if (move == "M'" || move == "r" || move == "l'" || move == "x") {
-                //cycle the edges
-                this.cycle_rotations(this.#cubies[19], this.#cubies[25], this.#cubies[7], this.#cubies[1]);
-                //cycle the centers
-                this.cycle_rotations(this.#cubies[10], this.#cubies[22], this.#cubies[16], this.#cubies[4]);
-                for (let i of this.#slices['M']) {
-                    //rotate them clockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#xAxis, -(Math.PI / 2));
-                }
-            }
-            //for 2 moves,
-            else if (move == "M2" || move == "r2" || move == "l2" || move == "x2" || move == "M2'" || move == "r2'" ||
-                move == "l2'" || move == "x2'") {
-                //swap the edges
-                this.swap_rotations(this.#cubies[1], this.#cubies[25]);
-                this.swap_rotations(this.#cubies[7], this.#cubies[19]);
-                //swap the centers
-                this.swap_rotations(this.#cubies[4], this.#cubies[22]);
-                this.swap_rotations(this.#cubies[10], this.#cubies[16]);
-                for (let i of this.#slices['M']) {
-                    //rote them 180
-                    this.#cubies[i].rotateOnWorldAxis(this.#xAxis, Math.PI);
-                }
-            } else if (move == "M" || move == "r'" || move == "l" || move == "x'") {
-                //cycle the edges
-                this.cycle_rotations(this.#cubies[7], this.#cubies[25], this.#cubies[19], this.#cubies[1]);
-                //cycle the centers
-                this.cycle_rotations(this.#cubies[16], this.#cubies[22], this.#cubies[10], this.#cubies[4]);
-                for (let i of this.#slices['M']) {
-                    //rotate them counterclockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#xAxis, (Math.PI / 2));
-                }
-            }
-        }
-        if (move[0] == "L" || move[0] == "l" || move[0] == "x") {
-            //for the next nine cubies
-            for (let i of this.#slices['L']) {
-                //add them back to the this.#scene
-                this.#scene.add(this.#cubies[i]);
-                this.#scene.add(this.#outlines[i]);
-            }
-            //If the move is E', d' or u
-            if (move == "L'" || move == "l'" || move == "x") {
-                //cycle the corners
-                this.cycle_rotations(this.#cubies[18], this.#cubies[24], this.#cubies[6], this.#cubies[0]);
-                //cycle the edges
-                this.cycle_rotations(this.#cubies[9], this.#cubies[21], this.#cubies[15], this.#cubies[3]);
-                for (let i of this.#slices['L']) {
-                    //rotate them clockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#xAxis, -(Math.PI / 2));
-                }
-            }
-            //for 2 moves,
-            else if (move == "L2" || move == "l2" || move == "x2" || move == "L2'" || move == "l2'" || move == "x2'") {
-                //swap the corners
-                this.swap_rotations(this.#cubies[0], this.#cubies[24]);
-                this.swap_rotations(this.#cubies[6], this.#cubies[18]);
-                //swap the edges
-                this.swap_rotations(this.#cubies[3], this.#cubies[21]);
-                this.swap_rotations(this.#cubies[9], this.#cubies[15]);
-                for (let i of this.#slices['L']) {
-                    //rotate them 180
-                    this.#cubies[i].rotateOnWorldAxis(this.#xAxis, Math.PI);
-                }
-            } else if (move == "L" || move == "l" || move == "x'") {
-                //cycle the corners
-                this.cycle_rotations(this.#cubies[6], this.#cubies[24], this.#cubies[18], this.#cubies[0]);
-                //cycle the edges
-                this.cycle_rotations(this.#cubies[15], this.#cubies[21], this.#cubies[9], this.#cubies[3]);
-                for (let i of this.#slices['L']) {
-                    //rotate them counterclockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#xAxis, (Math.PI / 2));
-                }
-            }
-        }
-        //Z direction
-        if (move[0] == "F" || move[0] == "f" || move[0] == "z") {
-            //for the first nine cubies
-            for (let i of this.#slices['F']) {
-                //add them back to the this.#scene
-                this.#scene.add(this.#cubies[i]);
-                this.#scene.add(this.#outlines[i]);
-            }
-            //If the move is U or u
-            if (move == "F" || move == "f" || move == "z") {
-                //cycle the corners
-                this.cycle_rotations(this.#cubies[8], this.#cubies[26], this.#cubies[24], this.#cubies[6]);
-                //cycle the edges
-                this.cycle_rotations(this.#cubies[17], this.#cubies[25], this.#cubies[15], this.#cubies[7]);
-                for (let i of this.#slices['F']) {
-                    //rotate them clockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#zAxis, -(Math.PI / 2));
-                }
-            }
-            //for 2 moves,
-            else if (move == "F2" || move == "f2" || move == "z2" || move == "F2'" || move == "f2'" || move == "z2'") {
-                //swap the corners
-                this.swap_rotations(this.#cubies[6], this.#cubies[26]);
-                this.swap_rotations(this.#cubies[8], this.#cubies[24]);
-                //swap the edges
-                this.swap_rotations(this.#cubies[7], this.#cubies[25]);
-                this.swap_rotations(this.#cubies[15], this.#cubies[17]);
-                for (let i of this.#slices['F']) {
-                    //rotate them 180
-                    this.#cubies[i].rotateOnWorldAxis(this.#zAxis, Math.PI);
-                }
-            } else if (move == "F'" || move == "f'" || move == "z'") {
-                //cycle the corners
-                this.cycle_rotations(this.#cubies[24], this.#cubies[26], this.#cubies[8], this.#cubies[6]);
-                //cycle the edges
-                this.cycle_rotations(this.#cubies[15], this.#cubies[25], this.#cubies[17], this.#cubies[7]);
-                for (let i of this.#slices['F']) {
-                    //rotate them counterclockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#zAxis, (Math.PI / 2));
-                }
-            }
-        }
-        if (move[0] == "S" || move[0] == "f" || move[0] == "b" || move[0] == "z") {
-            //for the next nine cubies
-            for (let i of this.#slices['S']) {
-                //add them back to the this.#scene
-                this.#scene.add(this.#cubies[i]);
-                this.#scene.add(this.#outlines[i]);
-            }
-            //If the move is E', d' or u
-            if (move == "S'" || move == "f" || move == "b'" || move == "z") {
-                //cycle the edges
-                this.cycle_rotations(this.#cubies[5], this.#cubies[23], this.#cubies[21], this.#cubies[3]);
-                //cycle the centers
-                this.cycle_rotations(this.#cubies[14], this.#cubies[22], this.#cubies[12], this.#cubies[4]);
-                for (let i of this.#slices['S']) {
-                    //rotate them clockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#zAxis, -(Math.PI / 2));
-                }
-            }
-            //for 2 moves,
-            else if (move == "S2" || move == "f2" || move == "b2" || move == "z2") {
-                //swap the edges
-                this.swap_rotations(this.#cubies[3], this.#cubies[23]);
-                this.swap_rotations(this.#cubies[5], this.#cubies[21]);
-                //swap the centers
-                this.swap_rotations(this.#cubies[4], this.#cubies[22]);
-                this.swap_rotations(this.#cubies[12], this.#cubies[14]);
-                for (let i of this.#slices['S']) {
-                    //rote them 180
-                    this.#cubies[i].rotateOnWorldAxis(this.#zAxis, Math.PI);
-                }
-            } else if (move == "S" || move == "f'" || move == "b" || move == "z'") {
-                //cycle the edges
-                this.cycle_rotations(this.#cubies[21], this.#cubies[23], this.#cubies[5], this.#cubies[3]);
-                //cycle the centers
-                this.cycle_rotations(this.#cubies[12], this.#cubies[22], this.#cubies[14], this.#cubies[4]);
-                for (let i of this.#slices['S']) {
-                    //rotate them counterclockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#zAxis, (Math.PI / 2));
-                }
-            }
-        }
-        if (move[0] == "B" || move[0] == "b" || move[0] == "z") {
-            //for the next nine cubies
-            for (let i of this.#slices['B']) {
-                //add them back to the this.#scene
-                this.#scene.add(this.#cubies[i]);
-                this.#scene.add(this.#outlines[i]);
-            }
-            //If the move is E', d' or u
-            if (move == "B'" || move == "b'" || move == "z") {
-                //cycle the corners
-                this.cycle_rotations(this.#cubies[2], this.#cubies[20], this.#cubies[18], this.#cubies[0]);
-                //cycle the edges
-                this.cycle_rotations(this.#cubies[11], this.#cubies[19], this.#cubies[9], this.#cubies[1]);
-                for (let i of this.#slices['B']) {
-                    //rotate them clockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#zAxis, -(Math.PI / 2));
-                }
-            }
-            //for 2 moves,
-            else if (move == "B2" || move == "b2" || move == "z2" || move == "B2'" || move == "b2'" || move == "z2'") {
-                //swap the corners
-                this.swap_rotations(this.#cubies[0], this.#cubies[20]);
-                this.swap_rotations(this.#cubies[2], this.#cubies[18]);
-                //swap the edges
-                this.swap_rotations(this.#cubies[1], this.#cubies[19]);
-                this.swap_rotations(this.#cubies[9], this.#cubies[11]);
-                for (let i of this.#slices['B']) {
-                    //rotate them 180
-                    this.#cubies[i].rotateOnWorldAxis(this.#zAxis, Math.PI);
-                }
-            } else if (move == "B" || move == "b" || move == "z'") {
-                //cycle the corners
-                this.cycle_rotations(this.#cubies[18], this.#cubies[20], this.#cubies[2], this.#cubies[0]);
-                //cycle the edges
-                this.cycle_rotations(this.#cubies[9], this.#cubies[19], this.#cubies[11], this.#cubies[1]);
-                for (let i of this.#slices['B']) {
-                    //rotate them counterclockwise
-                    this.#cubies[i].rotateOnWorldAxis(this.#zAxis, (Math.PI / 2));
-                }
-            }
+        //Add all center cubies back to the scene
+        for (let cubie of this.#moveInstructions[move]['centers']) {
+            this.#scene.add(this.#cubies[cubie]);
+            this.#scene.add(this.#outlines[cubie]);
         }
         //reset cur to ""
         this.#movesDone.push(this.#cur);
