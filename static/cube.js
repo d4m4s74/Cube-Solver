@@ -570,7 +570,7 @@ class Cube {
     }
 
     //The pattern for the default solved cube
-    zAxis = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+    solvedCube = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 1, 1, 1, 1, 1, 1, 1, 1],
     [2, 2, 2, 2, 2, 2, 2, 2, 2],
     [3, 3, 3, 3, 3, 3, 3, 3, 3],
@@ -581,9 +581,12 @@ class Cube {
     current_alg_div = "";
     applied;
     scene;
-    constructor(scene, applied = this.zAxis) {
+    constructor(scene, applied) {
         this.scene = scene;
-        this.applied = applied.map(function(arr) { return arr.slice() });
+        if (applied)
+            this.applied = applied.map(function(arr) { return arr.slice() });
+        else
+            this.applied = this.solvedCube.map(function(arr) { return arr.slice() });
         for (let i = 0; i < 27; i++) {
             //make a mesh based on the before box
             this.cubies.push(new THREE.Mesh(this.geometry, this.cubeMaterials));
@@ -638,7 +641,7 @@ class Cube {
         this.movenumber = 0;
         this.steps = [];
         $(this.current_alg_div).html("");
-        this.applied = this.zAxis.map(function(arr) { return arr.slice() });
+        this.applied = this.solvedCube.map(function(arr) { return arr.slice() });
         for (let i = 0; i < 27; i++) {
             this.cubies[i].rotation.x = 0;
             this.cubies[i].rotation.y = 0;
@@ -759,7 +762,7 @@ class Cube {
                 }
                 //If we're finished with the last step, asssume the cube is solved and clear the screen.
                 else if (this.stepnumber == this.steps.length - 1) {
-                    this.applied = this.zAxis.map(function(arr) { return arr.slice() });
+                    this.applied = this.solvedCube.map(function(arr) { return arr.slice() });
                     this.movesDone = [];
                     this.running = false;
                     $(this.current_alg_div).html("");
@@ -1203,12 +1206,12 @@ $('.square').click(function() {
         //set the color to the number of that color
         color = colors.indexOf(this.id);
         //update cur to show that color
-        $("cur").css("background-color", colors[color])
+        $("#cur").css("background-color", colors[color])
     }
     //If the selected square is cur, switch back to grey
-    else if (this.id == "cur") {
+    else if (this.id == "#cur") {
         color = 6
-        $("cur").css("background-color", colors[color])
+        $("#cur").css("background-color", colors[color])
     } //for all other squares, except for the centers
     else if (parseInt(this.id[3]) != 4) {
         if (faces[parseInt(this.id[1])][parseInt(this.id[3])] == color) {
