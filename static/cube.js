@@ -266,7 +266,7 @@ class Cube {
         "y2": {
             'cycles': [],
             'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14], [18, 26], [20, 24], [19, 25],
-                [21, 23]],
+            [21, 23]],
             'centers': [22, 13, 4],
             'axis': this.yAxis,
             'rotation': -Math.PI,
@@ -276,7 +276,7 @@ class Cube {
         "y2'": {
             'cycles': [],
             'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14], [18, 26], [20, 24], [19, 25],
-                [21, 23]],
+            [21, 23]],
             'centers': [22, 13, 4],
             'axis': this.yAxis,
             'rotation': Math.PI,
@@ -484,7 +484,7 @@ class Cube {
         "x2'": {
             'cycles': [],
             'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16], [2, 26], [8, 20], [5, 23],
-                [11, 17]],
+            [11, 17]],
             'centers': [12, 13, 14],
             'axis': this.xAxis,
             'rotation': Math.PI,
@@ -494,7 +494,7 @@ class Cube {
         "x2": {
             'cycles': [],
             'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16], [2, 26], [8, 20], [5, 23],
-                [11, 17]],
+            [11, 17]],
             'centers': [12, 13, 14],
             'axis': this.xAxis,
             'rotation': -Math.PI,
@@ -702,7 +702,7 @@ class Cube {
         "z2": {
             'cycles': [],
             'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14], [6, 26], [8, 24], [7, 25],
-                [15, 17]],
+            [15, 17]],
             'centers': [10, 13, 16],
             'axis': this.zAxis,
             'rotation': -Math.PI,
@@ -712,7 +712,7 @@ class Cube {
         "z2'": {
             'cycles': [],
             'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14], [6, 26], [8, 24], [7, 25],
-                [15, 17]],
+            [15, 17]],
             'centers': [10, 13, 16],
             'axis': this.zAxis,
             'rotation': Math.PI,
@@ -732,10 +732,6 @@ class Cube {
 
     constructor(scene, applied) {
         this.scene = scene;
-        if (applied)
-            apply_color(applied);
-        else
-            this.applied = this.solvedCube.map(function(arr) { return arr.slice() });
         for (let i = 0; i < 27; i++) {
             //make a mesh based on the before box
             this.cubies.push(new THREE.Mesh(this.geometry, this.cubeMaterials));
@@ -787,6 +783,11 @@ class Cube {
         this.planes[9].position.set(0, 0, 1); //front
         this.planes[10].position.set(0, 0, -1); //back
         this.planes[11].position.set(0, 0, -1); //back
+        //Apply the colors if requested
+        if (applied)
+            apply_color(applied);
+        else
+            this.applied = this.solvedCube.map(function(arr) { return arr.slice() });
     }
     //Method to cycle the rotations of 4 cubies a > b > c > d > a
     cycle_rotations(a, b, c, d) {
@@ -867,7 +868,7 @@ class Cube {
         for (let plane of this.moveInstructions[move]['moving']) {
             this.moving.add(this.planes[plane]);
         }
-        //Add the static planes to the moving group
+        //Add the static planes to the scene
         for (let plane of this.moveInstructions[move]['static']) {
             this.scene.add(this.planes[plane]);
         }
@@ -937,6 +938,7 @@ class Cube {
         this.movesDone.push(this.cur);
         this.cur = "";
     }
+
     //Method to cycle through moves.
     next_move(click = false) {
         //Only do the mode if we aren't currently moving. Without this check we can desync if the user presses next while moving.
@@ -1270,7 +1272,7 @@ class Cube {
     }
 
     //Method to prepare the next animation frame
-    animate() {
+    update() {
         //First wait for x frames
         if (this.wait > 0) {
             this.wait -= Math.max(10 * this.mspeed, 1);
@@ -1537,7 +1539,7 @@ $('#speed').on('input', function() {
 //the animate function
 function animate() {
     requestAnimationFrame(animate);
-    cube.animate();
+    cube.update();
     controls.update();
     renderer.render(scene, camera);
 }
