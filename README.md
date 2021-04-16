@@ -517,61 +517,6 @@ I also spent a week or 2 making a mobile view, because the text seemed to be a v
 Brings my algorithm to the user. Based on three.js  
 This is my first time actually writing javascript. It doesn't look pretty, probably breaks all the rules, but it works.
 
-First I create the canvas and camera. This piece of code is almost literally copied from the tutorials on the three.js site. Then I create a multicolored cube with some help from [stackoverflow](https://stackoverflow.com/questions/32649428/is-it-possible-to-add-different-colors-to-every-face-of-the-cube-using-threejs)  
-Except I do it 27 times. Well 28, I'll talk about that later.  
-I first did this manually one by one, but later wrote a few loops, making sure to keep the order I chose when doing that manually.  
-Finally I added way too many global variables containing the state of the cube and animation.
-#### cycle_rotations()
-Helper function. Cycles the rotations of 4 cubies using a 5th temp cubie. Simular to cycle() in utils.c
-#### swap_rotations()
-Helper function. Swaps the rotations of 2 cubies using a 3rd temp cubie.
-##### reset_cube()
-Resets the cube to its default state. Completely solved, green in front, white on top.
-##### do_move()
-Simple function, long function. Adds all cubies that are in the next move to a group to be rotated all at once, and sets the required rotation for each direction in radians. Does not modify the cube, only sets up the animation
-##### finish_move()
-Actually does the work.  
-Once the animation is finished, this function actually moves the cubies. Or at least it pretends to. Actually it rotates the cubies, making it look like a face has rotated.  
-First it swaps or cycles the rotations of the cubes on the face, and then rotates them some more. Finally it saves the finished moves to the moves_done array so we remember what we have done. Otherwise it would be hard to solve the cube.
-##### next_move()
-Takes the next move from a global array, or the next array from an array of dicts of arrays and sends it to do_move(). It also shows the current move by changing the html for currentAlg div.
-##### prev_move()
-Takes the previous move from the moves array, inverts it and sends it to do_move, updating the dom and setting the iterator one back.
-##### if (urlparam("alg") and if (urlparam("scramble"))
-Not really functions but worth saying. Hidden eature. Animates an algorithm from GET, or scrambles the cube from GET. Useful when sharing algorithms with others.
-##### $('.square').click
-Controls the color picker. If the user picks a color and clicks a square, this piece of code gives the square its color. It also changes the corresponding field in the faces array to be applied later.
-##### $('#clear').click
-Returns the color picker, and the faces array back to default.
-##### apply_pattern()
-Applies the colors from the color picker (or actually the faces array) to the cube by rotating each cubie. Contains some of its own functions
-Every cubie has its own line with manual modifiers. To me it's too random to automate. But if you want to try, be my guest.
-###### function opposite_color()
-Changes green to blue, red to orange, white to yellow, and the other way around. Now I think of it, this could have been a dict, but one line of math and 3 ifs works too.
-###### apply_color()
-Rotates a cubie based on the front and left color, or the up color. Basically lots of if statements with hardcoded moves, but that's enough here.
-##### $('#apply').click
-Validates the pattern using api/validator and sends it to apply_pattern(). Also copies the faces array to the applied array.
-##### $('#algForm').submit
-Takes an algorithm from the alg field, converts it into a moves array and sets running to true so the next frame the algorithm starts being animated.
-##### $('#scramble').click
-Takes an algorithm from the alg field, and runs the finish_move() function for every move so the cube updates without actually showing the animation.
-##### $('#pattern').change
-Takes the selected pattern and puts the algorithm in the alg field.
-##### $('#playpause').click
-Sets running to false, paused to true and switches the play icon with the pause icon in the interface
-##### $('#next'). and $('#prev').click
-Pauses animation and runs either next_move or prev_move
-##### solve_cube()
-Sends both the applied pattern, and all moves done to api/solver, puts the algorithms on screen in the Solutions div, and adds all steps to the steps array and sets running to true so the animation starts.
-##### $('#speed').on('input')
-Changes the movement speed variable based on an input slider on screen
-##### animate()
-Runs every frame and controls the 3d animation.  
-It first sets up an animation frame (default 3.js function).  
-If there is wait time, it does nothing except lowering the wait time by one.  
-If there are x, y or z moves remaining it rotates the moving group mspeed radians.  
-If there are no x, y or z moves remaining but there is a current move, it sends the move to finish_move().  
-Finally it updates the camera and renders everything.
-
+I rewrote this file multiple times. First iterative, that was before I started uploading to github, then functional, and then finally sort of object oriented (with just one class)
+#####
 
