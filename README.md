@@ -280,48 +280,48 @@ solver.cleanup_last_layer()
 
 ## Structure
 CS50 wants me to explain what every file does, and what's in it. So this readme is longer than all but 3 of my files.
-
-├── [app.py](#apppy)  
+```
+├── <a href="#apppy">app.py</a>  
 ├── bin  
-│   ├── [libcubesolver.so](#solver-library)  
-│   └── [solver](#solver)  
-├── [data](#data)  
-│   ├── [errors.txt](#errorstxt)  
-│   ├── [olls.csv](#ollscsv)  
-│   ├── [patterns.csv](#patternscsv)  
-│   └── [plls.csv](#pllscsv)  
-├── [makefile](#makefile)  
+│   ├── <a href="#solver-library">libcubesolver.so</a>  
+│   └── <a href="#solver">solver</a>  
+├── <a href="#data">data</a>  
+│   ├── <a href="#errorstxt">errors.txt</a>  
+│   ├── <a href="#ollscsv">olls.csv</a>  
+│   ├── <a href="#patternscsv">patterns.csv</a>  
+│   └── <a href="#pllscsv">plls.csv</a>  
+├── <a href="#makefile">makefile</a>  
 ├── README.md  
-├── [requirements.txt](#requirementstxt)  
-├── [src](#src)  
-│   ├── [cross.c](#crossc-and-crossh)  
-│   ├── [cross.h](#crossc-and-crossh)  
-│   ├── [cube.c](#cubec-and-cubeh)  
-│   ├── [cube.h](#cubec-and-cubeh)  
-│   ├── [cubesolver.h](#solver_libraryc-and-cubesolverh)  
-│   ├── [f2l.c](#f2lc-and-f2lh)  
-│   ├── [f2l.h](#f2lc-and-f2lh)  
-│   ├── [lastlayer.c](#lastlayerc-and-lastlayerh)  
-│   ├── [lastlayer.h](#lastlayerc-and-lastlayerh)  
-│   ├── [solver.c](#solverc)  
-│   ├── [solver_library.c](#solver_libraryc-and-cubesolverh)    
-│   ├── [utils.c](#utilsc-and-utilsh)  
-│   └── [utils.h](#utilsc-and-utilsh)  
+├── <a href="#requirementstxt">requirements.txt</a>  
+├── <a href="#src">src</a>  
+│   ├── <a href="#crossc-and-crossh">cross.c</a>  
+│   ├── <a href="#crossc-and-crossh">cross.h</a>  
+│   ├── <a href="#cubec-and-cubeh">cube.c</a>  
+│   ├── <a href="#cubec-and-cubeh">cube.h</a>  
+│   ├── <a href="#solver_libraryc-and-cubesolverh">cubesolver.h</a>  
+│   ├── <a href="#f2lc-and-f2lh">f2l.c</a>  
+│   ├── <a href="#f2lc-and-f2lh">f2l.h</a>  
+│   ├── <a href="#lastlayerc-and-lastlayerh">lastlayer.c</a>  
+│   ├── <a href="#lastlayerc-and-lastlayerh">lastlayer.h</a>  
+│   ├── <a href="#solverc">solver.c</a>  
+│   ├── <a href="#solver_libraryc-and-cubesolverh">solver_library.c</a>    
+│   ├── <a href="#utilsc-and-utilsh">utils.c</a>  
+│   └── <a href="#utilsc-and-utilsh">utils.h</a>  
 ├── test  
-│   ├── [randomtests.c](#randomtestsc)  
+│   ├── <a href="#randomtestsc">randomtests.c</a>  
 │   └── randomtests   
 ├── static  
-│   ├── [cube.css](cubecss)  
-│   ├── [cube.js](cubejs)  
+│   ├── <a href="cubecss">cube.css</a>  
+│   ├── <a href="cubejs">cube.js</a>  
 │   ├── favicon.ico  
 │   ├── next.png  
 │   ├── pause.png  
 │   ├── play.png  
 │   └── prev.png  
-├── [templates](#templates)  
-│   ├── [cube.html](#cubehtml)  
-│   └── [solver.html](#solverhtml)  
-
+├── <a href="#templates">templates</a>  
+│   ├── <a href="#cubehtml">cube.html</a>  
+│   └── <a href="#solverhtml">solver.html</a>  
+```
 ### src
 #### cube.c and cube.h
 Cube.c and cube.h contain all the code that controls the rubik's cube in memory.
