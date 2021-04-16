@@ -13,8 +13,8 @@ class Cube {
         new THREE.MeshBasicMaterial({ color: 'green', transparent: true, opacity: 1, side: THREE.DoubleSide }), //front
         new THREE.MeshBasicMaterial({ color: 'blue', transparent: true, opacity: 1, side: THREE.DoubleSide }), //back
     ];
-    planeGeometry = new THREE.PlaneGeometry(6,6);
-    planeMaterial = new THREE.MeshBasicMaterial( {color: 0x222222, side: THREE.DoubleSide} );
+    planeGeometry = new THREE.PlaneGeometry(6, 6);
+    planeMaterial = new THREE.MeshBasicMaterial({ color: 0x222222, side: THREE.DoubleSide });
     //draw the outlines:
     edges = new THREE.EdgesGeometry(this.geometry);
     //create a 27 this.cubies
@@ -82,7 +82,6 @@ class Cube {
             'rotation': -Math.PI / 2,
             'static': [0],
             'moving': [1]
-
         },
         "U2": {
             'cycles': [],
@@ -153,8 +152,8 @@ class Cube {
             'centers': [13],
             'axis': this.yAxis,
             'rotation': Math.PI / 2,
-            'static': [0,2],
-            'moving': [1,3]
+            'static': [0, 2],
+            'moving': [1, 3]
         },
         "E2": {
             'cycles': [],
@@ -162,8 +161,8 @@ class Cube {
             'centers': [13],
             'axis': this.yAxis,
             'rotation': Math.PI,
-            'static': [0,2],
-            'moving': [1,3]
+            'static': [0, 2],
+            'moving': [1, 3]
         },
         "E2'": {
             'cycles': [],
@@ -171,8 +170,8 @@ class Cube {
             'centers': [13],
             'axis': this.yAxis,
             'rotation': -Math.PI,
-            'static': [0,2],
-            'moving': [1,3]
+            'static': [0, 2],
+            'moving': [1, 3]
         },
         "E'": {
             'cycles': [[11, 17, 15, 9], [14, 16, 12, 10]],
@@ -180,8 +179,8 @@ class Cube {
             'centers': [13],
             'axis': this.yAxis,
             'rotation': -Math.PI / 2,
-            'static': [0,2],
-            'moving': [1,3]
+            'static': [0, 2],
+            'moving': [1, 3]
         },
         "D": {
             'cycles': [[24, 26, 20, 18], [21, 25, 23, 19]],
@@ -371,8 +370,8 @@ class Cube {
             'centers': [13],
             'axis': this.xAxis,
             'rotation': Math.PI / 2,
-            'static': [4,6],
-            'moving': [5,7]
+            'static': [4, 6],
+            'moving': [5, 7]
         },
         "M2": {
             'cycles': [],
@@ -380,8 +379,8 @@ class Cube {
             'centers': [13],
             'axis': this.xAxis,
             'rotation': Math.PI,
-            'static': [4,6],
-            'moving': [5,7]
+            'static': [4, 6],
+            'moving': [5, 7]
         },
         "M2'": {
             'cycles': [],
@@ -389,8 +388,8 @@ class Cube {
             'centers': [13],
             'axis': this.xAxis,
             'rotation': -Math.PI,
-            'static': [4,6],
-            'moving': [5,7]
+            'static': [4, 6],
+            'moving': [5, 7]
         },
         "M'": {
             'cycles': [[19, 25, 7, 1], [10, 22, 16, 4]],
@@ -398,8 +397,8 @@ class Cube {
             'centers': [13],
             'axis': this.xAxis,
             'rotation': -Math.PI / 2,
-            'static': [4,6],
-            'moving': [5,7]
+            'static': [4, 6],
+            'moving': [5, 7]
         },
         "L": {
             'cycles': [[6, 24, 18, 0], [15, 21, 9, 3]],
@@ -764,9 +763,8 @@ class Cube {
             }
         }
         //Adding a few planes between the cubies.
-        for (let i = 0; i < 12; i++)
-        {
-            this.planes.push(new THREE.Mesh( this.planeGeometry, this.planeMaterial ));
+        for (let i = 0; i < 12; i++) {
+            this.planes.push(new THREE.Mesh(this.planeGeometry, this.planeMaterial));
         }
         //I'm not sure how to do this programmatically.
         this.planes[0].position.set(0, 1, 0); //up
