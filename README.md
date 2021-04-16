@@ -311,8 +311,8 @@ CS50 wants me to explain what every file does, and what's in it. So this readme 
 │   ├── <a href="#randomtestsc">randomtests.c</a>  
 │   └── randomtests   
 ├── static  
-│   ├── <a href="cubecss">cube.css</a>  
-│   ├── <a href="cubejs">cube.js</a>  
+│   ├── <a href="#cubecss">cube.css</a>  
+│   ├── <a href="#cubejs">cube.js</a>  
 │   ├── favicon.ico  
 │   ├── next.png  
 │   ├── pause.png  
