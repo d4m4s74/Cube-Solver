@@ -79,7 +79,7 @@ class Cube {
             'swaps': [],
             'centers': [4],
             'axis': this.yAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [0],
             'moving': [1]
 
@@ -107,7 +107,7 @@ class Cube {
             'swaps': [],
             'centers': [4],
             'axis': this.yAxis,
-            'rotation': (Math.PI / 2),
+            'rotation': Math.PI / 2,
             'static': [0],
             'moving': [1]
         },
@@ -116,7 +116,7 @@ class Cube {
             'swaps': [],
             'centers': [4, 13],
             'axis': this.yAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [2],
             'moving': [3]
         },
@@ -143,7 +143,7 @@ class Cube {
             'swaps': [],
             'centers': [4, 13],
             'axis': this.yAxis,
-            'rotation': (Math.PI / 2),
+            'rotation': Math.PI / 2,
             'static': [2],
             'moving': [3]
         },
@@ -152,7 +152,7 @@ class Cube {
             'swaps': [],
             'centers': [13],
             'axis': this.yAxis,
-            'rotation': (Math.PI / 2),
+            'rotation': Math.PI / 2,
             'static': [0,2],
             'moving': [1,3]
         },
@@ -179,7 +179,7 @@ class Cube {
             'swaps': [],
             'centers': [13],
             'axis': this.yAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [0,2],
             'moving': [1,3]
         },
@@ -188,7 +188,7 @@ class Cube {
             'swaps': [],
             'centers': [22],
             'axis': this.yAxis,
-            'rotation': (Math.PI / 2),
+            'rotation': Math.PI / 2,
             'static': [2],
             'moving': [3]
         },
@@ -215,7 +215,7 @@ class Cube {
             'swaps': [],
             'centers': [22],
             'axis': this.yAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [2],
             'moving': [3]
         },
@@ -224,7 +224,7 @@ class Cube {
             'swaps': [],
             'centers': [22, 13],
             'axis': this.yAxis,
-            'rotation': (Math.PI / 2),
+            'rotation': Math.PI / 2,
             'static': [0],
             'moving': [1]
         },
@@ -251,7 +251,7 @@ class Cube {
             'swaps': [],
             'centers': [22, 13],
             'axis': this.yAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [0],
             'moving': [1]
         },
@@ -260,7 +260,7 @@ class Cube {
             'swaps': [],
             'centers': [22, 13, 4],
             'axis': this.yAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [],
             'moving': []
         },
@@ -289,7 +289,7 @@ class Cube {
             'swaps': [],
             'centers': [22, 13, 4],
             'axis': this.yAxis,
-            'rotation': (Math.PI / 2),
+            'rotation': Math.PI / 2,
             'static': [],
             'moving': []
         },
@@ -298,7 +298,7 @@ class Cube {
             'swaps': [],
             'centers': [14],
             'axis': this.xAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [4],
             'moving': [5]
         },
@@ -307,7 +307,7 @@ class Cube {
             'swaps': [[2, 26], [8, 20], [5, 23], [11, 17]],
             'centers': [14],
             'axis': this.xAxis,
-            'rotation': -(Math.PI),
+            'rotation': -Math.PI,
             'static': [4],
             'moving': [5]
         },
@@ -325,7 +325,7 @@ class Cube {
             'swaps': [],
             'centers': [14],
             'axis': this.xAxis,
-            'rotation': (Math.PI / 2),
+            'rotation': Math.PI / 2,
             'static': [4],
             'moving': [5]
         },
@@ -334,7 +334,7 @@ class Cube {
             'swaps': [],
             'centers': [14, 13],
             'axis': this.xAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [6],
             'moving': [7]
         },
@@ -343,7 +343,7 @@ class Cube {
             'swaps': [[2, 26], [8, 20], [5, 23], [11, 17], [1, 25], [7, 19], [4, 22], [10, 16]],
             'centers': [14, 13],
             'axis': this.xAxis,
-            'rotation': -(Math.PI),
+            'rotation': -Math.PI,
             'static': [6],
             'moving': [7]
         },
@@ -361,7 +361,7 @@ class Cube {
             'centers': [14, 13],
             'swaps': [],
             'axis': this.xAxis,
-            'rotation': (Math.PI / 2),
+            'rotation': Math.PI / 2,
             'static': [6],
             'moving': [7]
         },
@@ -370,7 +370,7 @@ class Cube {
             'swaps': [],
             'centers': [13],
             'axis': this.xAxis,
-            'rotation': (Math.PI / 2),
+            'rotation': Math.PI / 2,
             'static': [4,6],
             'moving': [5,7]
         },
@@ -388,7 +388,7 @@ class Cube {
             'swaps': [[1, 25], [7, 19], [4, 22], [10, 16]],
             'centers': [13],
             'axis': this.xAxis,
-            'rotation': -(Math.PI),
+            'rotation': -Math.PI,
             'static': [4,6],
             'moving': [5,7]
         },
@@ -397,7 +397,7 @@ class Cube {
             'swaps': [],
             'centers': [13],
             'axis': this.xAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [4,6],
             'moving': [5,7]
         },
@@ -406,7 +406,7 @@ class Cube {
             'swaps': [],
             'centers': [12],
             'axis': this.xAxis,
-            'rotation': (Math.PI / 2),
+            'rotation': Math.PI / 2,
             'static': [6],
             'moving': [7]
         },
@@ -424,7 +424,7 @@ class Cube {
             'swaps': [[0, 24], [6, 18], [3, 21], [9, 15]],
             'centers': [12],
             'axis': this.xAxis,
-            'rotation': -(Math.PI),
+            'rotation': -Math.PI,
             'static': [6],
             'moving': [7]
         },
@@ -433,7 +433,7 @@ class Cube {
             'swaps': [],
             'centers': [12],
             'axis': this.xAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [6],
             'moving': [7]
         },
@@ -442,7 +442,7 @@ class Cube {
             'swaps': [],
             'centers': [12, 13],
             'axis': this.xAxis,
-            'rotation': (Math.PI / 2),
+            'rotation': Math.PI / 2,
             'static': [4],
             'moving': [5]
         },
@@ -460,7 +460,7 @@ class Cube {
             'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16]],
             'centers': [12, 13],
             'axis': this.xAxis,
-            'rotation': -(Math.PI),
+            'rotation': -Math.PI,
             'static': [4],
             'moving': [5]
         },
@@ -469,7 +469,7 @@ class Cube {
             'swaps': [],
             'centers': [12, 13],
             'axis': this.xAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [4],
             'moving': [5]
         },
@@ -478,7 +478,7 @@ class Cube {
             'swaps': [],
             'centers': [12, 13, 14],
             'axis': this.xAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [],
             'moving': []
         },
@@ -498,7 +498,7 @@ class Cube {
                 [11, 17]],
             'centers': [12, 13, 14],
             'axis': this.xAxis,
-            'rotation': -(Math.PI),
+            'rotation': -Math.PI,
             'static': [],
             'moving': []
         },
@@ -507,7 +507,7 @@ class Cube {
             'swaps': [],
             'centers': [12, 13, 14],
             'axis': this.xAxis,
-            'rotation': (Math.PI / 2),
+            'rotation': Math.PI / 2,
             'static': [],
             'moving': []
         },
@@ -516,7 +516,7 @@ class Cube {
             'swaps': [],
             'centers': [16],
             'axis': this.zAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [8],
             'moving': [9]
         },
@@ -525,7 +525,7 @@ class Cube {
             'swaps': [[6, 26], [8, 24], [7, 25], [15, 17]],
             'centers': [16],
             'axis': this.zAxis,
-            'rotation': -(Math.PI),
+            'rotation': -Math.PI,
             'static': [8],
             'moving': [9]
         },
@@ -552,7 +552,7 @@ class Cube {
             'swaps': [],
             'centers': [16, 13],
             'axis': this.zAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [10],
             'moving': [11]
         },
@@ -561,7 +561,7 @@ class Cube {
             'swaps': [[6, 26], [8, 24], [7, 25], [15, 17], [3, 23], [5, 21], [4, 22], [12, 14]],
             'centers': [16, 13],
             'axis': this.zAxis,
-            'rotation': -(Math.PI),
+            'rotation': -Math.PI,
             'static': [10],
             'moving': [11]
         },
@@ -606,7 +606,7 @@ class Cube {
             'swaps': [[3, 23], [5, 21], [4, 22], [12, 14]],
             'centers': [13],
             'axis': this.zAxis,
-            'rotation': -(Math.PI),
+            'rotation': -Math.PI,
             'static': [8, 10],
             'moving': [9, 11]
         },
@@ -615,7 +615,7 @@ class Cube {
             'swaps': [],
             'centers': [13],
             'axis': this.zAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [8, 10],
             'moving': [9, 11]
         },
@@ -642,7 +642,7 @@ class Cube {
             'swaps': [[0, 20], [2, 18], [1, 19], [9, 11]],
             'centers': [10],
             'axis': this.zAxis,
-            'rotation': -(Math.PI),
+            'rotation': -Math.PI,
             'static': [10],
             'moving': [11]
         },
@@ -651,7 +651,7 @@ class Cube {
             'swaps': [],
             'centers': [10],
             'axis': this.zAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [10],
             'moving': [11]
         },
@@ -678,7 +678,7 @@ class Cube {
             'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14]],
             'centers': [10, 13],
             'axis': this.zAxis,
-            'rotation': -(Math.PI),
+            'rotation': -Math.PI,
             'static': [8],
             'moving': [9]
         },
@@ -687,7 +687,7 @@ class Cube {
             'swaps': [],
             'centers': [10, 13],
             'axis': this.zAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [8],
             'moving': [9]
         },
@@ -696,7 +696,7 @@ class Cube {
             'swaps': [],
             'centers': [10, 13, 16],
             'axis': this.zAxis,
-            'rotation': -(Math.PI / 2),
+            'rotation': -Math.PI / 2,
             'static': [],
             'moving': []
         },
@@ -706,7 +706,7 @@ class Cube {
                 [15, 17]],
             'centers': [10, 13, 16],
             'axis': this.zAxis,
-            'rotation': -(Math.PI),
+            'rotation': -Math.PI,
             'static': [],
             'moving': []
         },
