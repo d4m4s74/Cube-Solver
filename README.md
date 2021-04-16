@@ -280,7 +280,7 @@ solver.cleanup_last_layer()
 
 ## Structure
 CS50 wants me to explain what every file does, and what's in it. So this readme is longer than all but 3 of my files.
-```
+<pre>
 ├── <a href="#apppy">app.py</a>  
 ├── bin  
 │   ├── <a href="#solver-library">libcubesolver.so</a>  
@@ -321,7 +321,7 @@ CS50 wants me to explain what every file does, and what's in it. So this readme 
 ├── <a href="#templates">templates</a>  
 │   ├── <a href="#cubehtml">cube.html</a>  
 │   └── <a href="#solverhtml">solver.html</a>  
-```
+</pre>
 ### src
 #### cube.c and cube.h
 Cube.c and cube.h contain all the code that controls the rubik's cube in memory.
