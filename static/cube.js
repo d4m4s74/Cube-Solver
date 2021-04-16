@@ -13,11 +13,14 @@ class Cube {
         new THREE.MeshBasicMaterial({ color: 'green', transparent: true, opacity: 1, side: THREE.DoubleSide }), //front
         new THREE.MeshBasicMaterial({ color: 'blue', transparent: true, opacity: 1, side: THREE.DoubleSide }), //back
     ];
+    planeGeometry = new THREE.PlaneGeometry(6,6);
+    planeMaterial = new THREE.MeshBasicMaterial( {color: 0x222222, side: THREE.DoubleSide} );
     //draw the outlines:
     edges = new THREE.EdgesGeometry(this.geometry);
     //create a 27 this.cubies
     cubies = [];
     outlines = [];
+    planes = [];
     //cube used to store temporary values
     tempcube = new THREE.Mesh(this.geometry, this.cubeMaterials);
     //Create a group for the pieces currently moving
@@ -67,6 +70,8 @@ class Cube {
         Centers contain the center cubie of the slices
         Axis is the axis of rotation
         Rotation is the degrees to rotate in radians.
+        Static are the planes that don't move
+        Moving are the planes that do move.
     */
     moveInstructions = {
         "U": {
@@ -74,147 +79,190 @@ class Cube {
             'swaps': [],
             'centers': [4],
             'axis': this.yAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [0],
+            'moving': [1]
+
         },
         "U2": {
             'cycles': [],
             'swaps': [[0, 8], [2, 6], [1, 7], [3, 5]],
             'centers': [4],
             'axis': this.yAxis,
-            'rotation': -Math.PI
+            'rotation': -Math.PI,
+            'static': [0],
+            'moving': [1]
         },
         "U2'": {
             'cycles': [],
             'swaps': [[0, 8], [2, 6], [1, 7], [3, 5]],
             'centers': [4],
             'axis': this.yAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [0],
+            'moving': [1]
         },
         "U'": {
             'cycles': [[6, 8, 2, 0], [3, 7, 5, 1]],
             'swaps': [],
             'centers': [4],
             'axis': this.yAxis,
-            'rotation': (Math.PI / 2)
+            'rotation': (Math.PI / 2),
+            'static': [0],
+            'moving': [1]
         },
         "u": {
             'cycles': [[2, 8, 6, 0], [5, 7, 3, 1], [11, 17, 15, 9], [14, 16, 12, 10]],
             'swaps': [],
             'centers': [4, 13],
             'axis': this.yAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [2],
+            'moving': [3]
         },
         "u2": {
             'cycles': [],
             'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14]],
             'centers': [4, 13],
             'axis': this.yAxis,
-            'rotation': -Math.PI
+            'rotation': -Math.PI,
+            'static': [2],
+            'moving': [3]
         },
         "u2'": {
             'cycles': [],
             'swaps': [[0, 8], [2, 6], [1, 7], [3, 5], [9, 17], [11, 15], [10, 16], [12, 14]],
             'centers': [4, 13],
             'axis': this.yAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [2],
+            'moving': [3]
         },
         "u'": {
             'cycles': [[6, 8, 2, 0], [3, 7, 5, 1], [15, 17, 11, 9], [12, 16, 14, 10]],
             'swaps': [],
             'centers': [4, 13],
             'axis': this.yAxis,
-            'rotation': (Math.PI / 2)
+            'rotation': (Math.PI / 2),
+            'static': [2],
+            'moving': [3]
         },
         "E": {
             'cycles': [[15, 17, 11, 9], [12, 16, 14, 10]],
             'swaps': [],
             'centers': [13],
             'axis': this.yAxis,
-            'rotation': (Math.PI / 2)
+            'rotation': (Math.PI / 2),
+            'static': [0,2],
+            'moving': [1,3]
         },
         "E2": {
             'cycles': [],
             'swaps': [[9, 17], [11, 15], [10, 16], [12, 14]],
             'centers': [13],
             'axis': this.yAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [0,2],
+            'moving': [1,3]
         },
         "E2'": {
             'cycles': [],
             'swaps': [[9, 17], [11, 15], [10, 16], [12, 14]],
             'centers': [13],
             'axis': this.yAxis,
-            'rotation': -Math.PI
+            'rotation': -Math.PI,
+            'static': [0,2],
+            'moving': [1,3]
         },
         "E'": {
             'cycles': [[11, 17, 15, 9], [14, 16, 12, 10]],
             'swaps': [],
             'centers': [13],
             'axis': this.yAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [0,2],
+            'moving': [1,3]
         },
         "D": {
             'cycles': [[24, 26, 20, 18], [21, 25, 23, 19]],
             'swaps': [],
             'centers': [22],
             'axis': this.yAxis,
-            'rotation': (Math.PI / 2)
+            'rotation': (Math.PI / 2),
+            'static': [2],
+            'moving': [3]
         },
         "D2": {
             'cycles': [],
             'swaps': [[18, 26], [20, 24], [19, 25], [21, 23]],
             'centers': [22],
             'axis': this.yAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [2],
+            'moving': [3]
         },
         "D2'": {
             'cycles': [],
             'swaps': [[18, 26], [20, 24], [19, 25], [21, 23]],
             'centers': [22],
             'axis': this.yAxis,
-            'rotation': -Math.PI
+            'rotation': -Math.PI,
+            'static': [2],
+            'moving': [3]
         },
         "D'": {
             'cycles': [[20, 26, 24, 18], [23, 25, 21, 19]],
             'swaps': [],
             'centers': [22],
             'axis': this.yAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [2],
+            'moving': [3]
         },
         "d": {
             'cycles': [[24, 26, 20, 18], [21, 25, 23, 19], [15, 17, 11, 9], [12, 16, 14, 10]],
             'swaps': [],
             'centers': [22, 13],
             'axis': this.yAxis,
-            'rotation': (Math.PI / 2)
+            'rotation': (Math.PI / 2),
+            'static': [0],
+            'moving': [1]
         },
         "d2": {
             'cycles': [],
             'swaps': [[18, 26], [20, 24], [19, 25], [21, 23], [9, 17], [11, 15], [10, 16], [12, 14]],
             'centers': [22, 13],
             'axis': this.yAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [0],
+            'moving': [1]
         },
         "d2'": {
             'cycles': [],
             'swaps': [[18, 26], [20, 24], [19, 25], [21, 23], [9, 17], [11, 15], [10, 16], [12, 14]],
             'centers': [22, 13],
             'axis': this.yAxis,
-            'rotation': -Math.PI
+            'rotation': -Math.PI,
+            'static': [0],
+            'moving': [1]
         },
         "d'": {
             'cycles': [[20, 26, 24, 18], [23, 25, 21, 19], [11, 17, 15, 9], [14, 16, 12, 10]],
             'swaps': [],
             'centers': [22, 13],
             'axis': this.yAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [0],
+            'moving': [1]
         },
         "y": {
             'cycles': [[2, 8, 6, 0], [5, 7, 3, 1], [11, 17, 15, 9], [14, 16, 12, 10], [20, 26, 24, 18], [23, 25, 21, 19]],
             'swaps': [],
             'centers': [22, 13, 4],
             'axis': this.yAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [],
+            'moving': []
         },
         "y2": {
             'cycles': [],
@@ -222,7 +270,9 @@ class Cube {
                 [21, 23]],
             'centers': [22, 13, 4],
             'axis': this.yAxis,
-            'rotation': -Math.PI
+            'rotation': -Math.PI,
+            'static': [],
+            'moving': []
         },
         "y2'": {
             'cycles': [],
@@ -230,161 +280,207 @@ class Cube {
                 [21, 23]],
             'centers': [22, 13, 4],
             'axis': this.yAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [],
+            'moving': []
         },
         "y'": {
             'cycles': [[6, 8, 2, 0], [3, 7, 5, 1], [15, 17, 11, 9], [12, 16, 14, 10], [24, 26, 20, 18], [21, 25, 23, 19]],
             'swaps': [],
             'centers': [22, 13, 4],
             'axis': this.yAxis,
-            'rotation': (Math.PI / 2)
+            'rotation': (Math.PI / 2),
+            'static': [],
+            'moving': []
         },
         "R": {
             'cycles': [[20, 26, 8, 2], [11, 23, 17, 5]],
             'swaps': [],
             'centers': [14],
             'axis': this.xAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [4],
+            'moving': [5]
         },
         "R2": {
             'cycles': [],
             'swaps': [[2, 26], [8, 20], [5, 23], [11, 17]],
             'centers': [14],
             'axis': this.xAxis,
-            'rotation': -(Math.PI)
+            'rotation': -(Math.PI),
+            'static': [4],
+            'moving': [5]
         },
         "R2'": {
             'cycles': [],
             'swaps': [[2, 26], [8, 20], [5, 23], [11, 17]],
             'centers': [14],
             'axis': this.xAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [4],
+            'moving': [5]
         },
         "R'": {
             'cycles': [[8, 26, 20, 2], [17, 23, 11, 5]],
             'swaps': [],
             'centers': [14],
             'axis': this.xAxis,
-            'rotation': (Math.PI / 2)
+            'rotation': (Math.PI / 2),
+            'static': [4],
+            'moving': [5]
         },
         "r": {
             'cycles': [[20, 26, 8, 2], [11, 23, 17, 5], [19, 25, 7, 1], [10, 22, 16, 4]],
             'swaps': [],
             'centers': [14, 13],
             'axis': this.xAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [6],
+            'moving': [7]
         },
         "r2": {
             'cycles': [],
             'swaps': [[2, 26], [8, 20], [5, 23], [11, 17], [1, 25], [7, 19], [4, 22], [10, 16]],
             'centers': [14, 13],
             'axis': this.xAxis,
-            'rotation': -(Math.PI)
+            'rotation': -(Math.PI),
+            'static': [6],
+            'moving': [7]
         },
         "r2'": {
             'cycles': [],
             'swaps': [[2, 26], [8, 20], [5, 23], [11, 17], [1, 25], [7, 19], [4, 22], [10, 16]],
             'centers': [14, 13],
             'axis': this.xAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [6],
+            'moving': [7]
         },
         "r'": {
             'cycles': [[8, 26, 20, 2], [17, 23, 11, 5], [7, 25, 19, 1], [16, 22, 10, 4]],
             'centers': [14, 13],
             'swaps': [],
             'axis': this.xAxis,
-            'rotation': (Math.PI / 2)
+            'rotation': (Math.PI / 2),
+            'static': [6],
+            'moving': [7]
         },
         "M": {
             'cycles': [[7, 25, 19, 1], [16, 22, 10, 4]],
             'swaps': [],
             'centers': [13],
             'axis': this.xAxis,
-            'rotation': (Math.PI / 2)
+            'rotation': (Math.PI / 2),
+            'static': [4,6],
+            'moving': [5,7]
         },
         "M2": {
             'cycles': [],
             'swaps': [[1, 25], [7, 19], [4, 22], [10, 16]],
             'centers': [13],
             'axis': this.xAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [4,6],
+            'moving': [5,7]
         },
         "M2'": {
             'cycles': [],
             'swaps': [[1, 25], [7, 19], [4, 22], [10, 16]],
             'centers': [13],
             'axis': this.xAxis,
-            'rotation': -(Math.PI)
+            'rotation': -(Math.PI),
+            'static': [4,6],
+            'moving': [5,7]
         },
         "M'": {
             'cycles': [[19, 25, 7, 1], [10, 22, 16, 4]],
             'swaps': [],
             'centers': [13],
             'axis': this.xAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [4,6],
+            'moving': [5,7]
         },
         "L": {
             'cycles': [[6, 24, 18, 0], [15, 21, 9, 3]],
             'swaps': [],
             'centers': [12],
             'axis': this.xAxis,
-            'rotation': (Math.PI / 2)
+            'rotation': (Math.PI / 2),
+            'static': [6],
+            'moving': [7]
         },
         "L2": {
             'cycles': [],
             'swaps': [[0, 24], [6, 18], [3, 21], [9, 15]],
             'centers': [12],
             'axis': this.xAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [6],
+            'moving': [7]
         },
         "L2'": {
             'cycles': [],
             'swaps': [[0, 24], [6, 18], [3, 21], [9, 15]],
             'centers': [12],
             'axis': this.xAxis,
-            'rotation': -(Math.PI)
+            'rotation': -(Math.PI),
+            'static': [6],
+            'moving': [7]
         },
         "L'": {
             'cycles': [[18, 24, 6, 0], [9, 21, 15, 3]],
             'swaps': [],
             'centers': [12],
             'axis': this.xAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [6],
+            'moving': [7]
         },
         "l": {
             'cycles': [[6, 24, 18, 0], [15, 21, 9, 3], [7, 25, 19, 1], [16, 22, 10, 4]],
             'swaps': [],
             'centers': [12, 13],
             'axis': this.xAxis,
-            'rotation': (Math.PI / 2)
+            'rotation': (Math.PI / 2),
+            'static': [4],
+            'moving': [5]
         },
         "l2": {
             'cycles': [],
             'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16]],
             'centers': [12, 13],
             'axis': this.xAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [4],
+            'moving': [5]
         },
         "l2'": {
             'cycles': [],
             'swaps': [[0, 24], [6, 18], [3, 21], [9, 15], [1, 25], [7, 19], [4, 22], [10, 16]],
             'centers': [12, 13],
             'axis': this.xAxis,
-            'rotation': -(Math.PI)
+            'rotation': -(Math.PI),
+            'static': [4],
+            'moving': [5]
         },
         "l'": {
             'cycles': [[18, 24, 6, 0], [9, 21, 15, 3], [19, 25, 7, 1], [10, 22, 16, 4]],
             'swaps': [],
             'centers': [12, 13],
             'axis': this.xAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [4],
+            'moving': [5]
         },
         "x": {
             'cycles': [[18, 24, 6, 0], [9, 21, 15, 3], [19, 25, 7, 1], [10, 22, 16, 4], [20, 26, 8, 2], [11, 23, 17, 5]],
             'swaps': [],
             'centers': [12, 13, 14],
             'axis': this.xAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [],
+            'moving': []
         },
         "x2'": {
             'cycles': [],
@@ -392,7 +488,9 @@ class Cube {
                 [11, 17]],
             'centers': [12, 13, 14],
             'axis': this.xAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [],
+            'moving': []
         },
         "x2": {
             'cycles': [],
@@ -400,161 +498,207 @@ class Cube {
                 [11, 17]],
             'centers': [12, 13, 14],
             'axis': this.xAxis,
-            'rotation': -(Math.PI)
+            'rotation': -(Math.PI),
+            'static': [],
+            'moving': []
         },
         "x'": {
             'cycles': [[6, 24, 18, 0], [15, 21, 9, 3], [7, 25, 19, 1], [16, 22, 10, 4], [8, 26, 20, 2], [17, 23, 11, 5]],
             'swaps': [],
             'centers': [12, 13, 14],
             'axis': this.xAxis,
-            'rotation': (Math.PI / 2)
+            'rotation': (Math.PI / 2),
+            'static': [],
+            'moving': []
         },
         "F": {
             'cycles': [[8, 26, 24, 6], [17, 25, 15, 7]],
             'swaps': [],
             'centers': [16],
             'axis': this.zAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [8],
+            'moving': [9]
         },
         "F2": {
             'cycles': [],
             'swaps': [[6, 26], [8, 24], [7, 25], [15, 17]],
             'centers': [16],
             'axis': this.zAxis,
-            'rotation': -(Math.PI)
+            'rotation': -(Math.PI),
+            'static': [8],
+            'moving': [9]
         },
         "F2'": {
             'cycles': [],
             'swaps': [[6, 26], [8, 24], [7, 25], [15, 17]],
             'centers': [16],
             'axis': this.zAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [8],
+            'moving': [9]
         },
         "F'": {
             'cycles': [[24, 26, 8, 6], [15, 25, 17, 7]],
             'swaps': [],
             'centers': [16],
             'axis': this.zAxis,
-            'rotation': Math.PI / 2
+            'rotation': Math.PI / 2,
+            'static': [8],
+            'moving': [9]
         },
         "f": {
             'cycles': [[8, 26, 24, 6], [17, 25, 15, 7], [5, 23, 21, 3], [14, 22, 12, 4]],
             'swaps': [],
             'centers': [16, 13],
             'axis': this.zAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [10],
+            'moving': [11]
         },
         "f2": {
             'cycles': [],
             'swaps': [[6, 26], [8, 24], [7, 25], [15, 17], [3, 23], [5, 21], [4, 22], [12, 14]],
             'centers': [16, 13],
             'axis': this.zAxis,
-            'rotation': -(Math.PI)
+            'rotation': -(Math.PI),
+            'static': [10],
+            'moving': [11]
         },
         "f2'": {
             'cycles': [],
             'swaps': [[6, 26], [8, 24], [7, 25], [15, 17], [3, 23], [5, 21], [4, 22], [12, 14]],
             'centers': [16, 13],
             'axis': this.zAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [10],
+            'moving': [11]
         },
         "f'": {
             'cycles': [[24, 26, 8, 6], [15, 25, 17, 7], [21, 23, 5, 3], [12, 22, 14, 4]],
             'swaps': [],
             'centers': [16, 13],
             'axis': this.zAxis,
-            'rotation': Math.PI / 2
+            'rotation': Math.PI / 2,
+            'static': [10],
+            'moving': [11]
         },
         "S": {
             'cycles': [[21, 23, 5, 3], [12, 22, 14, 4]],
             'swaps': [],
             'centers': [13],
             'axis': this.zAxis,
-            'rotation': Math.PI / 2
+            'rotation': Math.PI / 2,
+            'static': [8, 10],
+            'moving': [9, 11]
         },
         "S2": {
             'cycles': [],
             'swaps': [[3, 23], [5, 21], [4, 22], [12, 14]],
             'centers': [13],
             'axis': this.zAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [8, 10],
+            'moving': [9, 11]
         },
         "S2'": {
             'cycles': [],
             'swaps': [[3, 23], [5, 21], [4, 22], [12, 14]],
             'centers': [13],
             'axis': this.zAxis,
-            'rotation': -(Math.PI)
+            'rotation': -(Math.PI),
+            'static': [8, 10],
+            'moving': [9, 11]
         },
         "S'": {
             'cycles': [[5, 23, 21, 3], [14, 22, 12, 4]],
             'swaps': [],
             'centers': [13],
             'axis': this.zAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [8, 10],
+            'moving': [9, 11]
         },
         "B": {
             'cycles': [[18, 20, 2, 0], [9, 19, 11, 1]],
             'swaps': [],
             'centers': [10],
             'axis': this.zAxis,
-            'rotation': Math.PI / 2
+            'rotation': Math.PI / 2,
+            'static': [10],
+            'moving': [11]
         },
         "B2": {
             'cycles': [],
             'swaps': [[0, 20], [2, 18], [1, 19], [9, 11]],
             'centers': [10],
             'axis': this.zAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [10],
+            'moving': [11]
         },
         "B2'": {
             'cycles': [],
             'swaps': [[0, 20], [2, 18], [1, 19], [9, 11]],
             'centers': [10],
             'axis': this.zAxis,
-            'rotation': -(Math.PI)
+            'rotation': -(Math.PI),
+            'static': [10],
+            'moving': [11]
         },
         "B'": {
             'cycles': [[2, 20, 18, 0], [11, 19, 9, 1]],
             'swaps': [],
             'centers': [10],
             'axis': this.zAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [10],
+            'moving': [11]
         },
         "b": {
             'cycles': [[18, 20, 2, 0], [9, 19, 11, 1], [21, 23, 5, 3], [12, 22, 14, 4]],
             'swaps': [],
             'centers': [10, 13],
             'axis': this.zAxis,
-            'rotation': Math.PI / 2
+            'rotation': Math.PI / 2,
+            'static': [8],
+            'moving': [9]
         },
         "b2": {
             'cycles': [],
             'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14]],
             'centers': [10, 13],
             'axis': this.zAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [8],
+            'moving': [9]
         },
         "b2'": {
             'cycles': [],
             'swaps': [[0, 20], [2, 18], [1, 19], [9, 11], [3, 23], [5, 21], [4, 22], [12, 14]],
             'centers': [10, 13],
             'axis': this.zAxis,
-            'rotation': -(Math.PI)
+            'rotation': -(Math.PI),
+            'static': [8],
+            'moving': [9]
         },
         "b'": {
             'cycles': [[2, 20, 18, 0], [11, 19, 9, 1], [5, 23, 21, 3], [14, 22, 12, 4]],
             'swaps': [],
             'centers': [10, 13],
             'axis': this.zAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [8],
+            'moving': [9]
         },
         "z": {
             'cycles': [[2, 20, 18, 0], [11, 19, 9, 1], [5, 23, 21, 3], [14, 22, 12, 4], [8, 26, 24, 6], [17, 25, 15, 7]],
             'swaps': [],
             'centers': [10, 13, 16],
             'axis': this.zAxis,
-            'rotation': -(Math.PI / 2)
+            'rotation': -(Math.PI / 2),
+            'static': [],
+            'moving': []
         },
         "z2": {
             'cycles': [],
@@ -562,7 +706,9 @@ class Cube {
                 [15, 17]],
             'centers': [10, 13, 16],
             'axis': this.zAxis,
-            'rotation': -(Math.PI)
+            'rotation': -(Math.PI),
+            'static': [],
+            'moving': []
         },
         "z2'": {
             'cycles': [],
@@ -570,14 +716,18 @@ class Cube {
                 [15, 17]],
             'centers': [10, 13, 16],
             'axis': this.zAxis,
-            'rotation': Math.PI
+            'rotation': Math.PI,
+            'static': [],
+            'moving': []
         },
         "z'": {
             'cycles': [[18, 20, 2, 0], [9, 19, 11, 1], [21, 23, 5, 3], [12, 22, 14, 4], [24, 26, 8, 6], [15, 25, 17, 7]],
             'swaps': [],
             'centers': [10, 13, 16],
             'axis': this.zAxis,
-            'rotation': Math.PI / 2
+            'rotation': Math.PI / 2,
+            'static': [],
+            'moving': []
         },
     }
 
@@ -613,6 +763,32 @@ class Cube {
                 }
             }
         }
+        //Adding a few planes between the cubies.
+        for (let i = 0; i < 12; i++)
+        {
+            this.planes.push(new THREE.Mesh( this.planeGeometry, this.planeMaterial ));
+        }
+        //I'm not sure how to do this programmatically.
+        this.planes[0].position.set(0, 1, 0); //up
+        this.planes[0].rotateX(Math.PI / 2);
+        this.planes[1].position.set(0, 1, 0); //up
+        this.planes[1].rotateX(Math.PI / 2);
+        this.planes[2].position.set(0, -1, 0); //down
+        this.planes[2].rotateX(Math.PI / 2);
+        this.planes[3].position.set(0, -1, 0); //down
+        this.planes[3].rotateX(Math.PI / 2);
+        this.planes[4].position.set(1, 0, 0); //right
+        this.planes[4].rotateY(Math.PI / 2);
+        this.planes[5].position.set(1, 0, 0); //right
+        this.planes[5].rotateY(Math.PI / 2);
+        this.planes[6].position.set(-1, 0, 0); //left
+        this.planes[6].rotateY(Math.PI / 2);
+        this.planes[7].position.set(-1, 0, 0); //left
+        this.planes[7].rotateY(Math.PI / 2);
+        this.planes[8].position.set(0, 0, 1); //front
+        this.planes[9].position.set(0, 0, 1); //front
+        this.planes[10].position.set(0, 0, -1); //back
+        this.planes[11].position.set(0, 0, -1); //back
     }
     //Method to cycle the rotations of 4 cubies a > b > c > d > a
     cycle_rotations(a, b, c, d) {
@@ -689,6 +865,14 @@ class Cube {
             this.moving.add(this.cubies[cubie]);
             this.moving.add(this.outlines[cubie]);
         }
+        //Add the moving planes to the moving group
+        for (let plane of this.moveInstructions[move]['moving']) {
+            this.moving.add(this.planes[plane]);
+        }
+        //Add the static planes to the moving group
+        for (let plane of this.moveInstructions[move]['static']) {
+            this.scene.add(this.planes[plane]);
+        }
         //Add the moving group back to the scene
         this.scene.add(this.moving);
         //Add the rotation to the right axis
@@ -746,6 +930,10 @@ class Cube {
         for (let cubie of this.moveInstructions[move]['centers']) {
             this.scene.add(this.cubies[cubie]);
             this.scene.add(this.outlines[cubie]);
+        }
+        //remove the static planes from the scene
+        for (let plane of this.moveInstructions[move]['static']) {
+            this.scene.remove(this.planes[plane]);
         }
         //reset cur to ""
         this.movesDone.push(this.cur);
@@ -1310,20 +1498,6 @@ $('#playpause').click(function() {
     }
 });
 
-$(document).keypress(function(event) {
-    if (event.charCode == 32){
-        if (cube.paused) {
-            cube.paused = false;
-            cube.running = true;
-            $('#playpause').html('<img src="static/pause.png" alt="pause"></img>');
-        } else {
-            cube.paused = true;
-            cube.running = false;
-            $('#playpause').html('<img src="static/play.png" alt="play"></img>');
-        }
-    }
-    event.preventDefault();
-});
 
 $('#next').click(function() {
     if (cube.paused == false) {
