@@ -3,7 +3,7 @@ import { OrbitControls } from 'https://unpkg.com/three/examples/jsm/controls/Orb
 
 
 class Cube {
-    geometry = new THREE.BoxGeometry(1.985, 1.985, 1.985); //including outline it's a perfect 2
+    geometry;
     //give it colors
     cubeMaterials = [
         new THREE.MeshBasicMaterial({ color: 'red', transparent: true, opacity: 1, side: THREE.DoubleSide, }), //left
@@ -13,10 +13,10 @@ class Cube {
         new THREE.MeshBasicMaterial({ color: 'green', transparent: true, opacity: 1, side: THREE.DoubleSide }), //front
         new THREE.MeshBasicMaterial({ color: 'blue', transparent: true, opacity: 1, side: THREE.DoubleSide }), //back
     ];
-    planeGeometry = new THREE.PlaneGeometry(6, 6);
+    planeGeometry;
     planeMaterial = new THREE.MeshBasicMaterial({ color: 0x222222, side: THREE.DoubleSide });
     //draw the outlines:
-    edges = new THREE.EdgesGeometry(this.geometry);
+    edges;
     //create a 27 this.cubies
     cubies = [];
     outlines = [];
@@ -730,8 +730,17 @@ class Cube {
         },
     }
 
-    constructor(scene, applied) {
+    constructor(scene, xpos = 0, ypos = 0, zpos = 0, size = 6) {
         this.scene = scene;
+        //set the geometry for the cube
+        //A cubie on a 3x3 is a third of the size of a full cube.
+        let csize = size/3;
+        //there are 3 cubies, they're each one third of the size of the full cube, with space for a small gap
+        this.geometry = new THREE.BoxGeometry(csize - 0.015, csize - 0.015, csize - 0.015); 
+        this.edges = new THREE.EdgesGeometry(this.geometry);
+        //the plane is the full size.
+        this.planeGeometry = new THREE.PlaneGeometry(size, size);
+
         for (let i = 0; i < 27; i++) {
             //make a mesh based on the before box
             this.cubies.push(new THREE.Mesh(this.geometry, this.cubeMaterials));
@@ -748,11 +757,11 @@ class Cube {
         //Set the locations left to right, back to front, top to bottom.
         {
             let i = 0;
-            for (let y = 2; y >= -2; y -= 2) {
-                for (let z = -2; z <= 2; z += 2) {
-                    for (let x = -2; x <= 2; x += 2) {
-                        this.cubies[i].position.set(x, y, z);
-                        this.outlines[i].position.set(x, y, z);
+            for (let y = csize; y >= -csize; y -= csize) {
+                for (let z = -csize; z <= csize; z += csize) {
+                    for (let x = -csize; x <= csize; x += csize) {
+                        this.cubies[i].position.set(xpos + x, ypos + y, zpos + z);
+                        this.outlines[i].position.set(xpos + x, ypos + y, zpos + z);
                         i++;
                     }
                 }
@@ -763,31 +772,28 @@ class Cube {
             this.planes.push(new THREE.Mesh(this.planeGeometry, this.planeMaterial));
         }
         //I'm not sure how to do this programmatically.
-        this.planes[0].position.set(0, 1, 0); //up
+        this.planes[0].position.set(0 + xpos, csize / 2 + ypos, 0 + zpos); //up
         this.planes[0].rotateX(Math.PI / 2);
-        this.planes[1].position.set(0, 1, 0); //up
+        this.planes[1].position.set(0 + xpos, csize / 2 + ypos, 0 + zpos); //up
         this.planes[1].rotateX(Math.PI / 2);
-        this.planes[2].position.set(0, -1, 0); //down
+        this.planes[2].position.set(0 + xpos, -csize / 2 + ypos, 0 + zpos); //down
         this.planes[2].rotateX(Math.PI / 2);
-        this.planes[3].position.set(0, -1, 0); //down
+        this.planes[3].position.set(0 + xpos, -csize / 2 + ypos, 0 + zpos); //down
         this.planes[3].rotateX(Math.PI / 2);
-        this.planes[4].position.set(1, 0, 0); //right
+        this.planes[4].position.set(csize / 2 + xpos, 0 + ypos, 0 + zpos); //right
         this.planes[4].rotateY(Math.PI / 2);
-        this.planes[5].position.set(1, 0, 0); //right
+        this.planes[5].position.set(csize / 2 + xpos, 0 + ypos, 0 + zpos); //right
         this.planes[5].rotateY(Math.PI / 2);
-        this.planes[6].position.set(-1, 0, 0); //left
+        this.planes[6].position.set(-csize / 2 + xpos, 0 + ypos, 0 + zpos); //left
         this.planes[6].rotateY(Math.PI / 2);
-        this.planes[7].position.set(-1, 0, 0); //left
+        this.planes[7].position.set(-csize / 2 + xpos, 0 + ypos, 0 + zpos); //left
         this.planes[7].rotateY(Math.PI / 2);
-        this.planes[8].position.set(0, 0, 1); //front
-        this.planes[9].position.set(0, 0, 1); //front
-        this.planes[10].position.set(0, 0, -1); //back
-        this.planes[11].position.set(0, 0, -1); //back
-        //Apply the colors if requested
-        if (applied)
-            apply_color(applied);
-        else
-            this.applied = this.solvedCube.map(function(arr) { return arr.slice() });
+        this.planes[8].position.set(0 + xpos, 0 + ypos, csize / 2 + zpos); //front
+        this.planes[9].position.set(0 + xpos, 0 + ypos, csize / 2 + zpos); //front
+        this.planes[10].position.set(0 + xpos, 0 + ypos, -csize / 2 + zpos); //back
+        this.planes[11].position.set(0 + xpos, 0 + ypos, -csize / 2 + zpos); //back
+        //Set the applied pattern to a solved cube
+        this.applied = this.solvedCube.map(function(arr) { return arr.slice() });
     }
     //Method to cycle the rotations of 4 cubies a > b > c > d > a
     cycle_rotations(a, b, c, d) {
@@ -1362,7 +1368,7 @@ window.camera = camera;
 controls.update();
 
 //Now finally create a cube
-let cube = new Cube(scene);
+let cube = new Cube(scene, 0, 0, 0, 6);
 cube.set_solver_api("api/solver");
 cube.set_solution_div("#solution");
 cube.set_current_alg_div("#currentAlg");
