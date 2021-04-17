@@ -523,8 +523,7 @@ The Cube class, used to create a cube object.
 First I declare all variables that need to be used by more than one function: The materials and geometry for the three.js objects, arrays to store the objects, the axes of rotation, and more.   
 There is also a gigantic dictionary containing the necessary variables for every legal cube move: The cubies to cycle or swap, the axis and degrees of rotation, and what to show. This could all have fit in 72 lines, but style50 wants one variable per line, making it 649 lines.
 ###### constructor()
-Takes the scene and saves a reference, generates the cubies, the outlines and planes in a loop, sets the positions of the cubies and outlines in a loop, and the planes manually.  
-Finally applies the colors if requested.
+Takes the scene and saves a reference, generates the cubies, the outlines and planes in a loop, sets the positions of the cubies and outlines in a loop, and the planes manually.
 ###### cycle_rotations()
 Helper function. Cycles the rotations of 4 cubies a > b > c > d > a using a temp cubie.
 ###### swap_rotations()

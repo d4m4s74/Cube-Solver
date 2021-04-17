@@ -3,7 +3,10 @@ import { OrbitControls } from 'https://unpkg.com/three/examples/jsm/controls/Orb
 
 
 class Cube {
+    //variables to store the geometry of the cube, edges and the "planes" in between
     geometry;
+    edges;
+    planeGeometry;
     //give it colors
     cubeMaterials = [
         new THREE.MeshBasicMaterial({ color: 'red', transparent: true, opacity: 1, side: THREE.DoubleSide, }), //left
@@ -13,10 +16,8 @@ class Cube {
         new THREE.MeshBasicMaterial({ color: 'green', transparent: true, opacity: 1, side: THREE.DoubleSide }), //front
         new THREE.MeshBasicMaterial({ color: 'blue', transparent: true, opacity: 1, side: THREE.DoubleSide }), //back
     ];
-    planeGeometry;
+    
     planeMaterial = new THREE.MeshBasicMaterial({ color: 0x222222, side: THREE.DoubleSide });
-    //draw the outlines:
-    edges;
     //create a 27 this.cubies
     cubies = [];
     outlines = [];
