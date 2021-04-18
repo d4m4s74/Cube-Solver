@@ -320,16 +320,16 @@ char *f2lCase1(int cube[6][9])
             switch (side)
             {
                 case 0:
-                    alg = append(alg, "(F ");
+                    alg = append(alg, "F ");
                     break;
                 case 1:
-                    alg = append(alg, "(R ");
+                    alg = append(alg, "R ");
                     break;
                 case 2:
-                    alg = append(alg, "(B ");
+                    alg = append(alg, "B ");
                     break;
                 case 3:
-                    alg = append(alg, "(L ");
+                    alg = append(alg, "L ");
                     break;
             }
             if (goal == 0)
@@ -346,16 +346,16 @@ char *f2lCase1(int cube[6][9])
             switch (side)
             {
                 case 0:
-                    alg = append(alg, "F')\n");
+                    alg = append(alg, "F'\n");
                     break;
                 case 1:
-                    alg = append(alg, "R')\n");
+                    alg = append(alg, "R'\n");
                     break;
                 case 2:
-                    alg = append(alg, "B')\n");
+                    alg = append(alg, "B'\n");
                     break;
                 case 3:
-                    alg = append(alg, "L')\n");
+                    alg = append(alg, "L'\n");
                     break;
             }
         }
@@ -365,30 +365,30 @@ char *f2lCase1(int cube[6][9])
             int base = (location + goal) % 4;
             if (goal == 2)
             {
-                alg = append(alg, "(U ");
+                alg = append(alg, "U ");
                 move_cube(cube, U, 1);
             }
             else
             {
-                alg = append(alg, "(");
+                alg = append(alg, "");
             }
             switch (base)
             {
                 case 0:
-                    alg = append(alg, "R' F R F')\n");
-                    run_algorithm(cube, "R' F R F')\n");
+                    alg = append(alg, "R' F R F'\n");
+                    run_algorithm(cube, "R' F R F'\n");
                     break;
                 case 1:
-                    alg = append(alg, "B' R B R')\n");
-                    run_algorithm(cube, "B' R B R')\n");
+                    alg = append(alg, "B' R B R'\n");
+                    run_algorithm(cube, "B' R B R'\n");
                     break;
                 case 2:
-                    alg = append(alg, "L' B L B')\n");
-                    run_algorithm(cube, "L' B L B')\n");
+                    alg = append(alg, "L' B L B'\n");
+                    run_algorithm(cube, "L' B L B'\n");
                     break;
                 case 3:
-                    alg = append(alg, "F' L F L')\n");
-                    run_algorithm(cube, "F' L F L')\n");
+                    alg = append(alg, "F' L F L'\n");
+                    run_algorithm(cube, "F' L F L'\n");
                     break;
             }
 
@@ -454,16 +454,16 @@ char *f2lCase2(int cube[6][9])
             switch (side)
             {
                 case 0:
-                    alg = append(alg, "(F' ");
+                    alg = append(alg, "F' ");
                     break;
                 case 1:
-                    alg = append(alg, "(R' ");
+                    alg = append(alg, "R' ");
                     break;
                 case 2:
-                    alg = append(alg, "(B' ");
+                    alg = append(alg, "B' ");
                     break;
                 case 3:
-                    alg = append(alg, "(L' ");
+                    alg = append(alg, "L' ");
                     break;
             }
             if (goal == 0)
@@ -481,16 +481,16 @@ char *f2lCase2(int cube[6][9])
             switch (side)
             {
                 case 0:
-                    alg = append(alg, "F)\n");
+                    alg = append(alg, "F\n");
                     break;
                 case 1:
-                    alg = append(alg, "R)\n");
+                    alg = append(alg, "R\n");
                     break;
                 case 2:
-                    alg = append(alg, "B)\n");
+                    alg = append(alg, "B\n");
                     break;
                 case 3:
-                    alg = append(alg, "L)\n");
+                    alg = append(alg, "L\n");
                     break;
             }
         }
@@ -500,12 +500,12 @@ char *f2lCase2(int cube[6][9])
             int base = mod(location - goal, 4);
             if (goal == 2)
             {
-                alg = append(alg, "(U' ");
+                alg = append(alg, "U' ");
                 move_cube(cube, U, 3);
             }
             else
             {
-                alg = append(alg, "(");
+                alg = append(alg, "");
             }
             move_cube(cube, mod(base - 1, 4), 1);
             move_cube(cube, base, 3);
@@ -514,16 +514,16 @@ char *f2lCase2(int cube[6][9])
             switch (base)
             {
                 case 0:
-                    alg = append(alg, "L F' L' F)\n");
+                    alg = append(alg, "L F' L' F\n");
                     break;
                 case 1:
-                    alg = append(alg, "F R' F' R)\n");
+                    alg = append(alg, "F R' F' R\n");
                     break;
                 case 2:
-                    alg = append(alg, "R B' R' B)\n");
+                    alg = append(alg, "R B' R' B\n");
                     break;
                 case 3:
-                    alg = append(alg, "B L' B' L)\n");
+                    alg = append(alg, "B L' B' L\n");
                     break;
             }
 
@@ -557,7 +557,7 @@ char *f2lCase3(int cube[6][9])
     else if (cube[D][8] == 5 && (cube[R][8] != cube[R][5] || cube[B][6] != cube[B][3]))
     {
         //turn the cube so it's in the front slice
-        alg = append(alg, "(y) ");
+        alg = append(alg, "y ");
         run_algorithm(cube, "y");
         found = true;
     }
@@ -565,7 +565,7 @@ char *f2lCase3(int cube[6][9])
     else if (cube[D][6] == 5 && (cube[B][8] != cube[B][5] || cube[L][6] != cube[L][3]))
     {
         //turn the cube so it's in the front slice
-        alg = append(alg, "(y2) ");
+        alg = append(alg, "y2 ");
         run_algorithm(cube, "y2");
         found = true;
     }
@@ -573,7 +573,7 @@ char *f2lCase3(int cube[6][9])
     else if (cube[D][0] == 5 && (cube[L][8] != cube[L][5] || cube[F][6] != cube[F][3]))
     {
         //turn the cube so it's in the front slice
-        alg = append(alg, "(y') ");
+        alg = append(alg, "y' ");
         run_algorithm(cube, "y'");
         found = true;
     }
@@ -604,13 +604,13 @@ char *f2lCase3(int cube[6][9])
             switch (edge)
             {
                 case 1:
-                    alg = append(alg, "(D B U B' D') ");
+                    alg = append(alg, "D B U B' D' ");
                     break;
                 case 2:
-                    alg = append(alg, "(D2 L U L' D2) ");
+                    alg = append(alg, "D2 L U L' D2 ");
                     break;
                 case 3:
-                    alg = append(alg, "(D' F U F' D) ");
+                    alg = append(alg, "D' F U F' D ");
                     break;
             }
             //ends with a complete pair in the top layer, ready to be put into the f2l
@@ -642,16 +642,16 @@ char *f2lCase3(int cube[6][9])
             switch (edge)
             {
                 case 0:
-                    alg = append(alg, "(R U R') ");
-                    run_algorithm(cube, "(R U R') ");
+                    alg = append(alg, "R U R' ");
+                    run_algorithm(cube, "R U R' ");
                     //ends up with a misoriented pair (edge flipped)
                     alg2 = f2lCase5(cube);
                     alg = append(alg, alg2);
                     free(alg2);
                     return alg;
                 case 1:
-                    alg = append(alg, "(R2 U2 R2 U2 R2) ");
-                    run_algorithm(cube, "(R2 U2 R2 U2 R2");
+                    alg = append(alg, "R2 U2 R2 U2 R2 ");
+                    run_algorithm(cube, "R2 U2 R2 U2 R2");
                     //check if corner in right location.
                     //We only have to check F8 because if f8 is correct and everything we tested before is correct, the corner is correct
                     if (cube[F][8] == cube[F][4])
@@ -668,16 +668,16 @@ char *f2lCase3(int cube[6][9])
                         return alg;
                     }
                 case 2:
-                    alg = append(alg, "(D2 B' U' B D2) ");
-                    run_algorithm(cube, "(D2 B' U' B D2)");
+                    alg = append(alg, "D2 B' U' B D2 ");
+                    run_algorithm(cube, "D2 B' U' B D2");
                     //ends up with a misoriented pair (edge flipped)
                     alg2 = f2lCase6(cube);
                     alg = append(alg, alg2);
                     free(alg2);
                     return alg;
                 case 3:
-                    alg = append(alg, "(F2 U2 F2 U2 F2) ");
-                    run_algorithm(cube, "(F2 U2 F2 U2 F2)");
+                    alg = append(alg, "F2 U2 F2 U2 F2 ");
+                    run_algorithm(cube, "F2 U2 F2 U2 F2");
                     //check if corner in right location
                     if (cube[F][8] == cube[F][4])
                     {
@@ -698,8 +698,8 @@ char *f2lCase3(int cube[6][9])
         //oriented counter clockwise from corner (Front of edge == left of corner)
         if (cube[F][1] == cube[F][8] && cube[U][7] == cube[R][6])
         {
-            alg = append(alg, "(U R U' R') ");
-            run_algorithm(cube, "(U R U' R') ");
+            alg = append(alg, "U R U' R' ");
+            run_algorithm(cube, "U R U' R' ");
             //ends with a complete pair in the top layer, ready to be put into the f2l
             alg2 = f2lCase2(cube);
             alg = append(alg, alg2);
@@ -708,8 +708,8 @@ char *f2lCase3(int cube[6][9])
         }
         else if (cube[L][1] == cube[F][8] && cube[U][3] == cube[R][6])
         {
-            alg = append(alg, "(R U' R') ");
-            run_algorithm(cube, "(R U' R') ");
+            alg = append(alg, "R U' R' ");
+            run_algorithm(cube, "R U' R' ");
             alg2 = f2lCase2(cube);
             alg = append(alg, alg2);
             free(alg2);
@@ -717,8 +717,8 @@ char *f2lCase3(int cube[6][9])
         }
         else if (cube[B][1] == cube[F][8] && cube[U][1] == cube[R][6])
         {
-            alg = append(alg, "(U' R U' R') ");
-            run_algorithm(cube, "(U' R U' R') ");
+            alg = append(alg, "U' R U' R' ");
+            run_algorithm(cube, "U' R U' R' ");
             alg2 = f2lCase2(cube);
             alg = append(alg, alg2);
             free(alg2);
@@ -726,8 +726,8 @@ char *f2lCase3(int cube[6][9])
         }
         else if (cube[R][1] == cube[F][8] && cube[U][5] == cube[R][6])
         {
-            alg = append(alg, "(U2 R U' R') ");
-            run_algorithm(cube, "(U2 R U' R') ");
+            alg = append(alg, "U2 R U' R' ");
+            run_algorithm(cube, "U2 R U' R' ");
             alg2 = f2lCase2(cube);
             alg = append(alg, alg2);
             free(alg2);
@@ -736,8 +736,8 @@ char *f2lCase3(int cube[6][9])
         //oriented anti-clockwise from corner (Front of edge == right of corner)
         if (cube[F][1] == cube[R][6] && cube[U][7] == cube[F][8])
         {
-            alg = append(alg, "(U2 F' U F) ");
-            run_algorithm(cube, "(U2 F' U F) ");
+            alg = append(alg, "U2 F' U F ");
+            run_algorithm(cube, "U2 F' U F ");
             //ends with a complete pair in the top layer, ready to be put into the f2l
             alg2 = f2lCase1(cube);
             alg = append(alg, alg2);
@@ -746,8 +746,8 @@ char *f2lCase3(int cube[6][9])
         }
         else if (cube[L][1] == cube[R][6] && cube[U][3] == cube[F][8])
         {
-            alg = append(alg, "(U F' U F) ");
-            run_algorithm(cube, "(U F' U F) ");
+            alg = append(alg, "U F' U F ");
+            run_algorithm(cube, "U F' U F ");
             alg2 = f2lCase1(cube);
             alg = append(alg, alg2);
             free(alg2);
@@ -755,8 +755,8 @@ char *f2lCase3(int cube[6][9])
         }
         else if (cube[B][1] == cube[R][6] && cube[U][1] == cube[F][8])
         {
-            alg = append(alg, "(F' U F) ");
-            run_algorithm(cube, "(F' U F) ");
+            alg = append(alg, "F' U F ");
+            run_algorithm(cube, "F' U F ");
             alg2 = f2lCase1(cube);
             alg = append(alg, alg2);
             free(alg2);
@@ -764,8 +764,8 @@ char *f2lCase3(int cube[6][9])
         }
         else if (cube[R][1] == cube[R][6] && cube[U][5] == cube[F][8])
         {
-            alg = append(alg, "(U' F' U F) ");
-            run_algorithm(cube, "(U' F' U F) ");
+            alg = append(alg, "U' F' U F ");
+            run_algorithm(cube, "U' F' U F ");
             alg2 = f2lCase1(cube);
             alg = append(alg, alg2);
             free(alg2);
@@ -810,31 +810,31 @@ char *f2lCase4(int cube[6][9])
         switch (location)
         {
             case 0:
-                alg = append(alg, "(R U R') ");
-                run_algorithm(cube, "(R U R')");
+                alg = append(alg, "R U R' ");
+                run_algorithm(cube, "R U R'");
                 //ends with a complete pair in the top layer, ready to be put into the f2l
                 alg2 = f2lCase1(cube);
                 alg = append(alg, alg2);
                 free(alg2);
                 return alg;
             case 1:
-                alg = append(alg, "(R' U' R) ");
-                run_algorithm(cube, "(R' U' R)");
+                alg = append(alg, "R' U' R ");
+                run_algorithm(cube, "R' U' R");
                 //ends with a complete pair in the top layer, ready to be put into the f2l, pointing the other way
                 alg2 = f2lCase2(cube);
                 alg = append(alg, alg2);
                 free(alg2);
                 return alg;
             case 2:
-                alg = append(alg, "(L U L') ");
-                run_algorithm(cube, "(L U L')");
+                alg = append(alg, "L U L' ");
+                run_algorithm(cube, "L U L'");
                 alg2 = f2lCase1(cube);
                 alg = append(alg, alg2);
                 free(alg2);
                 return alg;
             case 3:
-                alg = append(alg, "(L' U' L) ");
-                run_algorithm(cube, "(L' U' L) ");
+                alg = append(alg, "L' U' L ");
+                run_algorithm(cube, "L' U' L ");
                 alg2 = f2lCase2(cube);
                 alg = append(alg, alg2);
                 free(alg2);
@@ -868,7 +868,7 @@ char *f2lCase5(int cube[6][9])
     else if (cube[F][2] == 5 && cube[R][0] == cube[U][5] && cube[U][8] == cube[R][1])
     {
         //y necessary
-        alg = append(alg, "(y) ");
+        alg = append(alg, "y ");
         run_algorithm(cube, "y");
         goal = mod(cube[F][4] - cube[U][7], 4);
     }
@@ -876,7 +876,7 @@ char *f2lCase5(int cube[6][9])
     else if (cube[R][2] == 5 && cube[B][0] == cube[U][1] && cube[U][2] == cube[B][1])
     {
         //y necessary
-        alg = append(alg, "(y2) ");
+        alg = append(alg, "y2 ");
         run_algorithm(cube, "y2");
         goal = mod(cube[F][4] - cube[U][7], 4);
     }
@@ -884,7 +884,7 @@ char *f2lCase5(int cube[6][9])
     else if (cube[B][2] == 5 && cube[L][0] == cube[U][3] && cube[U][0] == cube[L][1])
     {
         //y necessary
-        alg = append(alg, "(y') ");
+        alg = append(alg, "y' ");
         run_algorithm(cube, "y'");
         goal = mod(cube[F][4] - cube[U][7], 4);
     }
@@ -895,24 +895,24 @@ char *f2lCase5(int cube[6][9])
         switch (goal)
         {
             case 0:
-                alg = append(alg, "(");
+                alg = append(alg, "");
                 break;
             case 1:
-                alg = append(alg, "(d) ");
-                run_algorithm(cube, "(d) ");
+                alg = append(alg, "d ");
+                run_algorithm(cube, "d ");
                 break;
             case 2:
-                alg = append(alg, "(d2) ");
-                run_algorithm(cube, "(d2) ");
+                alg = append(alg, "d2 ");
+                run_algorithm(cube, "d2 ");
                 break;
             case 3:
-                alg = append(alg, "(d') ");
-                run_algorithm(cube, "(d') ");
+                alg = append(alg, "d' ");
+                run_algorithm(cube, "d' ");
                 break;
         }
         //Then it's one simple algorythm.
-        alg = append(alg, "(L U2 L2 U' L2 U' L')\n");
-        run_algorithm(cube, "(L U2 L2 U' L2 U' L')");
+        alg = append(alg, "L U2 L2 U' L2 U' L'\n");
+        run_algorithm(cube, "L U2 L2 U' L2 U' L'");
         return alg;
     }
 
@@ -943,7 +943,7 @@ char *f2lCase6(int cube[6][9])
     else if (cube[B][0] == 5 && cube[R][1] == cube[U][2] && cube[U][5] == cube[R][2])
     {
         //y necessary
-        alg = append(alg, "(y) ");
+        alg = append(alg, "y ");
         run_algorithm(cube, "y");
         goal = mod(cube[F][4] - cube[U][7], 4);
     }
@@ -951,7 +951,7 @@ char *f2lCase6(int cube[6][9])
     else if (cube[L][0] == 5 && cube[B][1] == cube[U][0] && cube[U][1] == cube[B][2])
     {
         //y necessary
-        alg = append(alg, "(y2) ");
+        alg = append(alg, "y2 ");
         run_algorithm(cube, "y2");
         goal = mod(cube[F][4] - cube[U][7], 4);
     }
@@ -959,7 +959,7 @@ char *f2lCase6(int cube[6][9])
     else if (cube[F][0] == 5 && cube[L][1] == cube[U][6] && cube[U][3] == cube[L][2])
     {
         //y necessary
-        alg = append(alg, "(y') ");
+        alg = append(alg, "y' ");
         run_algorithm(cube, "y'");
         goal = mod(cube[F][4] - cube[U][7], 4);
     }
@@ -970,24 +970,24 @@ char *f2lCase6(int cube[6][9])
         switch (goal)
         {
             case 0:
-                alg = append(alg, "(");
+                alg = append(alg, "");
                 break;
             case 1:
-                alg = append(alg, "(d ");
-                run_algorithm(cube, "(d ");
+                alg = append(alg, "d ");
+                run_algorithm(cube, "d ");
                 break;
             case 2:
-                alg = append(alg, "(d2 ");
-                run_algorithm(cube, "(d2 ");
+                alg = append(alg, "d2 ");
+                run_algorithm(cube, "d2 ");
                 break;
             case 3:
-                alg = append(alg, "(d' ");
-                run_algorithm(cube, "(d' ");
+                alg = append(alg, "d' ");
+                run_algorithm(cube, "d' ");
                 break;
         }
         //Then it's one simple algorythm.
-        alg = append(alg, "R' U2 R2 U R2 U R)\n");
-        run_algorithm(cube, "R' U2 R2 U R2 U R)");
+        alg = append(alg, "R' U2 R2 U R2 U R\n");
+        run_algorithm(cube, "R' U2 R2 U R2 U R");
         return alg;
     }
 
@@ -1204,30 +1204,30 @@ char *f2lCase7(int cube[6][9])
                         if (cube[D][2] != 5)
                         {
                             run_algorithm(cube, "d");
-                            alg = append(alg, "(d ");
+                            alg = append(alg, "d ");
                         }
                         else if (cube[D][0] != 5)
                         {
                             run_algorithm(cube, "d2");
-                            alg = append(alg, "(d2 ");
+                            alg = append(alg, "d2 ");
                         }
                         else if (cube[D][6] != 5)
                         {
                             run_algorithm(cube, "d'");
-                            alg = append(alg, "(d' ");
+                            alg = append(alg, "d' ");
                         }
                     }
                     else
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     if (edge == 3)
                     {
-                        alg = append(alg, "R' U' R) ");
+                        alg = append(alg, "R' U' R ");
                     }
                     else
                     {
-                        alg = append(alg, "R' U2 R) ");
+                        alg = append(alg, "R' U2 R ");
                     }
                     move_cube(cube, R, 3);
                     move_cube(cube, U, edge);
@@ -1243,30 +1243,30 @@ char *f2lCase7(int cube[6][9])
                         if (cube[D][8] != 5)
                         {
                             run_algorithm(cube, "d");
-                            alg = append(alg, "(d ");
+                            alg = append(alg, "d ");
                         }
                         else if (cube[D][2] != 5)
                         {
                             run_algorithm(cube, "d2");
-                            alg = append(alg, "(d2 ");
+                            alg = append(alg, "d2 ");
                         }
                         else if (cube[D][0] != 5)
                         {
                             run_algorithm(cube, "d'");
-                            alg = append(alg, "(d' ");
+                            alg = append(alg, "d' ");
                         }
                     }
                     else
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     if (edge == 3)
                     {
-                        alg = append(alg, "B' U' B) ");
+                        alg = append(alg, "B' U' B ");
                     }
                     else
                     {
-                        alg = append(alg, "B' U2 B) ");
+                        alg = append(alg, "B' U2 B ");
                     }
                     move_cube(cube, B, 3);
                     move_cube(cube, U, edge);
@@ -1282,30 +1282,30 @@ char *f2lCase7(int cube[6][9])
                         if (cube[D][6] != 5)
                         {
                             run_algorithm(cube, "d");
-                            alg = append(alg, "(d ");
+                            alg = append(alg, "d ");
                         }
                         else if (cube[D][8] != 5)
                         {
                             run_algorithm(cube, "d2");
-                            alg = append(alg, "(d2 ");
+                            alg = append(alg, "d2 ");
                         }
                         else if (cube[D][2] != 5)
                         {
                             run_algorithm(cube, "d'");
-                            alg = append(alg, "(d' ");
+                            alg = append(alg, "d' ");
                         }
                     }
                     else
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     if (edge == 3)
                     {
-                        alg = append(alg, "L' U' L) ");
+                        alg = append(alg, "L' U' L ");
                     }
                     else
                     {
-                        alg = append(alg, "L' U2 L) ");
+                        alg = append(alg, "L' U2 L ");
                     }
                     move_cube(cube, L, 3);
                     move_cube(cube, U, edge);
@@ -1321,30 +1321,30 @@ char *f2lCase7(int cube[6][9])
                         if (cube[D][8] != 5)
                         {
                             run_algorithm(cube, "d'");
-                            alg = append(alg, "(d' ");
+                            alg = append(alg, "d' ");
                         }
                         else if (cube[D][6] != 5)
                         {
                             run_algorithm(cube, "d2");
-                            alg = append(alg, "(d2 ");
+                            alg = append(alg, "d2 ");
                         }
                         else if (cube[D][0] != 5)
                         {
                             run_algorithm(cube, "d");
-                            alg = append(alg, "(d ");
+                            alg = append(alg, "d ");
                         }
                     }
                     else
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     if (edge == 3)
                     {
-                        alg = append(alg, "F' U' F) ");
+                        alg = append(alg, "F' U' F ");
                     }
                     else
                     {
-                        alg = append(alg, "F' U2 F) ");
+                        alg = append(alg, "F' U2 F ");
                     }
                     move_cube(cube, F, 3);
                     move_cube(cube, U, edge);
@@ -1364,22 +1364,22 @@ char *f2lCase7(int cube[6][9])
                 case 0:
                     if (cube[D][0] != 5)
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     else if (cube[D][6] != 5)
                     {
                         run_algorithm(cube, "d");
-                        alg = append(alg, "(d ");
+                        alg = append(alg, "d ");
                     }
                     else if (cube[D][8] != 5)
                     {
                         run_algorithm(cube, "d2");
-                        alg = append(alg, "(d2 ");
+                        alg = append(alg, "d2 ");
                     }
                     else if (cube[D][2] != 5)
                     {
                         run_algorithm(cube, "d'");
-                        alg = append(alg, "(d' ");
+                        alg = append(alg, "d' ");
                     }
                     run_algorithm(cube, "F U' F'");
                     alg = append(alg, "F U' F' ");
@@ -1388,7 +1388,7 @@ char *f2lCase7(int cube[6][9])
                         run_algorithm(cube, "d2");
                         alg = append(alg, "d2 ");
                     }
-                    alg = append(alg, "R' U2 R) ");
+                    alg = append(alg, "R' U2 R ");
                     run_algorithm(cube, "R' U2 R");
                     //ends with a complete pair in the top layer, ready to be put into the f2l
                     alg2 = f2lCase2(cube);
@@ -1398,22 +1398,22 @@ char *f2lCase7(int cube[6][9])
                 case 1:
                     if (cube[D][2] != 5)
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     else if (cube[D][0] != 5)
                     {
                         run_algorithm(cube, "d");
-                        alg = append(alg, "(d ");
+                        alg = append(alg, "d ");
                     }
                     else if (cube[D][6] != 5)
                     {
                         run_algorithm(cube, "d2");
-                        alg = append(alg, "(d2 ");
+                        alg = append(alg, "d2 ");
                     }
                     else if (cube[D][8] != 5)
                     {
                         run_algorithm(cube, "d'");
-                        alg = append(alg, "(d' ");
+                        alg = append(alg, "d' ");
                     }
                     run_algorithm(cube, "R U' R'");
                     alg = append(alg, "R U' R' ");
@@ -1422,7 +1422,7 @@ char *f2lCase7(int cube[6][9])
                         run_algorithm(cube, "d2");
                         alg = append(alg, "d2 ");
                     }
-                    alg = append(alg, "B' U2 B) ");
+                    alg = append(alg, "B' U2 B ");
                     run_algorithm(cube, "B' U2 B");
                     //ends with a complete pair in the top layer, ready to be put into the f2l
                     alg2 = f2lCase2(cube);
@@ -1432,22 +1432,22 @@ char *f2lCase7(int cube[6][9])
                 case 2:
                     if (cube[D][8] != 5)
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     else if (cube[D][2] != 5)
                     {
                         run_algorithm(cube, "d");
-                        alg = append(alg, "(d ");
+                        alg = append(alg, "d ");
                     }
                     else if (cube[D][0] != 5)
                     {
                         run_algorithm(cube, "d2");
-                        alg = append(alg, "(d2 ");
+                        alg = append(alg, "d2 ");
                     }
                     else if (cube[D][6] != 5)
                     {
                         run_algorithm(cube, "d'");
-                        alg = append(alg, "(d' ");
+                        alg = append(alg, "d' ");
                     }
                     run_algorithm(cube, "B U' B'");
                     alg = append(alg, "B U' B' ");
@@ -1456,7 +1456,7 @@ char *f2lCase7(int cube[6][9])
                         run_algorithm(cube, "d2");
                         alg = append(alg, "d2 ");
                     }
-                    alg = append(alg, "L' U2 L) ");
+                    alg = append(alg, "L' U2 L ");
                     run_algorithm(cube, "L' U2 L");
                     //print_cube(cube);
                     //ends with a complete pair in the top layer, ready to be put into the f2l
@@ -1467,22 +1467,22 @@ char *f2lCase7(int cube[6][9])
                 case 3:
                     if (cube[D][6] != 5)
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     else if (cube[D][8] != 5)
                     {
                         run_algorithm(cube, "d");
-                        alg = append(alg, "(d ");
+                        alg = append(alg, "d ");
                     }
                     else if (cube[D][2] != 5)
                     {
                         run_algorithm(cube, "d2");
-                        alg = append(alg, "(d2 ");
+                        alg = append(alg, "d2 ");
                     }
                     else if (cube[D][0] != 5)
                     {
                         run_algorithm(cube, "d'");
-                        alg = append(alg, "(d' ");
+                        alg = append(alg, "d' ");
                     }
                     run_algorithm(cube, "L U' L'");
                     alg = append(alg, "L U' L' ");
@@ -1491,7 +1491,7 @@ char *f2lCase7(int cube[6][9])
                         run_algorithm(cube, "d2");
                         alg = append(alg, "d2 ");
                     }
-                    alg = append(alg, "F' U2 F) ");
+                    alg = append(alg, "F' U2 F ");
                     run_algorithm(cube, "F' U2 F");
                     //ends with a complete pair in the top layer, ready to be put into the f2l
                     alg2 = f2lCase2(cube);
@@ -1510,38 +1510,38 @@ char *f2lCase7(int cube[6][9])
                 switch (goal)
                 {
                     case 2:
-                        alg = append(alg, "(d ");
+                        alg = append(alg, "d ");
                         run_algorithm(cube, "d");
                         break;
                     case 3:
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                         break;
                     case 0:
-                        alg = append(alg, "(d' ");
+                        alg = append(alg, "d' ");
                         run_algorithm(cube, "d'");
                         break;
                     case 1:
-                        alg = append(alg, "(d2 ");
+                        alg = append(alg, "d2 ");
                         run_algorithm(cube, "d2");
                         break;
                 }
                 switch (location)
                 {
                     case 0:
-                        alg = append(alg, "F U' F' U F U F')");
-                        run_algorithm(cube, "F U' F' U F U F')");
+                        alg = append(alg, "F U' F' U F U F'");
+                        run_algorithm(cube, "F U' F' U F U F'");
                         break;
                     case 1:
-                        alg = append(alg, "R U' R' U R U R')");
-                        run_algorithm(cube, "R U' R' U R U R')");
+                        alg = append(alg, "R U' R' U R U R'");
+                        run_algorithm(cube, "R U' R' U R U R'");
                         break;
                     case 2:
-                        alg = append(alg, "B U' B' U B U B')");
-                        run_algorithm(cube, "B U' B' U B U B')");
+                        alg = append(alg, "B U' B' U B U B'");
+                        run_algorithm(cube, "B U' B' U B U B'");
                         break;
                     case 3:
-                        alg = append(alg, "L U' L' U L U L')");
-                        run_algorithm(cube, "L U' L' U L U L')");
+                        alg = append(alg, "L U' L' U L U L'");
+                        run_algorithm(cube, "L U' L' U L U L'");
                         break;
                 }
                 if (cube[location][3] == cube[location][4])
@@ -1564,38 +1564,38 @@ char *f2lCase7(int cube[6][9])
                 switch (goal)
                 {
                     case 0:
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                         break;
                     case 3:
-                        alg = append(alg, "(d ");
+                        alg = append(alg, "d ");
                         run_algorithm(cube, "d");
                         break;
                     case 2:
-                        alg = append(alg, "(d2 ");
+                        alg = append(alg, "d2 ");
                         run_algorithm(cube, "d2");
                         break;
                     case 1:
-                        alg = append(alg, "(d' ");
+                        alg = append(alg, "d' ");
                         run_algorithm(cube, "d'");
                         break;
                 }
                 switch (location)
                 {
                     case 0:
-                        alg = append(alg, "R U R')\n");
-                        run_algorithm(cube, "R U R')");
+                        alg = append(alg, "R U R'\n");
+                        run_algorithm(cube, "R U R'");
                         return alg;
                     case 1:
-                        alg = append(alg, "B U B')\n");
-                        run_algorithm(cube, "B U B')");
+                        alg = append(alg, "B U B'\n");
+                        run_algorithm(cube, "B U B'");
                         return alg;
                     case 2:
-                        alg = append(alg, "L U L')\n");
-                        run_algorithm(cube, "L U L')");
+                        alg = append(alg, "L U L'\n");
+                        run_algorithm(cube, "L U L'");
                         return alg;
                     case 3:
-                        alg = append(alg, "F U F')\n");
-                        run_algorithm(cube, "F U F')");
+                        alg = append(alg, "F U F'\n");
+                        run_algorithm(cube, "F U F'");
                         return alg;
                 }
             }
@@ -1604,18 +1604,18 @@ char *f2lCase7(int cube[6][9])
                 switch (goal)
                 {
                     case 1:
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                         break;
                     case 0:
-                        alg = append(alg, "(d ");
+                        alg = append(alg, "d ");
                         run_algorithm(cube, "d");
                         break;
                     case 3:
-                        alg = append(alg, "(d2 ");
+                        alg = append(alg, "d2 ");
                         run_algorithm(cube, "d2");
                         break;
                     case 2:
-                        alg = append(alg, "(d' ");
+                        alg = append(alg, "d' ");
                         run_algorithm(cube, "d'");
                         break;
                 }
@@ -1624,20 +1624,20 @@ char *f2lCase7(int cube[6][9])
                     //TODO: REDO
                 {
                     case 0:
-                        alg = append(alg, "R' U R d' R U R')\n");
-                        run_algorithm(cube, "R' U R d' R U R')");
+                        alg = append(alg, "R' U R d' R U R'\n");
+                        run_algorithm(cube, "R' U R d' R U R'");
                         return alg;
                     case 1:
-                        alg = append(alg, "B' U B d' B U B')\n");
-                        run_algorithm(cube, "B' U B d' B U B')");
+                        alg = append(alg, "B' U B d' B U B'\n");
+                        run_algorithm(cube, "B' U B d' B U B'");
                         return alg;
                     case 2:
-                        alg = append(alg, "L' U L d' L U L')\n");
-                        run_algorithm(cube, "L' U L d' L U L')");
+                        alg = append(alg, "L' U L d' L U L'\n");
+                        run_algorithm(cube, "L' U L d' L U L'");
                         return alg;
                     case 3:
-                        alg = append(alg, "F' U F d' F U F')\n");
-                        run_algorithm(cube, "F' U F d' F U F')");
+                        alg = append(alg, "F' U F d' F U F'\n");
+                        run_algorithm(cube, "F' U F d' F U F'");
                         return alg;
                 }
             }
@@ -1716,17 +1716,17 @@ char *f2lCase7(int cube[6][9])
             switch (edge)
             {
                 case 1:
-                    alg = append(alg, "(y) ");
+                    alg = append(alg, "y ");
                     run_algorithm(cube, "y");
                     location = mod(location - 1, 4);
                     break;
                 case 2:
-                    alg = append(alg, "(y2) ");
+                    alg = append(alg, "y2 ");
                     run_algorithm(cube, "y2");
                     location = mod(location - 2, 4);
                     break;
                 case 3:
-                    alg = append(alg, "(y') ");
+                    alg = append(alg, "y' ");
                     run_algorithm(cube, "y'");
                     location = mod(location + 1, 4);
                     break;
@@ -1734,23 +1734,23 @@ char *f2lCase7(int cube[6][9])
             switch (location)
             {
                 case 0:
-                    alg = append(alg, "(U' ");
+                    alg = append(alg, "U' ");
                     run_algorithm(cube, "U'");
                 case 1:
-                    alg = append(alg, "(");
+                    alg = append(alg, "");
                     break;
                 case 2:
-                    alg = append(alg, "(U ");
+                    alg = append(alg, "U ");
                     run_algorithm(cube, "U");
                     break;
                 case 3:
-                    alg = append(alg, "(U2) ");
+                    alg = append(alg, "U2 ");
                     run_algorithm(cube, "U2");
                     break;
             }
             //extra U to make the next step easily find it.
-            alg = append(alg, "R U2 R' U) ");
-            run_algorithm(cube, "R U2 R' U) ");
+            alg = append(alg, "R U2 R' U ");
+            run_algorithm(cube, "R U2 R' U ");
             //ends up with a loose corner in U, spot 0, and the edge in spot 3
             alg2 = f2lCase7(cube);
             alg = append(alg, alg2);
@@ -1763,17 +1763,17 @@ char *f2lCase7(int cube[6][9])
             switch (edge)
             {
                 case 1:
-                    alg = append(alg, "(y) ");
+                    alg = append(alg, "y ");
                     run_algorithm(cube, "y");
                     location = mod(location - 1, 4);
                     break;
                 case 2:
-                    alg = append(alg, "(y2) ");
+                    alg = append(alg, "y2 ");
                     run_algorithm(cube, "y2");
                     location = mod(location - 2, 4);
                     break;
                 case 3:
-                    alg = append(alg, "(y') ");
+                    alg = append(alg, "y' ");
                     run_algorithm(cube, "y'");
                     location = mod(location - 3, 4);
                     break;
@@ -1781,23 +1781,23 @@ char *f2lCase7(int cube[6][9])
             switch (location)
             {
                 case 2:
-                    alg = append(alg, "(U' ");
+                    alg = append(alg, "U' ");
                     run_algorithm(cube, "U'");
                     break;
                 case 3:
-                    alg = append(alg, "(");
+                    alg = append(alg, "");
                     break;
                 case 0:
-                    alg = append(alg, "(U ");
+                    alg = append(alg, "U ");
                     run_algorithm(cube, "U");
                     break;
                 case 1:
-                    alg = append(alg, "(U2 ");
+                    alg = append(alg, "U2 ");
                     run_algorithm(cube, "U2");
                     break;
             }
-            alg = append(alg, "R U R' U2) "); //extra U2 so this piece is done next
-            run_algorithm(cube, "R U R' U2) ");
+            alg = append(alg, "R U R' U2 "); //extra U2 so this piece is done next
+            run_algorithm(cube, "R U R' U2 ");
             //ends up with a loose corner in U, spot 0, and the edge in U
             //print_cube(cube); //testing
             alg2 = f2lCase7(cube);
@@ -2018,30 +2018,30 @@ char *f2lCase8(int cube[6][9])
                         if (cube[D][8] != 5)
                         {
                             run_algorithm(cube, "d");
-                            alg = append(alg, "(d ");
+                            alg = append(alg, "d ");
                         }
                         else if (cube[D][2] != 5)
                         {
                             run_algorithm(cube, "d2");
-                            alg = append(alg, "(d2 ");
+                            alg = append(alg, "d2 ");
                         }
                         else if (cube[D][0] != 5)
                         {
                             run_algorithm(cube, "d'");
-                            alg = append(alg, "(d' ");
+                            alg = append(alg, "d' ");
                         }
                     }
                     else
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     if (edge == 1)
                     {
-                        alg = append(alg, "L U L') ");
+                        alg = append(alg, "L U L' ");
                     }
                     else
                     {
-                        alg = append(alg, "L U2 L') ");
+                        alg = append(alg, "L U2 L' ");
                     }
                     move_cube(cube, L, 1);
                     move_cube(cube, U, edge);
@@ -2057,30 +2057,30 @@ char *f2lCase8(int cube[6][9])
                         if (cube[D][6] != 5)
                         {
                             run_algorithm(cube, "d");
-                            alg = append(alg, "(d ");
+                            alg = append(alg, "d ");
                         }
                         else if (cube[D][8] != 5)
                         {
                             run_algorithm(cube, "d2");
-                            alg = append(alg, "(d2 ");
+                            alg = append(alg, "d2 ");
                         }
                         else if (cube[D][2] != 5)
                         {
                             run_algorithm(cube, "d'");
-                            alg = append(alg, "(d' ");
+                            alg = append(alg, "d' ");
                         }
                     }
                     else
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     if (edge == 1)
                     {
-                        alg = append(alg, "F U F') ");
+                        alg = append(alg, "F U F' ");
                     }
                     else
                     {
-                        alg = append(alg, "F U2 F') ");
+                        alg = append(alg, "F U2 F' ");
                     }
 
                     move_cube(cube, F, 1);
@@ -2097,30 +2097,30 @@ char *f2lCase8(int cube[6][9])
                         if (cube[D][0] != 5)
                         {
                             run_algorithm(cube, "d");
-                            alg = append(alg, "(d ");
+                            alg = append(alg, "d ");
                         }
                         else if (cube[D][6] != 5)
                         {
                             run_algorithm(cube, "d2");
-                            alg = append(alg, "(d2 ");
+                            alg = append(alg, "d2 ");
                         }
                         else if (cube[D][8] != 5)
                         {
                             run_algorithm(cube, "d'");
-                            alg = append(alg, "(d' ");
+                            alg = append(alg, "d' ");
                         }
                     }
                     else
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     if (edge == 1)
                     {
-                        alg = append(alg, "R U R') ");
+                        alg = append(alg, "R U R' ");
                     }
                     else
                     {
-                        alg = append(alg, "R U2 R') ");
+                        alg = append(alg, "R U2 R' ");
                     }
                     move_cube(cube, R, 1);
                     move_cube(cube, U, edge);
@@ -2136,30 +2136,30 @@ char *f2lCase8(int cube[6][9])
                         if (cube[D][2] != 5)
                         {
                             run_algorithm(cube, "d");
-                            alg = append(alg, "(d ");
+                            alg = append(alg, "d ");
                         }
                         else if (cube[D][0] != 5)
                         {
                             run_algorithm(cube, "d2");
-                            alg = append(alg, "(d2 ");
+                            alg = append(alg, "d2 ");
                         }
                         else if (cube[D][6] != 5)
                         {
                             run_algorithm(cube, "d'");
-                            alg = append(alg, "(d' ");
+                            alg = append(alg, "d' ");
                         }
                     }
                     else
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     if (edge == 1)
                     {
-                        alg = append(alg, "B U B') ");
+                        alg = append(alg, "B U B' ");
                     }
                     else
                     {
-                        alg = append(alg, "B U2 B') ");
+                        alg = append(alg, "B U2 B' ");
                     }
                     move_cube(cube, B, 1);
                     move_cube(cube, U, edge);
@@ -2179,22 +2179,22 @@ char *f2lCase8(int cube[6][9])
                 case 0:
                     if (cube[D][2] != 5)
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     else if (cube[D][0] != 5)
                     {
                         run_algorithm(cube, "d");
-                        alg = append(alg, "(d ");
+                        alg = append(alg, "d ");
                     }
                     else if (cube[D][6] != 5)
                     {
                         run_algorithm(cube, "d2");
-                        alg = append(alg, "(d2 ");
+                        alg = append(alg, "d2 ");
                     }
                     else if (cube[D][8] != 5)
                     {
                         run_algorithm(cube, "d'");
-                        alg = append(alg, "(d' ");
+                        alg = append(alg, "d' ");
                     }
                     run_algorithm(cube, "F' U F");
                     alg = append(alg, "F' U F ");
@@ -2203,7 +2203,7 @@ char *f2lCase8(int cube[6][9])
                         run_algorithm(cube, "d2");
                         alg = append(alg, "d2 ");
                     }
-                    alg = append(alg, "L U2 L') ");
+                    alg = append(alg, "L U2 L' ");
                     run_algorithm(cube, "L U2 L'");
                     //ends with a complete pair in the top layer, ready to be put into the f2l
                     alg2 = f2lCase1(cube);
@@ -2213,22 +2213,22 @@ char *f2lCase8(int cube[6][9])
                 case 1:
                     if (cube[D][8] != 5)
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     else if (cube[D][2] != 5)
                     {
                         run_algorithm(cube, "d");
-                        alg = append(alg, "(d ");
+                        alg = append(alg, "d ");
                     }
                     else if (cube[D][0] != 5)
                     {
                         run_algorithm(cube, "d2");
-                        alg = append(alg, "(d2 ");
+                        alg = append(alg, "d2 ");
                     }
                     else if (cube[D][6] != 5)
                     {
                         run_algorithm(cube, "d'");
-                        alg = append(alg, "(d' ");
+                        alg = append(alg, "d' ");
                     }
                     run_algorithm(cube, "R' U R");
                     alg = append(alg, "R' U R ");
@@ -2237,7 +2237,7 @@ char *f2lCase8(int cube[6][9])
                         run_algorithm(cube, "d2");
                         alg = append(alg, "d2 ");
                     }
-                    alg = append(alg, "F U2 F') ");
+                    alg = append(alg, "F U2 F' ");
                     run_algorithm(cube, "F U2 F'");
                     //ends with a complete pair in the top layer, ready to be put into the f2l
                     alg2 = f2lCase1(cube);
@@ -2247,22 +2247,22 @@ char *f2lCase8(int cube[6][9])
                 case 2:
                     if (cube[D][6] != 5)
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     else if (cube[D][8] != 5)
                     {
                         run_algorithm(cube, "d");
-                        alg = append(alg, "(d ");
+                        alg = append(alg, "d ");
                     }
                     else if (cube[D][2] != 5)
                     {
                         run_algorithm(cube, "d2");
-                        alg = append(alg, "(d2 ");
+                        alg = append(alg, "d2 ");
                     }
                     else if (cube[D][0] != 5)
                     {
                         run_algorithm(cube, "d'");
-                        alg = append(alg, "(d' ");
+                        alg = append(alg, "d' ");
                     }
                     run_algorithm(cube, "B' U B");
                     alg = append(alg, "B' U B ");
@@ -2271,7 +2271,7 @@ char *f2lCase8(int cube[6][9])
                         run_algorithm(cube, "d2");
                         alg = append(alg, "d2 ");
                     }
-                    alg = append(alg, "R U2 R') ");
+                    alg = append(alg, "R U2 R' ");
                     run_algorithm(cube, "R U2 R'");
                     //ends with a complete pair in the top layer, ready to be put into the f2l
                     alg2 = f2lCase1(cube);
@@ -2281,22 +2281,22 @@ char *f2lCase8(int cube[6][9])
                 case 3:
                     if (cube[D][0] != 5)
                     {
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                     }
                     else if (cube[D][6] != 5)
                     {
                         run_algorithm(cube, "d");
-                        alg = append(alg, "(d ");
+                        alg = append(alg, "d ");
                     }
                     else if (cube[D][8] != 5)
                     {
                         run_algorithm(cube, "d2");
-                        alg = append(alg, "(d2 ");
+                        alg = append(alg, "d2 ");
                     }
                     else if (cube[D][2] != 5)
                     {
                         run_algorithm(cube, "d'");
-                        alg = append(alg, "(d' ");
+                        alg = append(alg, "d' ");
                     }
                     run_algorithm(cube, "L' U L");
                     alg = append(alg, "L' U L ");
@@ -2305,7 +2305,7 @@ char *f2lCase8(int cube[6][9])
                         run_algorithm(cube, "d2");
                         alg = append(alg, "d2 ");
                     }
-                    alg = append(alg, "B U2 B') ");
+                    alg = append(alg, "B U2 B' ");
                     run_algorithm(cube, "B U2 B'");
                     //ends with a complete pair in the top layer, ready to be put into the f2l
                     alg2 = f2lCase1(cube);
@@ -2324,38 +2324,38 @@ char *f2lCase8(int cube[6][9])
                 switch (goal)
                 {
                     case 2:
-                        alg = append(alg, "(d' ");
+                        alg = append(alg, "d' ");
                         run_algorithm(cube, "d'");
                         break;
                     case 1:
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                         break;
                     case 0:
-                        alg = append(alg, "(d ");
+                        alg = append(alg, "d ");
                         run_algorithm(cube, "d");
                         break;
                     case 3:
-                        alg = append(alg, "(d2 ");
+                        alg = append(alg, "d2 ");
                         run_algorithm(cube, "d2");
                         break;
                 }
                 switch (location)
                 {
                     case 0:
-                        alg = append(alg, "F' U F U' F' U' F)\n");
-                        run_algorithm(cube, "F' U F U' F' U' F)");
+                        alg = append(alg, "F' U F U' F' U' F\n");
+                        run_algorithm(cube, "F' U F U' F' U' F");
                         return alg;
                     case 1:
-                        alg = append(alg, "R' U R U' R' U' R)\n");
-                        run_algorithm(cube, "R' U R U' R' U' R)");
+                        alg = append(alg, "R' U R U' R' U' R\n");
+                        run_algorithm(cube, "R' U R U' R' U' R");
                         return alg;
                     case 2:
-                        alg = append(alg, "B' U B U' B' U' B)\n");
-                        run_algorithm(cube, "B' U B U' B' U' B)");
+                        alg = append(alg, "B' U B U' B' U' B\n");
+                        run_algorithm(cube, "B' U B U' B' U' B");
                         return alg;
                     case 3:
-                        alg = append(alg, "L' U L U' L' U' L)\n");
-                        run_algorithm(cube, "L' U L U' L' U' L)");
+                        alg = append(alg, "L' U L U' L' U' L\n");
+                        run_algorithm(cube, "L' U L U' L' U' L");
                         return alg;
                 }
             }
@@ -2364,38 +2364,38 @@ char *f2lCase8(int cube[6][9])
                 switch (goal)
                 {
                     case 0:
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                         break;
                     case 1:
-                        alg = append(alg, "(d' ");
+                        alg = append(alg, "d' ");
                         run_algorithm(cube, "d'");
                         break;
                     case 2:
-                        alg = append(alg, "(d2 ");
+                        alg = append(alg, "d2 ");
                         run_algorithm(cube, "d2");
                         break;
                     case 3:
-                        alg = append(alg, "(d ");
+                        alg = append(alg, "d ");
                         run_algorithm(cube, "d");
                         break;
                 }
                 switch (location)
                 {
                     case 0:
-                        alg = append(alg, "L' U' L)\n");
-                        run_algorithm(cube, "L' U' L)");
+                        alg = append(alg, "L' U' L\n");
+                        run_algorithm(cube, "L' U' L");
                         return alg;
                     case 1:
-                        alg = append(alg, "F' U' F)\n");
-                        run_algorithm(cube, "F' U' F)");
+                        alg = append(alg, "F' U' F\n");
+                        run_algorithm(cube, "F' U' F");
                         return alg;
                     case 2:
-                        alg = append(alg, "R' U' R)\n");
-                        run_algorithm(cube, "R' U' R)");
+                        alg = append(alg, "R' U' R\n");
+                        run_algorithm(cube, "R' U' R");
                         return alg;
                     case 3:
-                        alg = append(alg, "B' U' B)\n");
-                        run_algorithm(cube, "B' U' B)");
+                        alg = append(alg, "B' U' B\n");
+                        run_algorithm(cube, "B' U' B");
                         return alg;
                 }
             }
@@ -2404,38 +2404,38 @@ char *f2lCase8(int cube[6][9])
                 switch (goal)
                 {
                     case 3:
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                         break;
                     case 0:
-                        alg = append(alg, "(d' ");
+                        alg = append(alg, "d' ");
                         run_algorithm(cube, "d'");
                         break;
                     case 1:
-                        alg = append(alg, "(d2 ");
+                        alg = append(alg, "d2 ");
                         run_algorithm(cube, "d2");
                         break;
                     case 2:
-                        alg = append(alg, "(d ");
+                        alg = append(alg, "d ");
                         run_algorithm(cube, "d");
                         break;
                 }
                 switch (location)
                 {
                     case 0:
-                        alg = append(alg, "L U' L' d L' U' L)\n");
-                        run_algorithm(cube, "L U' L' d L' U' L)");
+                        alg = append(alg, "L U' L' d L' U' L\n");
+                        run_algorithm(cube, "L U' L' d L' U' L");
                         return alg;
                     case 1:
-                        alg = append(alg, "F U' F' d F' U' F)\n");
-                        run_algorithm(cube, "F U' F' d F' U' F)");
+                        alg = append(alg, "F U' F' d F' U' F\n");
+                        run_algorithm(cube, "F U' F' d F' U' F");
                         return alg;
                     case 2:
-                        alg = append(alg, "R U' R' d R' U' R)\n");
-                        run_algorithm(cube, "R U' R' d R' U' R)");
+                        alg = append(alg, "R U' R' d R' U' R\n");
+                        run_algorithm(cube, "R U' R' d R' U' R");
                         return alg;
                     case 3:
-                        alg = append(alg, "B U' B' d B' U' B)\n");
-                        run_algorithm(cube, "B U' B' d B' U' B)");
+                        alg = append(alg, "B U' B' d B' U' B\n");
+                        run_algorithm(cube, "B U' B' d B' U' B");
                         return alg;
                 }
             }
@@ -2514,17 +2514,17 @@ char *f2lCase8(int cube[6][9])
             switch (edge)
             {
                 case 0:
-                    alg = append(alg, "(y) ");
+                    alg = append(alg, "y ");
                     run_algorithm(cube, "y");
                     location = mod(location - 1, 4);
                     break;
                 case 1:
-                    alg = append(alg, "(y2) ");
+                    alg = append(alg, "y2 ");
                     run_algorithm(cube, "y2");
                     location = mod(location + 2, 4);
                     break;
                 case 2:
-                    alg = append(alg, "(y') ");
+                    alg = append(alg, "y' ");
                     run_algorithm(cube, "y'");
                     location = mod(location + 1, 4);
                     break;
@@ -2532,33 +2532,33 @@ char *f2lCase8(int cube[6][9])
             switch (location)
             {
                 case 2:
-                    alg = append(alg, "(U' ");
+                    alg = append(alg, "U' ");
                     run_algorithm(cube, "U'");
                     break;
                 case 3:
-                    alg = append(alg, "(");
+                    alg = append(alg, "");
                     break;
                 case 0:
-                    alg = append(alg, "(U ");
+                    alg = append(alg, "U ");
                     run_algorithm(cube, "U");
                     break;
                 case 1:
-                    alg = append(alg, "(U2 ");
+                    alg = append(alg, "U2 ");
                     run_algorithm(cube, "U2");
                     break;
             }
             //If it's in the right spot, immediately put it in
             if (cube[L][5] == cube[L][4])
             {
-                alg = append(alg, "L' U2 L U' L' U' L)\n");
-                run_algorithm(cube, "L' U2 L U' L' U' L) ");
+                alg = append(alg, "L' U2 L U' L' U' L\n");
+                run_algorithm(cube, "L' U2 L U' L' U' L ");
                 return alg;
             }
             else
             {
                 //the last y is there so the cubie will be seen first
-                alg = append(alg, "L' U2 L) (y') ");
-                run_algorithm(cube, "L' U2 L) (y') ");
+                alg = append(alg, "L' U2 L y' ");
+                run_algorithm(cube, "L' U2 L y' ");
                 //Ends with a pair in the wrong hole.
                 alg2 = f2lCase8(cube);
                 alg = append(alg, alg2);
@@ -2574,17 +2574,17 @@ char *f2lCase8(int cube[6][9])
             switch (edge)
             {
                 case 0:
-                    alg = append(alg, "(y) ");
+                    alg = append(alg, "y ");
                     run_algorithm(cube, "y");
                     location = mod(location - 1, 4);
                     break;
                 case 1:
-                    alg = append(alg, "(y2) ");
+                    alg = append(alg, "y2 ");
                     run_algorithm(cube, "y2");
                     location = mod(location - 2, 4);
                     break;
                 case 2:
-                    alg = append(alg, "(y') ");
+                    alg = append(alg, "y' ");
                     run_algorithm(cube, "y'");
                     location = mod(location - 3, 4);
                     break;
@@ -2592,23 +2592,23 @@ char *f2lCase8(int cube[6][9])
             switch (location)
             {
                 case 3:
-                    alg = append(alg, "(U' ");
+                    alg = append(alg, "U' ");
                     run_algorithm(cube, "U'");
                     break;
                 case 0:
-                    alg = append(alg, "(");
+                    alg = append(alg, "");
                     break;
                 case 1:
-                    alg = append(alg, "(U ");
+                    alg = append(alg, "U ");
                     run_algorithm(cube, "U");
                     break;
                 case 2:
-                    alg = append(alg, "(U2 ");
+                    alg = append(alg, "U2 ");
                     run_algorithm(cube, "U2");
                     break;
             }
-            alg = append(alg, "L' U' L) ");
-            run_algorithm(cube, "L' U' L) ");
+            alg = append(alg, "L' U' L ");
+            run_algorithm(cube, "L' U' L ");
             //Ends up with the corner on the bottom layer, and the edge in the top layer.
             alg2 = f2lCase3(cube);
             alg = append(alg, alg2);
@@ -2677,16 +2677,16 @@ char *f2lCase9(int cube[6][9])
             switch (mod(location - edge, 4))
             {
                 case 0:
-                    alg = append(alg, "(");
+                    alg = append(alg, "");
                     break;
                 case 1:
-                    alg = append(alg, "(U ");
+                    alg = append(alg, "U ");
                     break;
                 case 2:
-                    alg = append(alg, "(U2 ");
+                    alg = append(alg, "U2 ");
                     break;
                 case 3:
-                    alg = append(alg, "(U' ");
+                    alg = append(alg, "U' ");
                     break;
             }
             //move out the corner edge pair
@@ -2696,16 +2696,16 @@ char *f2lCase9(int cube[6][9])
             switch (edge)
             {
                 case 0:
-                    alg = append(alg, "F' U F) ");
+                    alg = append(alg, "F' U F ");
                     break;
                 case 1:
-                    alg = append(alg, "R' U R) ");
+                    alg = append(alg, "R' U R ");
                     break;
                 case 2:
-                    alg = append(alg, "B' U B) ");
+                    alg = append(alg, "B' U B ");
                     break;
                 case 3:
-                    alg = append(alg, "L' U L) ");
+                    alg = append(alg, "L' U L ");
                     break;
             }
             //ends with a complete pair in the top layer, ready to be put into the f2l
@@ -2723,15 +2723,15 @@ char *f2lCase9(int cube[6][9])
                 switch (edge)
                 {
                     case 1:
-                        alg = append(alg, "(y) ");
+                        alg = append(alg, "y ");
                         run_algorithm(cube, "y");
                         break;
                     case 2:
-                        alg = append(alg, "(y2) ");
+                        alg = append(alg, "y2 ");
                         run_algorithm(cube, "y2");
                         break;
                     case 3:
-                        alg = append(alg, "(y') ");
+                        alg = append(alg, "y' ");
                         run_algorithm(cube, "y'");
                         break;
                 }
@@ -2739,19 +2739,19 @@ char *f2lCase9(int cube[6][9])
                 switch (mod(location - edge, 4))
                 {
                     case 1:
-                        alg = append(alg, "(U) ");
+                        alg = append(alg, "U ");
                         break;
                     case 2:
-                        alg = append(alg, "(U2) ");
+                        alg = append(alg, "U2 ");
                         break;
                     case 3:
-                        alg = append(alg, "(U') ");
+                        alg = append(alg, "U' ");
                         break;
                 }
 
                 //todo, multiple variants
-                alg = append(alg, "(R U R' U') (R U R' U') (R U R')\n");
-                run_algorithm(cube, "(R U R' U') (R U R' U') (R U R')\n");
+                alg = append(alg, "R U R' U' R U R' U' R U R'\n");
+                run_algorithm(cube, "R U R' U' R U R' U' R U R'\n");
                 return alg;
             }
             else
@@ -2760,35 +2760,35 @@ char *f2lCase9(int cube[6][9])
                 switch (edge)
                 {
                     case 1:
-                        alg = append(alg, "(y) ");
+                        alg = append(alg, "y ");
                         run_algorithm(cube, "y");
                         break;
                     case 2:
-                        alg = append(alg, "(y2) ");
+                        alg = append(alg, "y2 ");
                         run_algorithm(cube, "y2");
                         break;
                     case 3:
-                        alg = append(alg, "(y') ");
+                        alg = append(alg, "y' ");
                         run_algorithm(cube, "y'");
                         break;
                 }
                 switch (mod(location - edge, 4))
                 {
                     case 2:
-                        alg = append(alg, "(U ");
-                        run_algorithm(cube, "(U ");
+                        alg = append(alg, "U ");
+                        run_algorithm(cube, "U ");
                         break;
                     case 3:
-                        alg = append(alg, "(U2 ");
-                        run_algorithm(cube, "(U2 ");
+                        alg = append(alg, "U2 ");
+                        run_algorithm(cube, "U2 ");
                         break;
                     case 0:
-                        alg = append(alg, "(U' ");
-                        run_algorithm(cube, "(U' ");
+                        alg = append(alg, "U' ");
+                        run_algorithm(cube, "U' ");
                         break;
                 }
-                alg = append(alg, "R U R' U R U' R') ");
-                run_algorithm(cube, "R U R' U R U' R')");
+                alg = append(alg, "R U R' U R U' R' ");
+                run_algorithm(cube, "R U R' U R U' R'");
                 //ends up with a loose corner in U, spot 0, and the edge in U
                 alg2 = f2lCase7(cube);
                 alg = append(alg, alg2);
@@ -2860,15 +2860,15 @@ char *f2lCase9(int cube[6][9])
                         switch (opening)
                         {
                             case 1:
-                                alg = append(alg, "(y) ");
+                                alg = append(alg, "y ");
                                 run_algorithm(cube, "y");
                                 break;
                             case 2:
-                                alg = append(alg, "(y2) ");
+                                alg = append(alg, "y2 ");
                                 run_algorithm(cube, "y2");
                                 break;
                             case 3:
-                                alg = append(alg, "(y') ");
+                                alg = append(alg, "y' ");
                                 run_algorithm(cube, "y'");
                                 break;
                         }
@@ -2879,19 +2879,19 @@ char *f2lCase9(int cube[6][9])
                         switch (u)
                         {
                             case 0:
-                                alg = append(alg, "(");
+                                alg = append(alg, "");
                                 break;
                             case 1:
-                                alg = append(alg, "(U ");
-                                run_algorithm(cube, "(U ");
+                                alg = append(alg, "U ");
+                                run_algorithm(cube, "U ");
                                 break;
                             case 2:
-                                alg = append(alg, "(U2 ");
-                                run_algorithm(cube, "(U2 ");
+                                alg = append(alg, "U2 ");
+                                run_algorithm(cube, "U2 ");
                                 break;
                             case 3:
-                                alg = append(alg, "(U' ");
-                                run_algorithm(cube, "(U' ");
+                                alg = append(alg, "U' ");
+                                run_algorithm(cube, "U' ");
                                 break;
                         }
                         location = mod(location - u, 4);
@@ -2908,18 +2908,18 @@ char *f2lCase9(int cube[6][9])
                 {
                     case 0:
                         //if no move print an empty bracket because we expect one later
-                        alg = append(alg, "(");
+                        alg = append(alg, "");
                         break;
                     case 1:
-                        alg = append(alg, "(y) (");
+                        alg = append(alg, "y ");
                         run_algorithm(cube, "y");
                         break;
                     case 2:
-                        alg = append(alg, "(y2) (");
+                        alg = append(alg, "y2 ");
                         run_algorithm(cube, "y2");
                         break;
                     case 3:
-                        alg = append(alg, "(y') (");
+                        alg = append(alg, "y' ");
                         run_algorithm(cube, "y'");
                         break;
                 }
@@ -2933,31 +2933,31 @@ char *f2lCase9(int cube[6][9])
                 switch (edge)
                 {
                     case 0:
-                        alg = append(alg, "F' U2 F U) ");
-                        run_algorithm(cube, "F' U2 F U) ");
+                        alg = append(alg, "F' U2 F U ");
+                        run_algorithm(cube, "F' U2 F U ");
                         //ends up with a loose corner in U, spot 8 and the edge in U
                         alg2 = f2lCase8(cube);
                         alg = append(alg, alg2);
                         free(alg2);
                         return alg;
                     case 1:
-                        alg = append(alg, "R U' R' U) ");
-                        run_algorithm(cube, "R U' R' U) ");
+                        alg = append(alg, "R U' R' U ");
+                        run_algorithm(cube, "R U' R' U ");
                         //ends up with a loose corner in U, spot 8, and the edge in U
                         alg2 = f2lCase7(cube);
                         alg = append(alg, alg2);
                         free(alg2);
                         return alg;
                     case 2:
-                        alg = append(alg, "F' U F U) ");
-                        run_algorithm(cube, "F' U F U) ");
+                        alg = append(alg, "F' U F U ");
+                        run_algorithm(cube, "F' U F U ");
                         alg2 = f2lCase8(cube);
                         alg = append(alg, alg2);
                         free(alg2);
                         return alg;
                     case 3:
-                        alg = append(alg, "R U' R' U) ");
-                        run_algorithm(cube, "R U' R' U) ");
+                        alg = append(alg, "R U' R' U ");
+                        run_algorithm(cube, "R U' R' U ");
                         alg2 = f2lCase7(cube);
                         alg = append(alg, alg2);
                         free(alg2);
@@ -2969,31 +2969,31 @@ char *f2lCase9(int cube[6][9])
                 switch (edge)
                 {
                     case 0:
-                        alg = append(alg, "F' U2 F U) ");
-                        run_algorithm(cube, "F' U2 F U) ");
+                        alg = append(alg, "F' U2 F U ");
+                        run_algorithm(cube, "F' U2 F U ");
                         //ends up with a loose corner in U, spot 8, and the edge in U
                         alg2 = f2lCase8(cube);
                         alg = append(alg, alg2);
                         free(alg2);
                         return alg;
                     case 1:
-                        alg = append(alg, "R U' R' U) ");
-                        run_algorithm(cube, "R U' R' U) ");
+                        alg = append(alg, "R U' R' U ");
+                        run_algorithm(cube, "R U' R' U ");
                         //ends up with a loose corner in U, spot 8, and the edge in U
                         alg2 = f2lCase7(cube);
                         alg = append(alg, alg2);
                         free(alg2);
                         return alg;
                     case 2:
-                        alg = append(alg, "F' U F U) ");
-                        run_algorithm(cube, "F' U F U) ");
+                        alg = append(alg, "F' U F U ");
+                        run_algorithm(cube, "F' U F U ");
                         alg2 = f2lCase8(cube);
                         alg = append(alg, alg2);
                         free(alg2);
                         return alg;
                     case 3:
-                        alg = append(alg, "R U' R' U) ");
-                        run_algorithm(cube, "R U' R' U) ");
+                        alg = append(alg, "R U' R' U ");
+                        run_algorithm(cube, "R U' R' U ");
                         alg2 = f2lCase7(cube);
                         alg = append(alg, alg2);
                         free(alg2);
@@ -3096,37 +3096,37 @@ char *f2lCase10(int cube[6][9])
             switch (mod(edge - location, 4))
             {
                 case 0:
-                    alg = append(alg, "(");
+                    alg = append(alg, "");
                     break;
                 case 1:
-                    alg = append(alg, "(U ");
+                    alg = append(alg, "U ");
                     run_algorithm(cube, "U");
                     break;
                 case 2:
-                    alg = append(alg, "(U2 ");
+                    alg = append(alg, "U2 ");
                     run_algorithm(cube, "U2");
                     break;
                 case 3:
-                    alg = append(alg, "(U' ");
+                    alg = append(alg, "U' ");
                     run_algorithm(cube, "U'");
                     break;
             }
             switch (location)
             {
                 case 0:
-                    alg = append(alg, "R U R') ");
+                    alg = append(alg, "R U R' ");
                     run_algorithm(cube, "R U R'");
                     break;
                 case 1:
-                    alg = append(alg, "B U B') ");
+                    alg = append(alg, "B U B' ");
                     run_algorithm(cube, "B U B'");
                     break;
                 case 2:
-                    alg = append(alg, "L U L') ");
+                    alg = append(alg, "L U L' ");
                     run_algorithm(cube, "L U L'");
                     break;
                 case 3:
-                    alg = append(alg, "F U F') ");
+                    alg = append(alg, "F U F' ");
                     run_algorithm(cube, "F U F'");
                     break;
             }
@@ -3143,37 +3143,37 @@ char *f2lCase10(int cube[6][9])
             switch (mod(edge - location + 2, 4))
             {
                 case 0:
-                    alg = append(alg, "(");
+                    alg = append(alg, "");
                     break;
                 case 1:
-                    alg = append(alg, "(U ");
+                    alg = append(alg, "U ");
                     run_algorithm(cube, "U");
                     break;
                 case 2:
-                    alg = append(alg, "(U2 ");
+                    alg = append(alg, "U2 ");
                     run_algorithm(cube, "U2");
                     break;
                 case 3:
-                    alg = append(alg, "(U' ");
+                    alg = append(alg, "U' ");
                     run_algorithm(cube, "U'");
                     break;
             }
             switch (location)
             {
                 case 0:
-                    alg = append(alg, "R U2 R') ");
+                    alg = append(alg, "R U2 R' ");
                     run_algorithm(cube, "R U2 R'");
                     break;
                 case 1:
-                    alg = append(alg, "B U2 B') ");
+                    alg = append(alg, "B U2 B' ");
                     run_algorithm(cube, "B U2 B'");
                     break;
                 case 2:
-                    alg = append(alg, "L U2 L') ");
+                    alg = append(alg, "L U2 L' ");
                     run_algorithm(cube, "L U2 L'");
                     break;
                 case 3:
-                    alg = append(alg, "F U2 F') ");
+                    alg = append(alg, "F U2 F' ");
                     run_algorithm(cube, "F U2 F'");
                     break;
             }
@@ -3205,19 +3205,19 @@ char *f2lCase10(int cube[6][9])
                 switch (location)
                 {
                     case 0:
-                        alg = append(alg, "(F' U F U) ");
+                        alg = append(alg, "F' U F U ");
                         run_algorithm(cube, "F' U F U");
                         break;
                     case 1:
-                        alg = append(alg, "(R' U R U) ");
+                        alg = append(alg, "R' U R U ");
                         run_algorithm(cube, "R' U R U");
                         break;
                     case 2:
-                        alg = append(alg, "(B' U B U) ");
+                        alg = append(alg, "B' U B U ");
                         run_algorithm(cube, "B' U B U");
                         break;
                     case 3:
-                        alg = append(alg, "(L' U L U) ");
+                        alg = append(alg, "L' U L U ");
                         run_algorithm(cube, "L' U L U");
                         break;
                 }
@@ -3232,19 +3232,19 @@ char *f2lCase10(int cube[6][9])
                 switch (location)
                 {
                     case 0:
-                        alg = append(alg, "(F' U' F) ");
+                        alg = append(alg, "F' U' F ");
                         run_algorithm(cube, "F' U' F");
                         break;
                     case 1:
-                        alg = append(alg, "(R' U' R) ");
+                        alg = append(alg, "R' U' R ");
                         run_algorithm(cube, "R' U' R");
                         break;
                     case 2:
-                        alg = append(alg, "(B' U' B) ");
+                        alg = append(alg, "B' U' B ");
                         run_algorithm(cube, "B' U' B");
                         break;
                     case 3:
-                        alg = append(alg, "(L' U' L) ");
+                        alg = append(alg, "L' U' L ");
                         run_algorithm(cube, "L' U' L");
                         break;
                 }
@@ -3259,20 +3259,20 @@ char *f2lCase10(int cube[6][9])
                 switch (location)
                 {
                     case 0:
-                        alg = append(alg, "(R U R' U' R U R') ");
-                        run_algorithm(cube, "(R U R' U' R U R')");
+                        alg = append(alg, "R U R' U' R U R' ");
+                        run_algorithm(cube, "R U R' U' R U R'");
                         break;
                     case 1:
-                        alg = append(alg, "(B U B' U' B U B') ");
-                        run_algorithm(cube, "(B U B' U' B U B')");
+                        alg = append(alg, "B U B' U' B U B' ");
+                        run_algorithm(cube, "B U B' U' B U B'");
                         break;
                     case 2:
-                        alg = append(alg, "(L U L' U' L U L') ");
-                        run_algorithm(cube, "(L U L' U' L U L')");
+                        alg = append(alg, "L U L' U' L U L' ");
+                        run_algorithm(cube, "L U L' U' L U L'");
                         break;
                     case 3:
-                        alg = append(alg, "(F U F' U' F U F') ");
-                        run_algorithm(cube, "(F U F' U' F U F')");
+                        alg = append(alg, "F U F' U' F U F' ");
+                        run_algorithm(cube, "F U F' U' F U F'");
                         break;
                 }
                 //Ends up with the corner on the bottom layer, and the edge in the top layer.
@@ -3377,37 +3377,37 @@ char *f2lCase11(int cube[6][9])
             switch (mod(edge - location, 4))
             {
                 case 0:
-                    alg = append(alg, "(");
+                    alg = append(alg, "");
                     break;
                 case 1:
-                    alg = append(alg, "(U ");
+                    alg = append(alg, "U ");
                     run_algorithm(cube, "U");
                     break;
                 case 2:
-                    alg = append(alg, "(U2 ");
+                    alg = append(alg, "U2 ");
                     run_algorithm(cube, "U2");
                     break;
                 case 3:
-                    alg = append(alg, "(U' ");
+                    alg = append(alg, "U' ");
                     run_algorithm(cube, "U'");
                     break;
             }
             switch (location)
             {
                 case 0:
-                    alg = append(alg, "L' U' L) ");
+                    alg = append(alg, "L' U' L ");
                     run_algorithm(cube, "L' U' L");
                     break;
                 case 1:
-                    alg = append(alg, "F' U' F) ");
+                    alg = append(alg, "F' U' F ");
                     run_algorithm(cube, "F' U' F");
                     break;
                 case 2:
-                    alg = append(alg, "R' U' R) ");
+                    alg = append(alg, "R' U' R ");
                     run_algorithm(cube, "R' U' R");
                     break;
                 case 3:
-                    alg = append(alg, "B' U' B) ");
+                    alg = append(alg, "B' U' B ");
                     run_algorithm(cube, "B' U' B");
                     break;
             }
@@ -3424,37 +3424,37 @@ char *f2lCase11(int cube[6][9])
             switch (mod(edge - location + 2, 4))
             {
                 case 0:
-                    alg = append(alg, "(");
+                    alg = append(alg, "");
                     break;
                 case 1:
-                    alg = append(alg, "(U ");
+                    alg = append(alg, "U ");
                     run_algorithm(cube, "U");
                     break;
                 case 2:
-                    alg = append(alg, "(U2 ");
+                    alg = append(alg, "U2 ");
                     run_algorithm(cube, "U2");
                     break;
                 case 3:
-                    alg = append(alg, "(U' ");
+                    alg = append(alg, "U' ");
                     run_algorithm(cube, "U'");
                     break;
             }
             switch (location)
             {
                 case 0:
-                    alg = append(alg, "L' U2 L) ");
+                    alg = append(alg, "L' U2 L ");
                     run_algorithm(cube, "L' U2 L");
                     break;
                 case 1:
-                    alg = append(alg, "F' U2 F) ");
+                    alg = append(alg, "F' U2 F ");
                     run_algorithm(cube, "F' U2 F");
                     break;
                 case 2:
-                    alg = append(alg, "R' U2 R) ");
+                    alg = append(alg, "R' U2 R ");
                     run_algorithm(cube, "R' U2 R");
                     break;
                 case 3:
-                    alg = append(alg, "B' U2 B) ");
+                    alg = append(alg, "B' U2 B ");
                     run_algorithm(cube, "B' U2 B");
                     break;
             }
@@ -3486,19 +3486,19 @@ char *f2lCase11(int cube[6][9])
                 switch (location)
                 {
                     case 0:
-                        alg = append(alg, "(F U' F') ");
+                        alg = append(alg, "F U' F' ");
                         run_algorithm(cube, "F U' F'");
                         break;
                     case 1:
-                        alg = append(alg, "(R U' R') ");
+                        alg = append(alg, "R U' R' ");
                         run_algorithm(cube, "R U' R'");
                         break;
                     case 2:
-                        alg = append(alg, "(B U' B') ");
+                        alg = append(alg, "B U' B' ");
                         run_algorithm(cube, "B U' B'");
                         break;
                     case 3:
-                        alg = append(alg, "(L U' L') ");
+                        alg = append(alg, "L U' L' ");
                         run_algorithm(cube, "L U' L'");
                         break;
                 }
@@ -3513,19 +3513,19 @@ char *f2lCase11(int cube[6][9])
                 switch (location)
                 {
                     case 0:
-                        alg = append(alg, "(F U F') ");
+                        alg = append(alg, "F U F' ");
                         run_algorithm(cube, "F U F'");
                         break;
                     case 1:
-                        alg = append(alg, "(R U R') ");
+                        alg = append(alg, "R U R' ");
                         run_algorithm(cube, "R U R'");
                         break;
                     case 2:
-                        alg = append(alg, "(B U B') ");
+                        alg = append(alg, "B U B' ");
                         run_algorithm(cube, "B U B'");
                         break;
                     case 3:
-                        alg = append(alg, "(L U L') ");
+                        alg = append(alg, "L U L' ");
                         run_algorithm(cube, "L U L'");
                         break;
                 }
@@ -3540,20 +3540,20 @@ char *f2lCase11(int cube[6][9])
                 switch (location)
                 {
                     case 0:
-                        alg = append(alg, "(L' U' L U L' U' L) ");
-                        run_algorithm(cube, "(L' U' L U L' U' L)");
+                        alg = append(alg, "L' U' L U L' U' L ");
+                        run_algorithm(cube, "L' U' L U L' U' L");
                         break;
                     case 1:
-                        alg = append(alg, "(F' U' F U F' U' F) ");
-                        run_algorithm(cube, "(F' U' F U F' U' F)");
+                        alg = append(alg, "F' U' F U F' U' F ");
+                        run_algorithm(cube, "F' U' F U F' U' F");
                         break;
                     case 2:
-                        alg = append(alg, "(R' U' R U R' U' R) ");
-                        run_algorithm(cube, "(R' U' R U R' U' R)");
+                        alg = append(alg, "R' U' R U R' U' R ");
+                        run_algorithm(cube, "R' U' R U R' U' R");
                         break;
                     case 3:
-                        alg = append(alg, "(B' U' B U B' U' B) ");
-                        run_algorithm(cube, "(B' U' B U B' U' B)");
+                        alg = append(alg, "B' U' B U B' U' B ");
+                        run_algorithm(cube, "B' U' B U B' U' B");
                         break;
                 }
                 //Ends up with the corner on the bottom layer, and the edge in the top layer.

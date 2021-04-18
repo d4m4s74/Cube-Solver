@@ -31,27 +31,27 @@ char *solve_cross(int cube[6][9])
     //First orient the cube with the yellow center pointing down.
     if (cube[U][4] == 5)
     {
-        algs = append(algs, "(z2)\n");
+        algs = append(algs, "z2\n");
         run_algorithm(cube, "z2");
     }
     else if (cube[R][4] == 5)
     {
-        algs = append(algs, "(z)\n");
+        algs = append(algs, "z\n");
         run_algorithm(cube, "z");
     }
     else if (cube[L][4] == 5)
     {
-        algs = append(algs, "(z')\n");
+        algs = append(algs, "z'\n");
         run_algorithm(cube, "z'");
     }
     else if (cube[F][4] == 5)
     {
-        algs = append(algs, "(x')\n");
+        algs = append(algs, "x'\n");
         run_algorithm(cube, "x'");
     }
     else if (cube[B][4] == 5)
     {
-        algs = append(algs, "(x)\n");
+        algs = append(algs, "x\n");
         run_algorithm(cube, "x");
     }
     int solved = 0;
@@ -195,13 +195,13 @@ char *crossCase1(int cube[6][9])
             switch (correction)
             {
                 case 1:
-                    alg = append(alg, "(D)\n");
+                    alg = append(alg, "D\n");
                     break;
                 case 2:
-                    alg = append(alg, "(D2\n");
+                    alg = append(alg, "D2\n");
                     break;
                 case 3:
-                    alg = append(alg, "(D')\n");
+                    alg = append(alg, "D'\n");
                     break;
             }
         }
@@ -215,13 +215,13 @@ char *crossCase1(int cube[6][9])
             switch (correction)
             {
                 case 1:
-                    alg = append(alg, "(F D' F' D)\n");
+                    alg = append(alg, "F D' F' D\n");
                     break;
                 case 2:
-                    alg = append(alg, "(F D2 F' D2)\n");
+                    alg = append(alg, "F D2 F' D2\n");
                     break;
                 case 3:
-                    alg = append(alg, "(F D F' D')\n");
+                    alg = append(alg, "F D F' D'\n");
                     break;
             }
         }
@@ -239,13 +239,13 @@ char *crossCase1(int cube[6][9])
             switch (correction)
             {
                 case 1:
-                    alg = append(alg, "(D)\n");
+                    alg = append(alg, "D\n");
                     break;
                 case 2:
-                    alg = append(alg, "(D2)\n");
+                    alg = append(alg, "D2\n");
                     break;
                 case 3:
-                    alg = append(alg, "(D')\n");
+                    alg = append(alg, "D'\n");
                     break;
             }
         }
@@ -260,13 +260,13 @@ char *crossCase1(int cube[6][9])
             switch (correction)
             {
                 case 1:
-                    alg = append(alg, "(R D' R' D)\n");
+                    alg = append(alg, "R D' R' D\n");
                     break;
                 case 2:
-                    alg = append(alg, "(R D2 R' D2)\n");
+                    alg = append(alg, "R D2 R' D2\n");
                     break;
                 case 3:
-                    alg = append(alg, "(R D R' D')\n");
+                    alg = append(alg, "R D R' D'\n");
                     break;
             }
         }
@@ -283,13 +283,13 @@ char *crossCase1(int cube[6][9])
             switch (correction)
             {
                 case 1:
-                    alg = append(alg, "(D)\n");
+                    alg = append(alg, "D\n");
                     break;
                 case 2:
-                    alg = append(alg, "(D2)\n");
+                    alg = append(alg, "D2\n");
                     break;
                 case 3:
-                    alg = append(alg, "(D')\n");
+                    alg = append(alg, "D'\n");
                     break;
             }
         }
@@ -303,13 +303,13 @@ char *crossCase1(int cube[6][9])
             switch (correction)
             {
                 case 1:
-                    alg = append(alg, "(L' D' L D)\n");
+                    alg = append(alg, "L' D' L D\n");
                     break;
                 case 2:
-                    alg = append(alg, "(L' D2 L D2)\n");
+                    alg = append(alg, "L' D2 L D2\n");
                     break;
                 case 3:
-                    alg = append(alg, "(L' D L D')\n");
+                    alg = append(alg, "L' D L D'\n");
                     break;
             }
         }
@@ -326,13 +326,13 @@ char *crossCase1(int cube[6][9])
             switch (correction)
             {
                 case 1:
-                    alg = append(alg, "(D)\n");
+                    alg = append(alg, "D\n");
                     break;
                 case 2:
-                    alg = append(alg, "(D2)\n");
+                    alg = append(alg, "D2\n");
                     break;
                 case 3:
-                    alg = append(alg, "(D')\n");
+                    alg = append(alg, "D'\n");
                     break;
             }
         }
@@ -347,13 +347,13 @@ char *crossCase1(int cube[6][9])
             switch (correction)
             {
                 case 1:
-                    alg = append(alg, "(B' D' B D)\n");
+                    alg = append(alg, "B' D' B D\n");
                     break;
                 case 2:
-                    alg = append(alg, "(B' D2 B D2)\n");
+                    alg = append(alg, "B' D2 B D2\n");
                     break;
                 case 3:
-                    alg = append(alg, "(B' D B D')\n");
+                    alg = append(alg, "B' D B D'\n");
                     break;
             }
         }
@@ -411,30 +411,30 @@ char *crossCase2(int cube[6][9])
         switch (correction)
         {
             case 0:
-                alg = append(alg, "(");
+                alg = append(alg, "");
                 break;
             case 1:
-                alg = append(alg, "(U ");
+                alg = append(alg, "U ");
                 break;
             case 2:
-                alg = append(alg, "(U2 ");
+                alg = append(alg, "U2 ");
                 break;
             case 3:
-                alg = append(alg, "(U' ");
+                alg = append(alg, "U' ");
         }
         switch (found)
         {
             case 0:
-                alg = append(alg, "F2)\n");
+                alg = append(alg, "F2\n");
                 break;
             case 1:
-                alg = append(alg, "R2)\n");
+                alg = append(alg, "R2\n");
                 break;
             case 2:
-                alg = append(alg, "B2)\n");
+                alg = append(alg, "B2\n");
                 break;
             case 3:
-                alg = append(alg, "L2)\n");
+                alg = append(alg, "L2\n");
         }
         return alg;
     }
@@ -462,19 +462,19 @@ char *crossCase3(int cube[6][9])
     else if (cube[R][5] == 5)
     {
         found = 1;
-        alg = append(alg, "(y) ");
+        alg = append(alg, "y ");
         run_algorithm(cube, "y");
     }
     else if (cube[B][5] == 5)
     {
         found = 2;
-        alg = append(alg, "(y2) ");
+        alg = append(alg, "y2 ");
         run_algorithm(cube, "y2");
     }
     else if (cube[L][5] == 5)
     {
         found = 3;
-        alg = append(alg, "(y') ");
+        alg = append(alg, "y' ");
         run_algorithm(cube, "y'");
     }
     if (found != -1)
@@ -486,16 +486,16 @@ char *crossCase3(int cube[6][9])
         switch (correction)
         {
             case 0:
-                alg = append(alg, "(R')\n");
+                alg = append(alg, "R'\n");
                 break;
             case 1:
-                alg = append(alg, "(D R' D')\n");
+                alg = append(alg, "D R' D'\n");
                 break;
             case 2:
-                alg = append(alg, "(D2 R' D2)\n");
+                alg = append(alg, "D2 R' D2\n");
                 break;
             case 3:
-                alg = append(alg, "(D' R' D)\n");
+                alg = append(alg, "D' R' D\n");
                 break;
         }
         return alg;
@@ -524,19 +524,19 @@ char *crossCase4(int cube[6][9])
     else if (cube[R][3] == 5)
     {
         found = 1;
-        alg = append(alg, "(y) ");
+        alg = append(alg, "y ");
         run_algorithm(cube, "y");
     }
     else if (cube[B][3] == 5)
     {
         found = 2;
-        alg = append(alg, "(y2) ");
+        alg = append(alg, "y2 ");
         run_algorithm(cube, "y2");
     }
     else if (cube[L][3] == 5)
     {
         found = 3;
-        alg = append(alg, "(y') ");
+        alg = append(alg, "y' ");
         run_algorithm(cube, "y'");
     }
     if (found != -1)
@@ -548,16 +548,16 @@ char *crossCase4(int cube[6][9])
         switch (correction)
         {
             case 0:
-                alg = append(alg, "(L)\n");
+                alg = append(alg, "L\n");
                 break;
             case 1:
-                alg = append(alg, "(D L D')\n");
+                alg = append(alg, "D L D'\n");
                 break;
             case 2:
-                alg = append(alg, "(D2 L D2)\n");
+                alg = append(alg, "D2 L D2\n");
                 break;
             case 3:
-                alg = append(alg, "(D' L D)\n");
+                alg = append(alg, "D' L D\n");
                 break;
         }
         return alg;
@@ -587,21 +587,21 @@ char *crossCase5(int cube[6][9])
     else if (cube[B][7] == 5)
     {
         found = 1;
-        alg = append(alg, "(y) ");
+        alg = append(alg, "y ");
         run_algorithm(cube, "y");
     }
     //Yellow facing out on the down left edge
     else if (cube[L][7] == 5)
     {
         found = 2;
-        alg = append(alg, "(y2) ");
+        alg = append(alg, "y2 ");
         run_algorithm(cube, "y2");
     }
     //Yellow facing out on the down front edge
     else if (cube[F][7] == 5)
     {
         found = 3;
-        alg = append(alg, "(y') ");
+        alg = append(alg, "y' ");
         run_algorithm(cube, "y'");
     }
     if (found != -1)
@@ -614,16 +614,16 @@ char *crossCase5(int cube[6][9])
         switch (correction)
         {
             case 0:
-                alg = append(alg, "(R F)\n");
+                alg = append(alg, "R F\n");
                 break;
             case 1:
-                alg = append(alg, "(R D F D')\n");
+                alg = append(alg, "R D F D'\n");
                 break;
             case 2:
-                alg = append(alg, "(R D2 F D2)\n");
+                alg = append(alg, "R D2 F D2\n");
                 break;
             case 3:
-                alg = append(alg, "(R D' F D)\n");
+                alg = append(alg, "R D' F D\n");
                 break;
         }
         return alg;
@@ -653,21 +653,21 @@ char *crossCase6(int cube[6][9])
     else if (cube[B][1] == 5)
     {
         found = 1;
-        alg = append(alg, "(y) ");
+        alg = append(alg, "y ");
         run_algorithm(cube, "y");
     }
     //Yellow facing out on the up left edge
     else if (cube[L][1] == 5)
     {
         found = 2;
-        alg = append(alg, "(y2) ");
+        alg = append(alg, "y2 ");
         run_algorithm(cube, "y2");
     }
     //Yellow facing out on the up front edge
     else if (cube[F][1] == 5)
     {
         found = 3;
-        alg = append(alg, "(y') ");
+        alg = append(alg, "y' ");
         run_algorithm(cube, "y'");
     }
     if (found != -1)
@@ -684,16 +684,16 @@ char *crossCase6(int cube[6][9])
         switch (correction)
         {
             case 0:
-                alg = append(alg, "(R' F R)\n");
+                alg = append(alg, "R' F R\n");
                 break;
             case 1:
-                alg = append(alg, "(R' D F D' R)\n");
+                alg = append(alg, "R' D F D' R\n");
                 break;
             case 2:
-                alg = append(alg, "(R' D2 F D2 R)\n");
+                alg = append(alg, "R' D2 F D2 R\n");
                 break;
             case 3:
-                alg = append(alg, "(R' D' F D)\n");
+                alg = append(alg, "R' D' F D\n");
                 break;
         }
         return alg;
