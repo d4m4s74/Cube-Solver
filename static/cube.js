@@ -735,7 +735,7 @@ class Cube {
         this.scene = scene;
         //set the geometry for the cube
         //A cubie on a 3x3 is a third of the size of a full cube.
-        let csize = size/3;
+        let csize = size / 3;
         //there are 3 cubies, they're each one third of the size of the full cube, with space for a small gap
         this.geometry = new THREE.BoxGeometry(csize - 0.015, csize - 0.015, csize - 0.015); 
         this.edges = new THREE.EdgesGeometry(this.geometry);
@@ -1250,7 +1250,7 @@ class Cube {
                     if (step["algorithms"] != "") {
                         //the id is dynamic so I can modify the CSS
                         html +=
-                            `<li id='alg${algs}' class='algorithm'>${alg.replace(/[^FfBbRrLlUuDdxyzMES\'2+ ]/g, "")}</li>\n`;
+                            `<li id='alg${algs}' class='algorithm'>${alg.replace(/[^FfBbRrLlUuDdxyzMES\(\)\'2+ ]/g, "")}</li>\n`;
                         //add he alg into the steps array, ignoring everything but the moves.
                         thisClass.steps.push(alg.replace(/[^FfBbRrLlUuDdxyzMES\'2 ]/g, "").split(" "))
                         //console.log(steps[algs]);
