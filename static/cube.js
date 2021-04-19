@@ -23,7 +23,7 @@ class Cube {
     outlines = [];
     planes = [];
     //cube used to store temporary values
-    tempcube = new THREE.Mesh(this.geometry, this.cubeMaterials);
+    tempcube;
     //Create a group for the pieces currently moving
     moving = new THREE.Group();
     //variables for the moves being made
@@ -768,6 +768,9 @@ class Cube {
                 }
             }
         }
+        //The center cubie is number 13. Using this as tempcube because you can't see it.
+        this.tempcube = this.cubies[13];
+
         //Adding a few planes between the cubies.
         for (let i = 0; i < 12; i++) {
             this.planes.push(new THREE.Mesh(this.planeGeometry, this.planeMaterial));
