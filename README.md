@@ -313,6 +313,7 @@ CS50 wants me to explain what every file does, and what's in it. So this readme 
 ├── static  
 │   ├── <a href="#cubecss">cube.css</a>  
 │   ├── <a href="#cubejs">cube.js</a>  
+│   ├── <a href="#cubeinterfacejs">cubeinterface.js</a>  
 │   ├── favicon.ico  
 │   ├── next.png  
 │   ├── pause.png  
@@ -517,53 +518,54 @@ I also spent a week or 2 making a mobile view, because the text seemed to be a v
 Brings my algorithm to the user. Based on three.js  
 This is my first time actually writing javascript. It doesn't look pretty, probably breaks all the rules, but it works.
 
-I rewrote this file multiple times. First iterative, that was before I started uploading to github, then functional, and then finally sort of object oriented (with just one class)
-##### Cube
-The Cube class, used to create a cube object.  
+I rewrote this file multiple times. First iterative, that was before I started uploading to github, then functional, and then finally sort of object oriented    
 First I declare all variables that need to be used by more than one function: The materials and geometry for the three.js objects, arrays to store the objects, the axes of rotation, and more.   
 There is also a gigantic dictionary containing the necessary variables for every legal cube move: The cubies to cycle or swap, the axis and degrees of rotation, and what to show. This could all have fit in 72 lines, but style50 wants one variable per line, making it 649 lines.
-###### constructor()
+##### constructor()
 Takes the scene and saves a reference, generates the cubies, the outlines and planes in a loop, sets the positions of the cubies and outlines in a loop, and the planes manually.
-###### cycle_rotations()
+##### cycle_rotations()
 Helper function. Cycles the rotations of 4 cubies a > b > c > d > a using a temp cubie.
-###### swap_rotations()
+##### swap_rotations()
 Helper function. Swaps the rotation of 2 cubies using a temp cubie.
-###### reset_cube()
+##### reset_cube()
 Reset the cubies to their default position and resets the solution div. This needs more steps than you'd think. First we need to reset all animation, finish it. Reset all future and past moves, and finally reset the rotation of the cubies.
-###### is_moving()
+##### is_moving()
 Returns true or false depending on if the cube is moving.
-###### do_move()
+##### do_move()
 Sets up the animation for a move on the cube.  
 This function was originally 160 lines of if/else statements, but I later rewrote it to get the cubies and moves from a gigantic dictionary. This makes this and the next function easier to read, and makes it so if I write a 4x4 or 5x5 version I only have to change the dictionary.
-###### finish_move()
+##### finish_move()
 Completes the animation, and actually moves (rotates) the cubies.  
 Because the cubies don't really move, the basic idea is to copy the rotation of the cubie that on a real cube would move into its place, and then rotate everything.  
 This function was originally a 375 line monstrosity of nexted if/else statements. It was later rewritten to work with the moves dictionary.
-###### next_move()
+##### next_move()
 Does the next move in the moves list, or the next algorithm in the steps list, and shows the current algorithm on screen.
-###### prev_move()
+##### prev_move()
 Does the previous move int he moves list in reverse, or the previous algortithm in the steps list
-###### apply_pattern()
+##### apply_pattern()
 Applies the colors from the color picker (or actually the faces array) to the cube by rotating each cubie. Contains some of its own functions
 Every cubie has its own line with manual modifiers. To me it's too random to automate. But if you want to try, be my guest.
 
-opposite_color()  
+###### opposite_color()  
 Changes green to blue, red to orange, white to yellow, and the other way around. Now I think of it, this could have been a dict, but one line of math and 3 ifs works too.
 
-apply_color()  
+###### apply_color()  
 Rotates a cubie based on the front and left color, or the up color. Basically lots of if statements with hardcoded moves, but that's enough here.
-###### run_alg()
+##### run_alg()
 Adds an algorithm to the moves array and starts the animation (if not paused)
-###### apply_alg()
+##### apply_alg()
 Runs an algorithm on the rubik's cube without showing the animation
-###### solve_cube()
+##### solve_cube()
 Sends both the applied pattern, and all moves done to api/solver, puts the algorithms on screen in the Solutions div, and adds all steps to the steps array and sets running to true so the animation starts.
-###### set_movement_speed()
+##### set_movement_speed()
 Sets the rotation speed in radians per frame. 
-###### update()
+##### update()
 If there is wait time, it does nothing except lowering the wait time by one.  
 If there are x, y or z moves remaining it rotates the moving group mspeed radians.  
 If there are no x, y or z moves remaining but there is a current move, it sends the move to finish_move().  
+
+#### cubeinterface.js
+The javascript for the actual interface. It imports the Cube class from cube.js and uses it. 
 ##### urlparam()
 Copied from the jquery codebase. Function to get variables from get.
 ##### if (urlparam("alg") and if (urlparam("scramble"))
