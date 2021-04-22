@@ -278,6 +278,12 @@ solver.cleanup_last_layer()
 
 ```
 
+### cube.js
+Cube.js can be used on its own, or with the flask APIs, or with your own api if you've written one.  
+Cube.js is built on three.js, and can easily loaded in your three.js scenes.
+
+
+
 ## Structure
 CS50 wants me to explain what every file does, and what's in it. So this readme is longer than all but 3 of my files.
 <pre>
