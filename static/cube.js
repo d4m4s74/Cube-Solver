@@ -1345,4 +1345,3 @@ class Cube {
     }
 };
 export { Cube };
-window.Cube = Cube;
