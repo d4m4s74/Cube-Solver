@@ -151,6 +151,40 @@ char *solve_f2l(int cube[6][9])
             continue;
         }
 
+
+        //Corner oriented anti-clockwise in bottom layer (pointing right if in RDF)
+        alg = f2lCase10(cube);
+        if (alg)
+        {
+            //prints for debugging
+            //printf("%s", alg);
+            //print_cube(cube);
+            algs = append(algs, alg);
+            free(alg);
+            if (algs == NULL)
+            {
+                //memory error
+                return NULL;
+            }
+            continue;
+        }
+
+        //corner oriented clockwise in bottom layer (pointing left in LDF)
+        alg = f2lCase11(cube);
+        if (alg)
+        {
+            //prints for debugging
+            //printf("%s", alg);
+            //print_cube(cube);
+            algs = append(algs, alg);
+            free(alg);
+            if (algs == NULL)
+            {
+                //memory error
+                return NULL;
+            }
+            continue;
+        }
         //Loose corner in top layer pointing right (assuming in front)
         alg = f2lCase7(cube);
         if (alg)
@@ -219,39 +253,6 @@ char *solve_f2l(int cube[6][9])
             continue;
         }
 
-        //Corner oriented anti-clockwise in bottom layer (pointing right if in RDF)
-        alg = f2lCase10(cube);
-        if (alg)
-        {
-            //prints for debugging
-            //printf("%s", alg);
-            //print_cube(cube);
-            algs = append(algs, alg);
-            free(alg);
-            if (algs == NULL)
-            {
-                //memory error
-                return NULL;
-            }
-            continue;
-        }
-
-        //corner oriented clockwise in bottom layer (pointing left in LDF)
-        alg = f2lCase11(cube);
-        if (alg)
-        {
-            //prints for debugging
-            //printf("%s", alg);
-            //print_cube(cube);
-            algs = append(algs, alg);
-            free(alg);
-            if (algs == NULL)
-            {
-                //memory error
-                return NULL;
-            }
-            continue;
-        }
 
         //This point should never be reached unless the cube is unsolvable or the code is faulty. If so, free algs and return null.
         free(algs);
@@ -3114,20 +3115,20 @@ char *f2lCase10(int cube[6][9])
             switch (location)
             {
                 case 0:
-                    alg = append(alg, "R U R' ");
-                    run_algorithm(cube, "R U R'");
+                    alg = append(alg, "R U R' U' ");
+                    run_algorithm(cube, "R U R' U'");
                     break;
                 case 1:
                     alg = append(alg, "B U B' ");
                     run_algorithm(cube, "B U B'");
                     break;
                 case 2:
-                    alg = append(alg, "L U L' ");
-                    run_algorithm(cube, "L U L'");
+                    alg = append(alg, "L U L' U");
+                    run_algorithm(cube, "L U L' U");
                     break;
                 case 3:
-                    alg = append(alg, "F U F' ");
-                    run_algorithm(cube, "F U F'");
+                    alg = append(alg, "F U F' U2");
+                    run_algorithm(cube, "F U F' U2");
                     break;
             }
             //ends with a complete pair in the top layer, ready to be put into the f2l
@@ -3161,23 +3162,23 @@ char *f2lCase10(int cube[6][9])
             switch (location)
             {
                 case 0:
-                    alg = append(alg, "R U2 R' ");
-                    run_algorithm(cube, "R U2 R'");
+                    alg = append(alg, "R U2 R' U2 ");
+                    run_algorithm(cube, "R U2 R' U2 ");
                     break;
                 case 1:
-                    alg = append(alg, "B U2 B' ");
-                    run_algorithm(cube, "B U2 B'");
+                    alg = append(alg, "B U2 B' U' ");
+                    run_algorithm(cube, "B U2 B' U' ");
                     break;
                 case 2:
                     alg = append(alg, "L U2 L' ");
                     run_algorithm(cube, "L U2 L'");
                     break;
                 case 3:
-                    alg = append(alg, "F U2 F' ");
-                    run_algorithm(cube, "F U2 F'");
+                    alg = append(alg, "F U2 F' U ");
+                    run_algorithm(cube, "F U2 F' U");
                     break;
             }
-            //ends up with a loose corner in U, spot 0, and the edge in U
+            //ends up with a loose corner in U, spot 8, and the edge in U
             alg2 = f2lCase7(cube);
             alg = append(alg, alg2);
             free(alg2);

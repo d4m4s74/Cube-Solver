@@ -37,27 +37,27 @@ char *solve_cross(int cube[6][9])
     //First orient the cube with the yellow center pointing down.
     if (cube[U][4] == 5)
     {
-        algs = append(algs, "z2\n");
+        algs = append(algs, "z2 ");
         run_algorithm(cube, "z2");
     }
     else if (cube[R][4] == 5)
     {
-        algs = append(algs, "z\n");
+        algs = append(algs, "z ");
         run_algorithm(cube, "z");
     }
     else if (cube[L][4] == 5)
     {
-        algs = append(algs, "z'\n");
+        algs = append(algs, "z' ");
         run_algorithm(cube, "z'");
     }
     else if (cube[F][4] == 5)
     {
-        algs = append(algs, "x'\n");
+        algs = append(algs, "x' ");
         run_algorithm(cube, "x'");
     }
     else if (cube[B][4] == 5)
     {
-        algs = append(algs, "x\n");
+        algs = append(algs, "x ");
         run_algorithm(cube, "x");
     }
     int solved = 0;
