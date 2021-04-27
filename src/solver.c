@@ -206,6 +206,7 @@ int main(int argc, char **argv)
     else
     {
         usage(argv[0]);
+        return 0;
     }
 
     //Validate the colors of the cube (This does not check if the cube is solvable)
