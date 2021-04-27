@@ -183,6 +183,7 @@ char *solve_cross(int cube[6][9])
         !(cube[D][7] == 5 && cube[B][7] == cube[B][4]))
     {
         //If not, return NULL
+        free(algs);
         return NULL;
     }
     //remove trailing newline
@@ -251,6 +252,7 @@ char *crossCase1(int cube[6][9])
     //If zero == 6, there are no squares facing down at all
     if (zero == 6)
     {
+        free(alg);
         return NULL;
     }
     int found = 6;
@@ -318,6 +320,7 @@ char *crossCase1(int cube[6][9])
         run_algorithm(cube, alg);
         return alg;
     }
+    free(alg);
     return NULL;
 }
 
@@ -384,6 +387,7 @@ char *crossCase2(int cube[6][9])
         run_algorithm(cube, alg);
         return alg;
     }
+    free(alg);
     return NULL;
 }
 
@@ -444,6 +448,7 @@ char *crossCase3(int cube[6][9])
         run_algorithm(cube, alg);
         return alg;
     }
+    free(alg);
     return NULL;
 }
 
@@ -504,6 +509,7 @@ char *crossCase4(int cube[6][9])
         run_algorithm(cube, alg);
         return alg;
     }
+    free(alg);
     return NULL;
 }
 
@@ -549,6 +555,7 @@ char *crossCase5(int cube[6][9])
         free(alg2);
         return alg;
     }
+    free(alg);
     return NULL;
 }
 
@@ -632,5 +639,6 @@ char *crossCase6(int cube[6][9])
         run_algorithm(cube, alg);
         return alg;
     }
+    free(alg);
     return NULL;
 }
