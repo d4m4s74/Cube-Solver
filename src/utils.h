@@ -25,4 +25,4 @@ char *append(char *a, char *b);
 bool isNumber(char *s);
 //checks if a string only contains ones and zeroes
 bool isBinary(char *s);
-#endif
+#endif  
