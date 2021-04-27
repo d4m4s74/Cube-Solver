@@ -369,6 +369,9 @@ In order to do this I partially copied the idea of the locked array in Tideman, 
 
 #### cross.c and cross.h
 Cross.c contains all code needed to solve the cross of the cube. Because I use a "Human method" (CFOP) to solve the cube, I'm kind of forced to use huge decision trees.  
+I rewrote almost this whole file last minute so it doesn't have to align the edges every step of the way.  
+##### findZero()
+Finds where on the bottom layer the yellow-green edge is, or would be if it's not there yet. This makes it easier to align the other edges in fewer steps because they can align to "relative zero" instead of actual zero.
 ##### crossCase1() through 6
 These 6 cases are every way an edge can be oriented, Pointing down, pointing up, pointing out in the up and down layers, pointing left and pointing right on the E layer.  
 The functions basically scan the faces in order from 0 to 3 to look for pieces that belong in the cross, rotate them into place, and store the moves in a char array using a helper function I call append().
