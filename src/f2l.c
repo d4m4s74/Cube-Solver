@@ -3123,11 +3123,11 @@ char *f2lCase10(int cube[6][9])
                     run_algorithm(cube, "B U B'");
                     break;
                 case 2:
-                    alg = append(alg, "L U L' U");
+                    alg = append(alg, "L U L' U ");
                     run_algorithm(cube, "L U L' U");
                     break;
                 case 3:
-                    alg = append(alg, "F U F' U2");
+                    alg = append(alg, "F U F' U2 ");
                     run_algorithm(cube, "F U F' U2");
                     break;
             }
