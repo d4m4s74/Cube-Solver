@@ -1,5 +1,5 @@
 # Rubik's Cube Solver
-#### Video Demo:  <URL HERE>
+#### Video Demo:  https://www.youtube.com/watch?v=A6JyElruhwE
 #### Demo: http://d4m4s74.pythonanywhere.com/
 #### Description:
 My Final Project for CS50 is a "Human Method" Rubik's Cube Solver.  
