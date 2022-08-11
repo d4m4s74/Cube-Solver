@@ -459,5 +459,5 @@ void helptext(const char *filename)
 void usage(const char *filename)
 {
     printf("Usage: %s [option...] \"Scramble algorithm\"\n", filename);
-    printf("Alt usage: %s [option...] [Up] [Left] [Front] [Right] [Back] [Down]\n", filename);
+    printf("Alt usage: %s [option...] [Up] [Front] [Right] [Back] [Left] [Down]\n", filename);
 }
