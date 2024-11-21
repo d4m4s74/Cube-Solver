@@ -580,9 +580,9 @@ Returns the color picker, and the faces array back to default.
 Validates the entered rubik's cube using the validator api, then sends the pattern to cube.apply_pattern()
 ##### $('#pattern').change
 Takes the selected pattern and puts the algorithm in the alg field.
-##### $('#playpause').click
+##### \$('#playpause').click
 Sets running to false, paused to true and switches the play icon with the pause icon in the interface
-##### $('#next'). and $('#prev').click
+##### <span>$</span>('#next').click and <span>$</span>('#prev').click
 Pauses animation and runs either next_move or prev_move
 ##### animate()
 Runs every frame and controls the 3d animation.  
