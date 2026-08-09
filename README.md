@@ -1,6 +1,6 @@
 # Rubik's Cube Solver
 #### Video Demo:  https://www.youtube.com/watch?v=A6JyElruhwE
-#### Demo: http://d4m4s74.pythonanywhere.com/
+#### Demo: https://cube-solver.d4m4s74.com/
 #### Description:
 My Final Project for CS50 is a "Human Method" Rubik's Cube Solver.  
 This means that the entered Rubik's Cube is solved using a method a human could use (CFOP), with clear steps: Cross, F2L, OLL and PLL.  
@@ -274,9 +274,51 @@ G perm c
 solver.free_strings()
 # Finally clean up the loaded OLLs or PLLs to prevent memory leaks
 solver.cleanup_last_layer()
-
-
 ```
+
+## Docker Container
+
+### Download the files
+```bash
+git clone https://github.com/d4m4s74/Cube-Solver
+cd Cube-Solver
+```
+
+### Build the docker image
+```bash
+docker build -t cube-solver .
+```
+
+### Run the Docker Container
+
+#### Using the run command
+```bash
+docker run -d -p 5000:5000 --name cube-solver cube-solver
+```
+
+#### Using docker-compose
+Create a file called `docker-compose.yml` containing the following code:
+
+```yaml
+services:
+  cube-solver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: flask-cube-solver:latest
+    container_name: cube-solver
+    platform: linux/amd64
+#    restart: always    #uncomment to start container on boot
+    ports:
+      - "5000:5000"
+```
+
+Run the file using:
+```bash
+docker compose up -d
+```
+
+
 ## Structure
 CS50 wants me to explain what every file does, and what's in it. So this readme is longer than all but 3 of my files.
 <pre>
